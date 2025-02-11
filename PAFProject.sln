@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PAFProject", "PAFProject\PAFProject.csproj", "{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
