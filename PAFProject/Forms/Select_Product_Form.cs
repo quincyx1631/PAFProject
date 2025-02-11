@@ -14,6 +14,12 @@ namespace PAFProject.Forms
             selectProductButton.Click += new System.EventHandler(this.selectProductButton_Click);
             _gridViewDesign = new PurchaseLimitGridViewDesign(kryptonDataGridView1);
             limitSelectionDropdown.TextChanged += LimitSelectionDropdown_TextChanged;
+            InitializeEvents();
+        }
+        private void InitializeEvents()
+        {
+            limitSelectionDropdown.TextChanged += LimitSelectionDropdown_TextChanged;
+            _gridViewDesign.OnBudgetCalculated += UpdateBudgetAmount;
         }
         private void Select_Product_Form_Load(object sender, EventArgs e)
         {
@@ -149,6 +155,40 @@ namespace PAFProject.Forms
             else
             {
                 overShortSTextBox.Text = overShortStocks;
+            }
+        }
+        public void UpdateAverageCost(string averageCost)
+        {
+            if (AVGPriceTextBox.InvokeRequired)
+            {
+                AVGPriceTextBox.Invoke(new Action(() =>
+                {
+                    AVGPriceTextBox.Text = averageCost;
+                    if (decimal.TryParse(averageCost, out decimal cost))
+                    {
+                        _gridViewDesign.SetAverageCost(cost);
+                    }
+                }));
+            }
+            else
+            {
+                AVGPriceTextBox.Text = averageCost;
+                if (decimal.TryParse(averageCost, out decimal cost))
+                {
+                    _gridViewDesign.SetAverageCost(cost);
+                }
+            }
+        }
+        public void UpdateBudgetAmount(string budget)
+        {
+            if (budgetAmountTextBox.InvokeRequired)
+            {
+                budgetAmountTextBox.Invoke(new Action(() =>
+                    budgetAmountTextBox.Text = budget));
+            }
+            else
+            {
+                budgetAmountTextBox.Text = budget;
             }
         }
 

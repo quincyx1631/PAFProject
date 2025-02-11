@@ -12,7 +12,7 @@ namespace PAFProject.Computations
                 // Check if average daily sales is zero to avoid division by zero
                 if (averageDailySales == 0)
                 {
-                    return "N/A";
+                    return "0";
                 }
 
                 // Calculate days to go using raw decimal values

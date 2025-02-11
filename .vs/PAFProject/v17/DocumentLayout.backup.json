@@ -3,12 +3,36 @@
   "WorkspaceRootPath": "C:\\Users\\admin\\source\\repos\\PAFProject\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\computations\\daystogocomputation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\computations\\daystogocomputation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\computations\\budgetcomputation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\computations\\budgetcomputation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\design\\purchaselimitgridviewdesign.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\design\\purchaselimitgridviewdesign.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\forms\\product_list_form.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\forms\\product_list_form.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\forms\\select_product_form.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\forms\\select_product_form.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\forms\\select_product_form.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\forms\\select_product_form.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\computations\\purchaselimitcomputation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\computations\\purchaselimitcomputation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\computations\\totalbudgetcomputation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\computations\\totalbudgetcomputation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,28 +50,106 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
+              "Title": "Product_List_Form.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Forms\\Product_List_Form.cs",
+              "RelativeDocumentMoniker": "PAFProject\\Forms\\Product_List_Form.cs",
+              "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Forms\\Product_List_Form.cs",
+              "RelativeToolTip": "PAFProject\\Forms\\Product_List_Form.cs",
+              "ViewState": "AgIAAEQAAAAAAAAAAAAuwF8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-11T06:54:59.668Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "PurchaseLimitGridViewDesign.cs",
               "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Design\\PurchaseLimitGridViewDesign.cs",
               "RelativeDocumentMoniker": "PAFProject\\Design\\PurchaseLimitGridViewDesign.cs",
               "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Design\\PurchaseLimitGridViewDesign.cs",
               "RelativeToolTip": "PAFProject\\Design\\PurchaseLimitGridViewDesign.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAIwEIAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAIYAAAAAAAAAAAAtwJEAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-11T06:30:35.685Z",
+              "WhenOpened": "2025-02-11T08:01:59.084Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DaysToGoComputation.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Computations\\DaysToGoComputation.cs",
+              "RelativeDocumentMoniker": "PAFProject\\Computations\\DaysToGoComputation.cs",
+              "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Computations\\DaysToGoComputation.cs",
+              "RelativeToolTip": "PAFProject\\Computations\\DaysToGoComputation.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAA1wA4AAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-11T08:21:27.34Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "BudgetComputation.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Computations\\BudgetComputation.cs",
+              "RelativeDocumentMoniker": "PAFProject\\Computations\\BudgetComputation.cs",
+              "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Computations\\BudgetComputation.cs",
+              "RelativeToolTip": "PAFProject\\Computations\\BudgetComputation.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAQwAoAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-11T08:06:44.921Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Select_Product_Form.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Forms\\Select_Product_Form.cs",
+              "RelativeDocumentMoniker": "PAFProject\\Forms\\Select_Product_Form.cs",
+              "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Forms\\Select_Product_Form.cs",
+              "RelativeToolTip": "PAFProject\\Forms\\Select_Product_Form.cs",
+              "ViewState": "AgIAAKsAAAAAAAAAAAAuwLYAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-11T06:50:24.611Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "Select_Product_Form.cs [Design]",
               "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Forms\\Select_Product_Form.cs",
               "RelativeDocumentMoniker": "PAFProject\\Forms\\Select_Product_Form.cs",
               "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Forms\\Select_Product_Form.cs [Design]",
               "RelativeToolTip": "PAFProject\\Forms\\Select_Product_Form.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-11T06:08:58.543Z",
+              "WhenOpened": "2025-02-11T08:27:44.346Z",
               "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "PurchaseLimitComputation.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Computations\\PurchaseLimitComputation.cs",
+              "RelativeDocumentMoniker": "PAFProject\\Computations\\PurchaseLimitComputation.cs",
+              "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Computations\\PurchaseLimitComputation.cs",
+              "RelativeToolTip": "PAFProject\\Computations\\PurchaseLimitComputation.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAA4wB4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-11T08:22:56.796Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "TotalBudgetComputation.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Computations\\TotalBudgetComputation.cs",
+              "RelativeDocumentMoniker": "PAFProject\\Computations\\TotalBudgetComputation.cs",
+              "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Computations\\TotalBudgetComputation.cs",
+              "RelativeToolTip": "PAFProject\\Computations\\TotalBudgetComputation.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-11T07:46:11.196Z",
+              "EditorCaption": ""
             }
           ]
         }

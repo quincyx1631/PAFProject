@@ -1,11 +1,17 @@
 ﻿using Krypton.Toolkit;
 using PAFProject.Computations;
+using System.Numerics;
 
 public class PurchaseLimitGridViewDesign
 {
     private readonly KryptonDataGridView _dataGridView;
     private decimal _currentAverageDailySales = 0;
+    private decimal _averageCost = 0;  // Add this field
     private readonly PurchaseLimitComputation _purchaseLimitComputation;
+    public decimal totalBudget = 0;
+
+    // Add the event declaration
+    public event Action<string> OnBudgetCalculated;
 
     public PurchaseLimitGridViewDesign(KryptonDataGridView dataGridView)
     {
@@ -108,12 +114,24 @@ public class PurchaseLimitGridViewDesign
             {
                 int total = systemValue + userValue;
                 _dataGridView.Rows[0].Cells[2].Value = total.ToString();
+
+                // Calculate budget
+                var budgetComputation = new BudgetComputation();
+                string budget = budgetComputation.ComputeBudget(total, _averageCost);
+                OnBudgetCalculated?.Invoke(budget);
             }
         }
         catch
         {
             _dataGridView.Rows[0].Cells[2].Value = "0";
+            OnBudgetCalculated?.Invoke("0.00");
         }
+    }
+
+    public void SetAverageCost(decimal averageCost)
+    {
+        _averageCost = averageCost;
+        UpdateTotal(); // Recalculate budget with new average cost
     }
 
     public void UpdateSystemValue(string limitSelectionText, decimal averageDailySales)

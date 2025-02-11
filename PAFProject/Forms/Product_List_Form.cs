@@ -44,11 +44,10 @@ namespace PAFProject.Forms
                     // Clear all textboxes first
                     _parentForm.ClearAllTextBoxes();
 
-                    // Get the SalesDesc from the clicked row
+                    // Get values from the clicked row
                     string salesDesc = productListDataGrid.Rows[e.RowIndex].Cells["SalesDesc"].Value.ToString();
-
-                    // Get and round QuantityOnHand
                     decimal quantityOnHand = decimal.Parse(productListDataGrid.Rows[e.RowIndex].Cells["QuantityOnHand"].Value.ToString());
+                    decimal averageCost = decimal.Parse(productListDataGrid.Rows[e.RowIndex].Cells["AverageCost"].Value.ToString());
                     int roundedQuantity = (int)Math.Round(quantityOnHand, 0);
 
                     // Create instance of AverageDailySalesComputation
@@ -63,18 +62,19 @@ namespace PAFProject.Forms
 
                     // Compute days to go using numeric values
                     string daysToGoStr = daysToGoComputation.ComputeDaysToGo(quantityOnHand, numericAverageDailySales);
-                    decimal daysToGo;
-                    decimal.TryParse(daysToGoStr, out daysToGo);
 
                     // Create instance of OverShortStocksComputation
                     var overShortStocksComputation = new OverShortStocksComputation();
 
                     // Compute over/short stocks
                     string overShortStocks = overShortStocksComputation.ComputeOverShortStocks(
-                        daysToGo,
+                        decimal.Parse(daysToGoStr),
                         quantityOnHand,
                         numericAverageDailySales
                     );
+
+                    // Create instance of BudgetComputation
+                    var budgetComputation = new BudgetComputation();
 
                     // Update the parent form's textboxes
                     _parentForm.UpdateProductName(salesDesc);
@@ -82,6 +82,7 @@ namespace PAFProject.Forms
                     _parentForm.UpdateQuantityOnHand(roundedQuantity.ToString());
                     _parentForm.UpdateDaysToGo(daysToGoStr);
                     _parentForm.UpdateOverShortStocks(overShortStocks);
+                    _parentForm.UpdateAverageCost(averageCost.ToString("N2")); // This will trigger initial budget calculation
 
                     // Close this form
                     this.Close();
