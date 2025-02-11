@@ -5,10 +5,15 @@ namespace PAFProject.Forms
 {
     public partial class Select_Product_Form : MaterialForm
     {
+        private decimal _currentAverageDailySales = 0;
+        private PurchaseLimitGridViewDesign _gridViewDesign;
+
         public Select_Product_Form()
         {
             InitializeComponent();
             selectProductButton.Click += new System.EventHandler(this.selectProductButton_Click);
+            _gridViewDesign = new PurchaseLimitGridViewDesign(kryptonDataGridView1);
+            limitSelectionDropdown.TextChanged += LimitSelectionDropdown_TextChanged;
         }
         private void Select_Product_Form_Load(object sender, EventArgs e)
         {
@@ -90,15 +95,36 @@ namespace PAFProject.Forms
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
+        private void LimitSelectionDropdown_TextChanged(object sender, EventArgs e)
+        {
+            _gridViewDesign.UpdateSystemValue(limitSelectionDropdown.Values.Text, _currentAverageDailySales);
+        }
         public void UpdateAverageDailySales(string averageDailySales)
         {
             if (avgTextBox.InvokeRequired)
             {
-                avgTextBox.Invoke(new Action(() => avgTextBox.Text = averageDailySales));
+                avgTextBox.Invoke(new Action(() =>
+                {
+                    avgTextBox.Text = averageDailySales;
+                    // Extract numeric value from the formatted string
+                    string numericPart = new string(averageDailySales.TakeWhile(c => char.IsDigit(c) || c == '.').ToArray());
+                    if (decimal.TryParse(numericPart, out decimal value))
+                    {
+                        _currentAverageDailySales = value;
+                        _gridViewDesign.UpdateSystemValue(limitSelectionDropdown.Values.Text, value);
+                    }
+                }));
             }
             else
             {
                 avgTextBox.Text = averageDailySales;
+                // Extract numeric value from the formatted string
+                string numericPart = new string(averageDailySales.TakeWhile(c => char.IsDigit(c) || c == '.').ToArray());
+                if (decimal.TryParse(numericPart, out decimal value))
+                {
+                    _currentAverageDailySales = value;
+                    _gridViewDesign.UpdateSystemValue(limitSelectionDropdown.Values.Text, value);
+                }
             }
         }
 

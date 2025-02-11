@@ -37,4 +37,3 @@ C:\Users\admin\source\repos\PAFProject\PAFProject\obj\Debug\net8.0-windows\ref\P
 C:\Users\admin\source\repos\PAFProject\PAFProject\obj\Debug\net8.0-windows\PAFProject.Forms.Product_List_Form.resources
 C:\Users\admin\source\repos\PAFProject\PAFProject\obj\Debug\net8.0-windows\PAFProject.Forms.Select_Product_Form.resources
 C:\Users\admin\source\repos\PAFProject\PAFProject\obj\Debug\net8.0-windows\PAFProject.Properties.Resources.resources
-C:\Users\admin\source\repos\PAFProject\PAFProject\obj\Debug\net8.0-windows\PAFProject.sourcelink.json

@@ -2,7 +2,6 @@
 using MaterialSkin.Controls;
 using PAFProject.Class;
 using PAFProject.Computations;
-using PAFProject.Design;
 
 namespace PAFProject.Forms
 {
@@ -145,7 +144,6 @@ namespace PAFProject.Forms
             {
                 _productManager.FormatDataGridView(productListDataGrid);
 
-                // Only adjust the width to fill horizontally
                 productListDataGrid.Width = this.ClientSize.Width -
                     (productListDataGrid.Margin.Left + productListDataGrid.Margin.Right);
             }

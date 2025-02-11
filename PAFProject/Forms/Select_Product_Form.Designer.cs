@@ -132,17 +132,29 @@
             // 
             // kryptonDataGridView1
             // 
+            kryptonDataGridView1.AllowUserToOrderColumns = true;
+            kryptonDataGridView1.AllowUserToResizeColumns = false;
+            kryptonDataGridView1.AllowUserToResizeRows = false;
+            kryptonDataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             kryptonDataGridView1.BorderStyle = BorderStyle.None;
-            kryptonDataGridView1.ColumnHeadersHeight = 35;
+            kryptonDataGridView1.ClipboardCopyMode = DataGridViewClipboardCopyMode.Disable;
+            kryptonDataGridView1.ColumnHeadersHeight = 30;
             kryptonDataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3 });
             kryptonDataGridView1.Location = new Point(193, 223);
             kryptonDataGridView1.MultiSelect = false;
             kryptonDataGridView1.Name = "kryptonDataGridView1";
             kryptonDataGridView1.RowHeadersVisible = false;
             kryptonDataGridView1.RowHeadersWidth = 45;
+            kryptonDataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             kryptonDataGridView1.ScrollBars = ScrollBars.None;
+            kryptonDataGridView1.ShowCellErrors = false;
+            kryptonDataGridView1.ShowCellToolTips = false;
+            kryptonDataGridView1.ShowEditingIcon = false;
+            kryptonDataGridView1.ShowRowErrors = false;
             kryptonDataGridView1.Size = new Size(279, 61);
-            kryptonDataGridView1.TabIndex = 28;
+            kryptonDataGridView1.StandardTab = true;
+            kryptonDataGridView1.TabIndex = 30;
+            kryptonDataGridView1.TabStop = false;
             // 
             // Column1
             // 
