@@ -65,7 +65,7 @@
             productListDataGrid.Location = new Point(3, 39);
             productListDataGrid.Name = "productListDataGrid";
             productListDataGrid.RowHeadersVisible = false;
-            productListDataGrid.Size = new Size(844, 543);
+            productListDataGrid.Size = new Size(839, 543);
             productListDataGrid.TabIndex = 0;
             // 
             // previousButton
@@ -105,7 +105,10 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(850, 700);
             Controls.Add(kryptonPanel1);
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "Product_List_Form";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "PRODUCT LIST: ";
             ((System.ComponentModel.ISupportInitialize)kryptonPanel1).EndInit();
             kryptonPanel1.ResumeLayout(false);

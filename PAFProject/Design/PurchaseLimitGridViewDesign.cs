@@ -4,13 +4,12 @@ using System.Numerics;
 
 public class PurchaseLimitGridViewDesign
 {
-    private readonly KryptonDataGridView _dataGridView;
+    public readonly KryptonDataGridView _dataGridView;
     private decimal _currentAverageDailySales = 0;
-    private decimal _averageCost = 0;  // Add this field
+    private decimal _averageCost = 0;
     private readonly PurchaseLimitComputation _purchaseLimitComputation;
     public decimal totalBudget = 0;
 
-    // Add the event declaration
     public event Action<string> OnBudgetCalculated;
 
     public PurchaseLimitGridViewDesign(KryptonDataGridView dataGridView)
@@ -88,7 +87,20 @@ public class PurchaseLimitGridViewDesign
 
     private void TextBox_KeyPress(object sender, KeyPressEventArgs e)
     {
-        if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+        // Allow negative sign, digits, and control characters (like backspace)
+        if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '-')
+        {
+            e.Handled = true;
+        }
+
+        // Allow only one negative sign at the beginning
+        if (e.KeyChar == '-' && (sender as TextBox)?.Text.Contains('-') == true)
+        {
+            e.Handled = true;
+        }
+
+        // Only allow negative sign at the beginning of the number
+        if (e.KeyChar == '-' && (sender as TextBox)?.SelectionStart != 0)
         {
             e.Handled = true;
         }
@@ -112,7 +124,12 @@ public class PurchaseLimitGridViewDesign
             if (int.TryParse(systemValueStr, out int systemValue) &&
                 int.TryParse(userValueStr, out int userValue))
             {
+                // If user value is negative, we add it to system value (which effectively subtracts)
                 int total = systemValue + userValue;
+
+                // Ensure total doesn't go below 0
+                total = Math.Max(0, total);
+
                 _dataGridView.Rows[0].Cells[2].Value = total.ToString();
 
                 // Calculate budget

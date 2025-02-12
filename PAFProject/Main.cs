@@ -4,6 +4,7 @@ using System;
 using MySql.Data.MySqlClient;
 using PAFProject.Database;
 using PAFProject.Forms;
+using PAFProject.Models;
 
 namespace PAFProject
 {
@@ -14,6 +15,56 @@ namespace PAFProject
         {
             InitializeComponent();
             selectButton.Click += new System.EventHandler(this.selectButton_Click);
+
+            // Subscribe to ProductDataManager events
+            ProductDataManager.OnProductAdded += HandleNewProduct;
+            ProductDataManager.OnWeeklyBudgetUpdated += UpdateWeeklyBudget;
+
+            // Initialize the DataGridView
+            InitializeDataGridView();
+        }
+
+        private void InitializeDataGridView()
+        {
+        kryptonDataGridView1.AllowUserToAddRows = false;  
+        kryptonDataGridView1.AllowUserToDeleteRows = false;
+        kryptonDataGridView1.ReadOnly = true;
+        kryptonDataGridView1.RowHeadersVisible = false;
+        kryptonDataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        kryptonDataGridView1.MultiSelect = false;
+        kryptonDataGridView1.AutoGenerateColumns = false; 
+
+        kryptonDataGridView1.Rows.Clear();
+        }
+        private void HandleNewProduct(ProductData product)
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action<ProductData>(HandleNewProduct), product);
+                return;
+            }
+
+            kryptonDataGridView1.Rows.Add(
+                product.Description,
+                product.BarCode,
+                product.AverageDaily,
+                product.QuantityOnHand,
+                product.DaysToGo,
+                product.OverShortStocks,
+                product.PurchaseLimit,
+                product.AveragePrice,
+                product.BudgetAmount,
+                product.Remarks  
+            );
+        }
+        private void UpdateWeeklyBudget(decimal totalBudget)
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action<decimal>(UpdateWeeklyBudget), totalBudget);
+                return;
+            }
+            weeklyBudgetTextBox.Text = totalBudget.ToString("N2");
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -45,8 +96,8 @@ namespace PAFProject
         {
             try
             {
-                Select_Product_Form selectProductForm = new Select_Product_Form();
-                selectProductForm.Show();  // Try using Show() instead of ShowDialog() for testing
+                Select_Product_Form selectProductForm = new Select_Product_Form(this);
+                selectProductForm.Show();
             }
             catch (Exception ex)
             {

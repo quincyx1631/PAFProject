@@ -49,6 +49,10 @@
             Column4 = new DataGridViewTextBoxColumn();
             Column5 = new DataGridViewTextBoxColumn();
             Column6 = new DataGridViewTextBoxColumn();
+            Column7 = new DataGridViewTextBoxColumn();
+            Column8 = new DataGridViewTextBoxColumn();
+            Column9 = new DataGridViewTextBoxColumn();
+            Column10 = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)kryptonPanel1).BeginInit();
             kryptonPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)kryptonSeparator1).BeginInit();
@@ -203,48 +207,82 @@
             // kryptonDataGridView1
             // 
             kryptonDataGridView1.BorderStyle = BorderStyle.None;
-            kryptonDataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4, Column5, Column6 });
+            kryptonDataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4, Column5, Column6, Column7, Column8, Column9, Column10 });
             kryptonDataGridView1.Location = new Point(3, 0);
             kryptonDataGridView1.Name = "kryptonDataGridView1";
+            kryptonDataGridView1.ReadOnly = true;
             kryptonDataGridView1.RowHeadersVisible = false;
             kryptonDataGridView1.Size = new Size(1363, 600);
             kryptonDataGridView1.TabIndex = 0;
             // 
             // Column1
             // 
-            Column1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Column1.HeaderText = "Description";
             Column1.Name = "Column1";
+            Column1.ReadOnly = true;
+            Column1.Width = 200;
             // 
             // Column2
             // 
             Column2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Column2.HeaderText = "Bar Code";
             Column2.Name = "Column2";
+            Column2.ReadOnly = true;
             // 
             // Column3
             // 
             Column3.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Column3.HeaderText = "Average Daily";
             Column3.Name = "Column3";
+            Column3.ReadOnly = true;
             // 
             // Column4
             // 
             Column4.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Column4.HeaderText = "Qty On Hand";
             Column4.Name = "Column4";
+            Column4.ReadOnly = true;
             // 
             // Column5
             // 
             Column5.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Column5.HeaderText = "Days To Go";
             Column5.Name = "Column5";
+            Column5.ReadOnly = true;
             // 
             // Column6
             // 
             Column6.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Column6.HeaderText = "Over/Short Stocks";
             Column6.Name = "Column6";
+            Column6.ReadOnly = true;
+            // 
+            // Column7
+            // 
+            Column7.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Column7.HeaderText = "Purchase Limit";
+            Column7.Name = "Column7";
+            Column7.ReadOnly = true;
+            // 
+            // Column8
+            // 
+            Column8.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Column8.HeaderText = "Average Price";
+            Column8.Name = "Column8";
+            Column8.ReadOnly = true;
+            // 
+            // Column9
+            // 
+            Column9.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Column9.HeaderText = "Budget Amount";
+            Column9.Name = "Column9";
+            Column9.ReadOnly = true;
+            // 
+            // Column10
+            // 
+            Column10.HeaderText = "Remarks";
+            Column10.Name = "Column10";
+            Column10.ReadOnly = true;
             // 
             // Main
             // 
@@ -289,5 +327,9 @@
         private DataGridViewTextBoxColumn Column4;
         private DataGridViewTextBoxColumn Column5;
         private DataGridViewTextBoxColumn Column6;
+        private DataGridViewTextBoxColumn Column7;
+        private DataGridViewTextBoxColumn Column8;
+        private DataGridViewTextBoxColumn Column9;
+        private DataGridViewTextBoxColumn Column10;
     }
 }

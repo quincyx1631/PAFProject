@@ -155,6 +155,7 @@
             kryptonDataGridView1.StandardTab = true;
             kryptonDataGridView1.TabIndex = 30;
             kryptonDataGridView1.TabStop = false;
+            kryptonDataGridView1.CellContentClick += kryptonDataGridView1_CellContentClick;
             // 
             // Column1
             // 
@@ -218,6 +219,7 @@
             budgetAmountTextBox.Name = "budgetAmountTextBox";
             budgetAmountTextBox.Size = new Size(279, 30);
             budgetAmountTextBox.TabIndex = 23;
+            budgetAmountTextBox.TextAlign = HorizontalAlignment.Right;
             budgetAmountTextBox.TextChanged += budgetAmountTextBox_TextChanged;
             // 
             // budgetAmountLabel
@@ -239,6 +241,7 @@
             AVGPriceTextBox.Name = "AVGPriceTextBox";
             AVGPriceTextBox.Size = new Size(279, 30);
             AVGPriceTextBox.TabIndex = 21;
+            AVGPriceTextBox.TextAlign = HorizontalAlignment.Right;
             // 
             // AVGPriceLabel
             // 
@@ -259,6 +262,7 @@
             overShortSTextBox.Name = "overShortSTextBox";
             overShortSTextBox.Size = new Size(279, 30);
             overShortSTextBox.TabIndex = 19;
+            overShortSTextBox.TextAlign = HorizontalAlignment.Right;
             // 
             // stocksLabel
             // 
@@ -279,6 +283,7 @@
             daysTGTextBox.Name = "daysTGTextBox";
             daysTGTextBox.Size = new Size(279, 30);
             daysTGTextBox.TabIndex = 17;
+            daysTGTextBox.TextAlign = HorizontalAlignment.Right;
             // 
             // DTGLabel
             // 
@@ -311,7 +316,7 @@
             doneButton.TabIndex = 14;
             doneButton.Text = "DONE";
             doneButton.UseVisualStyleBackColor = true;
-            doneButton.Click += doneButton_Click;
+            
             // 
             // selectProductButton
             // 
@@ -329,6 +334,7 @@
             qtyTextBox.Name = "qtyTextBox";
             qtyTextBox.Size = new Size(279, 30);
             qtyTextBox.TabIndex = 12;
+            qtyTextBox.TextAlign = HorizontalAlignment.Right;
             qtyTextBox.TextChanged += qtyTextBox_TextChanged;
             // 
             // avgTextBox
@@ -345,6 +351,7 @@
             nameTextBox.Location = new Point(193, 16);
             nameTextBox.Multiline = true;
             nameTextBox.Name = "nameTextBox";
+            nameTextBox.ReadOnly = true;
             nameTextBox.Size = new Size(279, 30);
             nameTextBox.TabIndex = 10;
             nameTextBox.TextChanged += nameTextBox_TextChanged;

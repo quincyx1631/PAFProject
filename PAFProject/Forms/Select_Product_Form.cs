@@ -1,17 +1,21 @@
 ﻿//Select_Product_Form.cs
 using MaterialSkin.Controls;
 using PAFProject.Design;
+using PAFProject.Models;
 namespace PAFProject.Forms
 {
     public partial class Select_Product_Form : MaterialForm
     {
         private decimal _currentAverageDailySales = 0;
         private PurchaseLimitGridViewDesign _gridViewDesign;
+        private Main _mainForm;
 
-        public Select_Product_Form()
+        public Select_Product_Form(Main mainForm)
         {
             InitializeComponent();
+            _mainForm = mainForm;
             selectProductButton.Click += new System.EventHandler(this.selectProductButton_Click);
+            doneButton.Click += new System.EventHandler(this.doneButton_Click);
             _gridViewDesign = new PurchaseLimitGridViewDesign(kryptonDataGridView1);
             limitSelectionDropdown.TextChanged += LimitSelectionDropdown_TextChanged;
             InitializeEvents();
@@ -79,9 +83,43 @@ namespace PAFProject.Forms
         private void weeklyBudgetLabel_Click(object sender, EventArgs e)
         {
         }
+
         private void doneButton_Click(object sender, EventArgs e)
         {
+            try
+            {
+                // Get the total value from the grid
+                string purchaseLimit = "0";
+                if (_gridViewDesign._dataGridView.Rows.Count > 0 &&
+                    _gridViewDesign._dataGridView.Rows[0].Cells[2].Value != null)
+                {
+                    purchaseLimit = _gridViewDesign._dataGridView.Rows[0].Cells[2].Value.ToString();
+                }
+
+                var productData = new ProductData
+                {
+                    Description = nameTextBox.Text,
+                    BarCode = "", // Add barcode textbox if needed
+                    AverageDaily = avgTextBox.Text,
+                    QuantityOnHand = qtyTextBox.Text,
+                    DaysToGo = daysTGTextBox.Text,
+                    OverShortStocks = overShortSTextBox.Text,
+                    PurchaseLimit = purchaseLimit,
+                    AveragePrice = AVGPriceTextBox.Text,
+                    BudgetAmount = budgetAmountTextBox.Text,
+                    Remarks = remarksTextBox.Text
+                };
+
+                ProductDataManager.AddProduct(productData);
+                this.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error adding product: " + ex.Message);
+            }
         }
+
         private void label4_Click(object sender, EventArgs e)
         {
         }
@@ -210,10 +248,11 @@ namespace PAFProject.Forms
         private void budgetAmountLabel_Click(object sender, EventArgs e)
         {
         }
-
         private void limitSelectionDropdown_Click(object sender, EventArgs e)
         {
-
+        }
+        private void kryptonDataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
         }
     }
 }
