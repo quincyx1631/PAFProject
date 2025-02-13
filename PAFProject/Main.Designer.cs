@@ -37,7 +37,6 @@
             weeklyBudgetLabel = new Label();
             weekTextBox = new Krypton.Toolkit.KryptonTextBox();
             weekLabel = new Label();
-            titleName = new Label();
             selectButton = new Button();
             processButton = new Button();
             kryptonSeparator1 = new Krypton.Toolkit.KryptonSeparator();
@@ -53,6 +52,8 @@
             Column8 = new DataGridViewTextBoxColumn();
             Column9 = new DataGridViewTextBoxColumn();
             Column10 = new DataGridViewTextBoxColumn();
+            addBranch = new Button();
+            branchSelect = new Krypton.Toolkit.KryptonDropButton();
             ((System.ComponentModel.ISupportInitialize)kryptonPanel1).BeginInit();
             kryptonPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)kryptonSeparator1).BeginInit();
@@ -63,6 +64,8 @@
             // 
             // kryptonPanel1
             // 
+            kryptonPanel1.Controls.Add(branchSelect);
+            kryptonPanel1.Controls.Add(addBranch);
             kryptonPanel1.Controls.Add(shortOverTextBox);
             kryptonPanel1.Controls.Add(proposedBudgetTextBox);
             kryptonPanel1.Controls.Add(shortOverLabel);
@@ -71,7 +74,6 @@
             kryptonPanel1.Controls.Add(weeklyBudgetLabel);
             kryptonPanel1.Controls.Add(weekTextBox);
             kryptonPanel1.Controls.Add(weekLabel);
-            kryptonPanel1.Controls.Add(titleName);
             kryptonPanel1.Controls.Add(selectButton);
             kryptonPanel1.Controls.Add(processButton);
             kryptonPanel1.Controls.Add(kryptonSeparator1);
@@ -79,6 +81,7 @@
             kryptonPanel1.Name = "kryptonPanel1";
             kryptonPanel1.Size = new Size(1369, 145);
             kryptonPanel1.TabIndex = 0;
+            kryptonPanel1.Paint += kryptonPanel1_Paint;
             // 
             // shortOverTextBox
             // 
@@ -140,7 +143,7 @@
             // 
             // weekTextBox
             // 
-            weekTextBox.Location = new Point(102, 43);
+            weekTextBox.Location = new Point(102, 46);
             weekTextBox.Multiline = true;
             weekTextBox.Name = "weekTextBox";
             weekTextBox.Size = new Size(78, 30);
@@ -151,25 +154,13 @@
             // 
             weekLabel.BackColor = Color.Transparent;
             weekLabel.Font = new Font("Segoe UI", 12F);
-            weekLabel.Location = new Point(13, 43);
+            weekLabel.Location = new Point(13, 46);
             weekLabel.Name = "weekLabel";
             weekLabel.Size = new Size(83, 28);
             weekLabel.TabIndex = 4;
             weekLabel.Text = "Week No.";
             weekLabel.TextAlign = ContentAlignment.MiddleLeft;
             weekLabel.Click += weekLabel_Click;
-            // 
-            // titleName
-            // 
-            titleName.BackColor = Color.Transparent;
-            titleName.Font = new Font("Segoe UI", 12F);
-            titleName.Location = new Point(13, 9);
-            titleName.Name = "titleName";
-            titleName.Size = new Size(138, 28);
-            titleName.TabIndex = 3;
-            titleName.Text = "Yulito Bunawan";
-            titleName.TextAlign = ContentAlignment.MiddleLeft;
-            titleName.Click += label1_Click;
             // 
             // selectButton
             // 
@@ -284,6 +275,24 @@
             Column10.Name = "Column10";
             Column10.ReadOnly = true;
             // 
+            // addBranch
+            // 
+            addBranch.Location = new Point(1149, 74);
+            addBranch.Name = "addBranch";
+            addBranch.Size = new Size(100, 35);
+            addBranch.TabIndex = 12;
+            addBranch.Text = "ADD BRANCH";
+            addBranch.UseVisualStyleBackColor = true;
+            // 
+            // branchSelect
+            // 
+            branchSelect.Location = new Point(13, 3);
+            branchSelect.Name = "branchSelect";
+            branchSelect.Size = new Size(167, 37);
+            branchSelect.TabIndex = 13;
+            branchSelect.Values.DropDownArrowColor = Color.Empty;
+            branchSelect.Values.Text = "Select Branch";
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -312,7 +321,6 @@
         private Button processButton;
         private Krypton.Toolkit.KryptonSeparator kryptonSeparator1;
         private Krypton.Toolkit.KryptonDataGridView kryptonDataGridView1;
-        private Label titleName;
         private Label weekLabel;
         private Krypton.Toolkit.KryptonTextBox weekTextBox;
         private Label shortOverLabel;
@@ -331,5 +339,7 @@
         private DataGridViewTextBoxColumn Column8;
         private DataGridViewTextBoxColumn Column9;
         private DataGridViewTextBoxColumn Column10;
+        private Button addBranch;
+        private Krypton.Toolkit.KryptonDropButton branchSelect;
     }
 }

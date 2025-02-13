@@ -21,7 +21,7 @@ namespace PAFProject.Models
     {
         private static List<ProductData> _productList = new List<ProductData>();
         public static event Action<ProductData> OnProductAdded;
-        public static event Action<decimal> OnWeeklyBudgetUpdated;
+        public static event Action<decimal> OnProposedBudget;
 
         public static void AddProduct(ProductData product)
         {
@@ -37,7 +37,7 @@ namespace PAFProject.Models
                     totalBudget += budget;
                 }
             }
-            OnWeeklyBudgetUpdated?.Invoke(totalBudget);
+            OnProposedBudget?.Invoke(totalBudget);
         }
 
         public static List<ProductData> GetProducts()
@@ -48,7 +48,7 @@ namespace PAFProject.Models
         public static void ClearProducts()
         {
             _productList.Clear();
-            OnWeeklyBudgetUpdated?.Invoke(0);
+            OnProposedBudget?.Invoke(0);
         }
     }
 }

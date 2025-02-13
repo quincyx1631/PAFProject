@@ -88,7 +88,6 @@ namespace PAFProject.Forms
         {
             try
             {
-                // Get the total value from the grid
                 string purchaseLimit = "0";
                 if (_gridViewDesign._dataGridView.Rows.Count > 0 &&
                     _gridViewDesign._dataGridView.Rows[0].Cells[2].Value != null)
@@ -99,7 +98,7 @@ namespace PAFProject.Forms
                 var productData = new ProductData
                 {
                     Description = nameTextBox.Text,
-                    BarCode = "", // Add barcode textbox if needed
+                    BarCode = "", 
                     AverageDaily = avgTextBox.Text,
                     QuantityOnHand = qtyTextBox.Text,
                     DaysToGo = daysTGTextBox.Text,

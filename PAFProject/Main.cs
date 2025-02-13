@@ -16,25 +16,25 @@ namespace PAFProject
             InitializeComponent();
             selectButton.Click += new System.EventHandler(this.selectButton_Click);
 
-            // Subscribe to ProductDataManager events
             ProductDataManager.OnProductAdded += HandleNewProduct;
-            ProductDataManager.OnWeeklyBudgetUpdated += UpdateWeeklyBudget;
+            ProductDataManager.OnProposedBudget += UpdateProposedBudget;
 
-            // Initialize the DataGridView
+            weeklyBudgetTextBox.TextChanged += new System.EventHandler(this.weeklyBudgetTextBox_TextChanged);
+
             InitializeDataGridView();
         }
 
         private void InitializeDataGridView()
         {
-        kryptonDataGridView1.AllowUserToAddRows = false;  
-        kryptonDataGridView1.AllowUserToDeleteRows = false;
-        kryptonDataGridView1.ReadOnly = true;
-        kryptonDataGridView1.RowHeadersVisible = false;
-        kryptonDataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-        kryptonDataGridView1.MultiSelect = false;
-        kryptonDataGridView1.AutoGenerateColumns = false; 
+            kryptonDataGridView1.AllowUserToAddRows = false;
+            kryptonDataGridView1.AllowUserToDeleteRows = false;
+            kryptonDataGridView1.ReadOnly = true;
+            kryptonDataGridView1.RowHeadersVisible = false;
+            kryptonDataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            kryptonDataGridView1.MultiSelect = false;
+            kryptonDataGridView1.AutoGenerateColumns = false;
 
-        kryptonDataGridView1.Rows.Clear();
+            kryptonDataGridView1.Rows.Clear();
         }
         private void HandleNewProduct(ProductData product)
         {
@@ -54,17 +54,17 @@ namespace PAFProject
                 product.PurchaseLimit,
                 product.AveragePrice,
                 product.BudgetAmount,
-                product.Remarks  
+                product.Remarks
             );
         }
-        private void UpdateWeeklyBudget(decimal totalBudget)
+        private void UpdateProposedBudget(decimal totalBudget)
         {
             if (this.InvokeRequired)
             {
-                this.Invoke(new Action<decimal>(UpdateWeeklyBudget), totalBudget);
+                this.Invoke(new Action<decimal>(UpdateProposedBudget), totalBudget);
                 return;
             }
-            weeklyBudgetTextBox.Text = totalBudget.ToString("N2");
+            proposedBudgetTextBox.Text = totalBudget.ToString("N2");
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -103,6 +103,53 @@ namespace PAFProject
             {
                 MessageBox.Show("Error: " + ex.Message);
             }
+        }
+        private void weeklyBudgetTextBox_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                // Get the total budget from proposedBudget
+                decimal totalBudget = decimal.Parse(proposedBudgetTextBox.Text);
+
+                // Try to parse the Weekly budget
+                if (decimal.TryParse(weeklyBudgetTextBox.Text, out decimal weeklyBudgetAmount))
+                {
+                    // Calculate the difference
+                    decimal difference = weeklyBudgetAmount - totalBudget;
+
+                    // Display the result in shortOverTextBox
+                    shortOverTextBox.Text = difference.ToString("N2");
+
+                    // Optionally, you can change the text color based on whether it's short or over
+                    if (difference < 0)
+                    {
+                        shortOverTextBox.ForeColor = System.Drawing.Color.Red;
+                        // You might want to show a warning message or indicator here
+                    }
+                    else
+                    {
+                        shortOverTextBox.ForeColor = System.Drawing.Color.Green;
+                    }
+                }
+                else
+                {
+                    // If the input is not a valid number, clear the shortOverTextBox
+                    shortOverTextBox.Text = "0.00";
+                    shortOverTextBox.ForeColor = System.Drawing.Color.Black;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any potential errors (like invalid number format)
+                MessageBox.Show("Please enter a valid number.");
+                weeklyBudgetTextBox.Text = "0";
+                shortOverTextBox.Text = weeklyBudgetTextBox.Text;
+            }
+        }
+
+        private void kryptonPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
