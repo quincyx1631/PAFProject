@@ -9,6 +9,7 @@ public class PurchaseLimitGridViewDesign
     private decimal _averageCost = 0;
     private readonly PurchaseLimitComputation _purchaseLimitComputation;
     public decimal totalBudget = 0;
+    private string _userInput = "0";
 
     public event Action<string> OnBudgetCalculated;
 
@@ -19,6 +20,15 @@ public class PurchaseLimitGridViewDesign
         InitializeGridView();
     }
 
+    public void SetUserInput(string userValue)
+    {
+        _userInput = userValue;
+        if (_dataGridView.Rows.Count > 0)
+        {
+            _dataGridView.Rows[0].Cells[1].Value = userValue;
+            UpdateTotal();
+        }
+    }
     private void InitializeGridView()
     {
         // Configure grid properties
@@ -124,10 +134,11 @@ public class PurchaseLimitGridViewDesign
             if (int.TryParse(systemValueStr, out int systemValue) &&
                 int.TryParse(userValueStr, out int userValue))
             {
-                // If user value is negative, we add it to system value (which effectively subtracts)
-                int total = systemValue + userValue;
+                // Store the user input
+                _userInput = userValue.ToString();
 
-                // Ensure total doesn't go below 0
+                // Calculate total
+                int total = systemValue + userValue;
                 total = Math.Max(0, total);
 
                 _dataGridView.Rows[0].Cells[2].Value = total.ToString();
@@ -158,11 +169,16 @@ public class PurchaseLimitGridViewDesign
             int days = _purchaseLimitComputation.GetDaysFromSelection(limitSelectionText);
             int purchaseLimit = _purchaseLimitComputation.ComputePurchaseLimit(averageDailySales, days);
             _dataGridView.Rows[0].Cells[0].Value = purchaseLimit.ToString();
+
+            // Preserve user input
+            _dataGridView.Rows[0].Cells[1].Value = _userInput;
+
             UpdateTotal();
         }
         catch
         {
             _dataGridView.Rows[0].Cells[0].Value = "0";
+            _dataGridView.Rows[0].Cells[1].Value = _userInput;
             UpdateTotal();
         }
     }

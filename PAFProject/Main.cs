@@ -5,11 +5,14 @@ using MySql.Data.MySqlClient;
 using PAFProject.Database;
 using PAFProject.Forms;
 using PAFProject.Models;
+using PAFProject.Export;
 
 namespace PAFProject
 {
     public partial class Main : MaterialForm
     {
+        private int selectedRowIndex = -1;
+
 
         public Main()
         {
@@ -18,10 +21,14 @@ namespace PAFProject
 
             ProductDataManager.OnProductAdded += HandleNewProduct;
             ProductDataManager.OnProposedBudget += UpdateProposedBudget;
+            processButton.Click += new System.EventHandler(this.ProcessButton_Click);
 
             weeklyBudgetTextBox.TextChanged += new System.EventHandler(this.weeklyBudgetTextBox_TextChanged);
 
             InitializeDataGridView();
+
+            // Add double-click event handler
+            kryptonDataGridView1.CellDoubleClick += KryptonDataGridView1_CellDoubleClick;
         }
 
         private void InitializeDataGridView()
@@ -36,27 +43,83 @@ namespace PAFProject
 
             kryptonDataGridView1.Rows.Clear();
         }
-        private void HandleNewProduct(ProductData product)
+        private void KryptonDataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                selectedRowIndex = e.RowIndex;
+
+                var currentProduct = new ProductData
+                {
+                    Description = kryptonDataGridView1.Rows[e.RowIndex].Cells[0].Value?.ToString(),
+                    BarCode = kryptonDataGridView1.Rows[e.RowIndex].Cells[1].Value?.ToString(),
+                    AverageDaily = kryptonDataGridView1.Rows[e.RowIndex].Cells[2].Value?.ToString(),
+                    QuantityOnHand = kryptonDataGridView1.Rows[e.RowIndex].Cells[3].Value?.ToString(),
+                    DaysToGo = kryptonDataGridView1.Rows[e.RowIndex].Cells[4].Value?.ToString(),
+                    OverShortStocks = kryptonDataGridView1.Rows[e.RowIndex].Cells[5].Value?.ToString(),
+                    PurchaseLimit = kryptonDataGridView1.Rows[e.RowIndex].Cells[6].Value?.ToString(),
+                    AveragePrice = kryptonDataGridView1.Rows[e.RowIndex].Cells[7].Value?.ToString(),
+                    BudgetAmount = kryptonDataGridView1.Rows[e.RowIndex].Cells[8].Value?.ToString(),
+                    Remarks = kryptonDataGridView1.Rows[e.RowIndex].Cells[9].Value?.ToString()
+                };
+
+                Select_Product_Form selectProductForm = new Select_Product_Form(this, currentProduct, selectedRowIndex);
+                selectProductForm.Show();
+            }
+        }
+
+        private void HandleNewProduct(ProductData product, int? editIndex)
         {
             if (this.InvokeRequired)
             {
-                this.Invoke(new Action<ProductData>(HandleNewProduct), product);
+                this.Invoke(new Action<ProductData, int?>((p, i) => HandleNewProduct(p, i)), product, editIndex);
                 return;
             }
 
-            kryptonDataGridView1.Rows.Add(
-                product.Description,
-                product.BarCode,
-                product.AverageDaily,
-                product.QuantityOnHand,
-                product.DaysToGo,
-                product.OverShortStocks,
-                product.PurchaseLimit,
-                product.AveragePrice,
-                product.BudgetAmount,
-                product.Remarks
-            );
+            if (editIndex.HasValue && editIndex.Value >= 0 && editIndex.Value < kryptonDataGridView1.Rows.Count)
+            {
+                // Update existing row
+                var row = kryptonDataGridView1.Rows[editIndex.Value];
+                row.Cells[0].Value = product.Description;
+                row.Cells[1].Value = product.BarCode;
+                row.Cells[2].Value = product.AverageDaily;
+                row.Cells[3].Value = product.QuantityOnHand;
+                row.Cells[4].Value = product.DaysToGo;
+                row.Cells[5].Value = product.OverShortStocks;
+                row.Cells[6].Value = product.PurchaseLimit;
+                row.Cells[7].Value = product.AveragePrice;
+                row.Cells[8].Value = product.BudgetAmount;
+                row.Cells[9].Value = product.Remarks;
+            }
+            else
+            {
+                // Add new row
+                kryptonDataGridView1.Rows.Add(
+                    product.Description,
+                    product.BarCode,
+                    product.AverageDaily,
+                    product.QuantityOnHand,
+                    product.DaysToGo,
+                    product.OverShortStocks,
+                    product.PurchaseLimit,
+                    product.AveragePrice,
+                    product.BudgetAmount,
+                    product.Remarks
+                );
+            }
         }
+
+        private void ProcessButton_Click(object sender, EventArgs e)
+        {
+            string branchName = branchNameLabel.Text;
+            string week = weekTextBox.Text;
+            string weeklyBudget = weeklyBudgetTextBox.Text;
+            string proposedBudget = proposedBudgetTextBox.Text;
+            string shortOver = shortOverTextBox.Text;
+
+            ExcelExporter.ExportToExcel(kryptonDataGridView1, branchName, week, weeklyBudget, proposedBudget, shortOver);
+        }
+
         private void UpdateProposedBudget(decimal totalBudget)
         {
             if (this.InvokeRequired)

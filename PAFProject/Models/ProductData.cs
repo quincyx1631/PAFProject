@@ -20,15 +20,28 @@ namespace PAFProject.Models
     public static class ProductDataManager
     {
         private static List<ProductData> _productList = new List<ProductData>();
-        public static event Action<ProductData> OnProductAdded;
+        public static event Action<ProductData, int?> OnProductAdded;
         public static event Action<decimal> OnProposedBudget;
 
+        // Add new method for updating existing products
+        public static void UpdateProduct(ProductData product, int index)
+        {
+            if (index >= 0 && index < _productList.Count)
+            {
+                _productList[index] = product;
+                OnProductAdded?.Invoke(product, index);
+                UpdateBudgetTotal();
+            }
+        }
         public static void AddProduct(ProductData product)
         {
             _productList.Add(product);
-            OnProductAdded?.Invoke(product);
+            OnProductAdded?.Invoke(product, null);
+            UpdateBudgetTotal();
+        }
 
-            // Calculate and update weekly budget total
+        private static void UpdateBudgetTotal()
+        {
             decimal totalBudget = 0;
             foreach (var p in _productList)
             {

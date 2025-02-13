@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.104.2" />
     <PackageReference Include="Krypton.Toolkit" Version="90.24.11.317" />
     <PackageReference Include="MaterialSkin" Version="0.2.1" />
     <PackageReference Include="MySql.Data" Version="9.2.0" />
