@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             kryptonPanel1 = new Krypton.Toolkit.KryptonPanel();
+            branchSelect = new Krypton.Toolkit.KryptonDropButton();
+            addBranch = new Button();
             shortOverTextBox = new Krypton.Toolkit.KryptonTextBox();
             proposedBudgetTextBox = new Krypton.Toolkit.KryptonTextBox();
             shortOverLabel = new Label();
@@ -52,8 +54,7 @@
             Column8 = new DataGridViewTextBoxColumn();
             Column9 = new DataGridViewTextBoxColumn();
             Column10 = new DataGridViewTextBoxColumn();
-            addBranch = new Button();
-            branchSelect = new Krypton.Toolkit.KryptonDropButton();
+            yulito = new Label();
             ((System.ComponentModel.ISupportInitialize)kryptonPanel1).BeginInit();
             kryptonPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)kryptonSeparator1).BeginInit();
@@ -64,6 +65,7 @@
             // 
             // kryptonPanel1
             // 
+            kryptonPanel1.Controls.Add(yulito);
             kryptonPanel1.Controls.Add(branchSelect);
             kryptonPanel1.Controls.Add(addBranch);
             kryptonPanel1.Controls.Add(shortOverTextBox);
@@ -82,6 +84,24 @@
             kryptonPanel1.Size = new Size(1369, 145);
             kryptonPanel1.TabIndex = 0;
             kryptonPanel1.Paint += kryptonPanel1_Paint;
+            // 
+            // branchSelect
+            // 
+            branchSelect.Location = new Point(605, 10);
+            branchSelect.Name = "branchSelect";
+            branchSelect.Size = new Size(167, 37);
+            branchSelect.TabIndex = 13;
+            branchSelect.Values.DropDownArrowColor = Color.Empty;
+            branchSelect.Values.Text = "Select Branch";
+            // 
+            // addBranch
+            // 
+            addBranch.Location = new Point(1149, 74);
+            addBranch.Name = "addBranch";
+            addBranch.Size = new Size(100, 35);
+            addBranch.TabIndex = 12;
+            addBranch.Text = "ADD BRANCH";
+            addBranch.UseVisualStyleBackColor = true;
             // 
             // shortOverTextBox
             // 
@@ -275,23 +295,16 @@
             Column10.Name = "Column10";
             Column10.ReadOnly = true;
             // 
-            // addBranch
+            // yulito
             // 
-            addBranch.Location = new Point(1149, 74);
-            addBranch.Name = "addBranch";
-            addBranch.Size = new Size(100, 35);
-            addBranch.TabIndex = 12;
-            addBranch.Text = "ADD BRANCH";
-            addBranch.UseVisualStyleBackColor = true;
-            // 
-            // branchSelect
-            // 
-            branchSelect.Location = new Point(13, 3);
-            branchSelect.Name = "branchSelect";
-            branchSelect.Size = new Size(167, 37);
-            branchSelect.TabIndex = 13;
-            branchSelect.Values.DropDownArrowColor = Color.Empty;
-            branchSelect.Values.Text = "Select Branch";
+            yulito.BackColor = Color.Transparent;
+            yulito.Font = new Font("Segoe UI", 12F);
+            yulito.Location = new Point(13, 10);
+            yulito.Name = "yulito";
+            yulito.Size = new Size(83, 28);
+            yulito.TabIndex = 14;
+            yulito.Text = "Yulito";
+            yulito.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // Main
             // 
@@ -341,5 +354,6 @@
         private DataGridViewTextBoxColumn Column10;
         private Button addBranch;
         private Krypton.Toolkit.KryptonDropButton branchSelect;
+        private Label yulito;
     }
 }

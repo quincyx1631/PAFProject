@@ -316,7 +316,6 @@
             doneButton.TabIndex = 14;
             doneButton.Text = "DONE";
             doneButton.UseVisualStyleBackColor = true;
-            
             // 
             // selectProductButton
             // 
@@ -383,6 +382,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.Control;
             ClientSize = new Size(850, 700);
             Controls.Add(kryptonPanel1);
             Controls.Add(kryptonPanel2);

@@ -9,6 +9,7 @@ namespace PAFProject.Models
     public class ProductModel
     {
         public string SalesDesc { get; set; }
+        public string ManufacturerPartNumber { get; set; }
         public decimal QuantityOnHand { get; set; }
         public decimal AverageCost { get; set; }
     }
@@ -21,7 +22,31 @@ namespace PAFProject.Models
         {
             _dbConnector = new DatabaseConnector();
         }
+        public string GetManufacturerPartNumber(string salesDesc)
+        {
+            using (var conn = _dbConnector.GetConnection())
+            {
+                try
+                {
+                    conn.Open();
+                    string query = @"
+                        SELECT ManufacturerPartNumber 
+                        FROM item_inventory_active 
+                        WHERE SalesDesc = @salesDesc";
 
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@salesDesc", salesDesc);
+                        var result = cmd.ExecuteScalar();
+                        return result?.ToString() ?? string.Empty;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Error fetching ManufacturerPartNumber: {ex.Message}");
+                }
+            }
+        }
         public (DataTable DataTable, int TotalPages, List<decimal> QuantityOnHandList) GetInventoryData(string searchTerm, int currentPage, int recordsPerPage)
         {
             using (var conn = _dbConnector.GetConnection())
@@ -33,7 +58,6 @@ namespace PAFProject.Models
                     var quantityOnHandList = new List<decimal>();
                     int totalRecords = 0;
 
-                    // Get total records for pagination
                     string countQuery = "SELECT COUNT(*) FROM item_inventory_active";
                     if (!string.IsNullOrWhiteSpace(searchTerm))
                     {
@@ -51,13 +75,12 @@ namespace PAFProject.Models
 
                     int totalPages = (int)Math.Ceiling((double)totalRecords / recordsPerPage);
 
-                    // Get paginated data
                     string query = @"
-                SELECT 
-                    SalesDesc,
-                    QuantityOnHand,
-                    AverageCost
-                FROM item_inventory_active";
+                        SELECT 
+                            SalesDesc,
+                            QuantityOnHand,
+                            AverageCost
+                        FROM item_inventory_active";
 
                     if (!string.IsNullOrWhiteSpace(searchTerm))
                     {
@@ -77,11 +100,8 @@ namespace PAFProject.Models
                         using (var reader = cmd.ExecuteReader())
                         {
                             dataTable.Load(reader);
-
-                            // Reset reader to fetch QuantityOnHand separately
                             reader.Close();
 
-                            // Fetch QuantityOnHand values
                             using (var quantityCmd = new MySqlCommand(query, conn))
                             {
                                 if (!string.IsNullOrWhiteSpace(searchTerm))
@@ -101,7 +121,6 @@ namespace PAFProject.Models
                             }
                         }
                     }
-
                     return (dataTable, totalPages, quantityOnHandList);
                 }
                 catch (Exception ex)

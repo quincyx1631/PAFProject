@@ -1,4 +1,5 @@
 ﻿//Select_Product_Form.cs
+using MaterialSkin;
 using MaterialSkin.Controls;
 using PAFProject.Design;
 using PAFProject.Models;
@@ -6,6 +7,7 @@ namespace PAFProject.Forms
 {
     public partial class Select_Product_Form : MaterialForm
     {
+        private readonly ProductDataAccess _productDataAccess;
         private decimal _currentAverageDailySales = 0;
         private PurchaseLimitGridViewDesign _gridViewDesign;
         private Main _mainForm;
@@ -18,6 +20,7 @@ namespace PAFProject.Forms
             doneButton.Click += new System.EventHandler(this.doneButton_Click);
             _gridViewDesign = new PurchaseLimitGridViewDesign(kryptonDataGridView1);
             limitSelectionDropdown.TextChanged += LimitSelectionDropdown_TextChanged;
+            _productDataAccess = new ProductDataAccess();
             InitializeEvents();
         }
         private void InitializeEvents()
@@ -95,10 +98,13 @@ namespace PAFProject.Forms
                     purchaseLimit = _gridViewDesign._dataGridView.Rows[0].Cells[2].Value.ToString();
                 }
 
+                // Get ManufacturerPartNumber for the selected product
+                string manufacturerPartNumber = _productDataAccess.GetManufacturerPartNumber(nameTextBox.Text);
+
                 var productData = new ProductData
                 {
                     Description = nameTextBox.Text,
-                    BarCode = "", 
+                    BarCode = manufacturerPartNumber, // Set the BarCode to ManufacturerPartNumber
                     AverageDaily = avgTextBox.Text,
                     QuantityOnHand = qtyTextBox.Text,
                     DaysToGo = daysTGTextBox.Text,
@@ -111,7 +117,6 @@ namespace PAFProject.Forms
 
                 ProductDataManager.AddProduct(productData);
                 this.Close();
-
             }
             catch (Exception ex)
             {
