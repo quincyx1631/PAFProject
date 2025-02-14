@@ -1,67 +1,70 @@
-﻿//AverageDailySalesComputation.cs
-using PAFProject.Models;
+﻿using PAFProject.Models;
 
-namespace PAFProject.Computations
+public class AverageDailySalesComputation
 {
-    public class AverageDailySalesComputation
+    private readonly SalesDataAccess _salesDataAccess;
+    private const int DAYS_IN_THREE_MONTHS = 90;
+    private const int DAYS_IN_SIX_MONTHS = 180;
+    private const int DAYS_IN_A_WEEK = 7;
+    private bool _isThreeMonths = true;
+
+    public AverageDailySalesComputation()
     {
-        private readonly SalesDataAccess _salesDataAccess;
-        private const int DAYS_IN_THREE_MONTHS = 90; // Approximate days in 3 months
-        private const int DAYS_IN_SIX_MONTHS = 180;
-        private const int DAYS_IN_A_WEEK = 7;
+        _salesDataAccess = new SalesDataAccess();
+    }
 
-        public AverageDailySalesComputation()
+    public void SetPeriod(bool isThreeMonths)
+    {
+        _isThreeMonths = isThreeMonths;
+    }
+
+    public decimal GetNumericAverageDailySales(string productDescription)
+    {
+        try
         {
-            _salesDataAccess = new SalesDataAccess();
+            var salesData = _salesDataAccess.GetSalesData(productDescription, _isThreeMonths);
+            var productSales = salesData.FirstOrDefault();
+            if (productSales == null)
+            {
+                return 0;
+            }
+
+            int daysInPeriod = _isThreeMonths ? DAYS_IN_THREE_MONTHS : DAYS_IN_SIX_MONTHS;
+            decimal averageDailySales = productSales.Quantity / (decimal)daysInPeriod;
+            return averageDailySales;
         }
-
-        public decimal GetNumericAverageDailySales(string productDescription)
+        catch (Exception ex)
         {
-            try
-            {
-                var salesData = _salesDataAccess.GetThreeMonthsSales(productDescription);
-                var productSales = salesData.FirstOrDefault();
-                if (productSales == null)
-                {
-                    return 0;
-                }
+            throw new Exception($"Error computing numeric average daily sales: {ex.Message}");
+        }
+    }
 
-                decimal averageDailySales = productSales.Quantity / (decimal)DAYS_IN_THREE_MONTHS;
-                return averageDailySales;
-            }
-            catch (Exception ex)
+    public string ComputeAverageDailySales(string productDescription)
+    {
+        try
+        {
+            decimal averageDailySales = GetNumericAverageDailySales(productDescription);
+            string periodText = _isThreeMonths ? "3 Months" : "6 Months";
+
+            if (averageDailySales >= 1)
             {
-                throw new Exception($"Error computing numeric average daily sales: {ex.Message}");
+                int roundedSales = (int)Math.Round(averageDailySales, 0);
+                return $"{roundedSales} Per Day ({periodText} Average: {averageDailySales:F2})";
+            }
+            else if (averageDailySales >= 1m / DAYS_IN_A_WEEK)
+            {
+                int weeklySales = (int)Math.Ceiling(averageDailySales * DAYS_IN_A_WEEK);
+                return $"{weeklySales} Per Week ({periodText} Average: {averageDailySales:F2})";
+            }
+            else
+            {
+                int daysPerSale = (int)Math.Ceiling(1 / averageDailySales);
+                return $"1 Per {daysPerSale} Days ({periodText} Average: {averageDailySales:F2})";
             }
         }
-
-        public string ComputeAverageDailySales(string productDescription)
+        catch (Exception ex)
         {
-            try
-            {
-                decimal averageDailySales = GetNumericAverageDailySales(productDescription);
-
-                if (averageDailySales >= 1)
-                {
-                    int roundedSales = (int)Math.Round(averageDailySales, 0);
-                    return $"{roundedSales} Per Day (Average: {averageDailySales:F2})";
-                }
-                else if (averageDailySales >= 1m / DAYS_IN_A_WEEK)
-                {
-                    // For weekly sales, still use ceiling to ensure minimum 1 per week if close
-                    int weeklySales = (int)Math.Ceiling(averageDailySales * DAYS_IN_A_WEEK);
-                    return $"{weeklySales} Per Week (Average: {averageDailySales:F2})";
-                }
-                else
-                {
-                    int daysPerSale = (int)Math.Ceiling(1 / averageDailySales);
-                    return $"1 Per {daysPerSale} Days (Average: {averageDailySales:F2})";
-                }
-            }
-            catch (Exception ex)
-            {
-                return "0";
-            }
+            return "0";
         }
     }
 }

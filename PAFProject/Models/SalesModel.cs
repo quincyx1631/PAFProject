@@ -12,11 +12,13 @@ namespace PAFProject.Models
     public class SalesDataAccess
     {
         private readonly DatabaseConnector _dbConnector;
+
         public SalesDataAccess()
         {
             _dbConnector = new DatabaseConnector();
         }
-        public List<SalesModel> GetThreeMonthsSales(string description)
+
+        public List<SalesModel> GetSalesData(string description, bool isThreeMonths)
         {
             List<SalesModel> salesData = new List<SalesModel>();
             using (var conn = _dbConnector.GetConnection())
@@ -24,10 +26,12 @@ namespace PAFProject.Models
                 try
                 {
                     conn.Open();
-                    string query = @"
+                    string tableName = isThreeMonths ? "three_months_sales" : "six_months_sales";
+                    string query = $@"
                     SELECT Description, Quantity 
-                    FROM yulitodb.three_months_sales 
+                    FROM yulitodb.{tableName} 
                     WHERE Description = @description";
+
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@description", description);
@@ -37,7 +41,6 @@ namespace PAFProject.Models
                             {
                                 decimal quantity = Convert.ToDecimal(reader["Quantity"]);
                                 Console.WriteLine($"Raw Quantity from DB: {quantity}"); // Debug line
-
                                 salesData.Add(new SalesModel
                                 {
                                     Description = reader["Description"].ToString(),

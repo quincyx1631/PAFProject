@@ -1,4 +1,5 @@
 ﻿//Select_Product_Form.cs
+using Krypton.Toolkit;
 using MaterialSkin.Controls;
 using PAFProject.Computations;
 using PAFProject.Design;
@@ -12,6 +13,7 @@ namespace PAFProject.Forms
         private PurchaseLimitGridViewDesign _gridViewDesign;
         private Main _mainForm;
         private ProductData _editingProduct;
+        private AverageDailySalesComputation _avgDailySalesComputation;
         private int? _editingIndex;
 
         public Select_Product_Form(Main mainForm, ProductData editingProduct = null, int? editingIndex = null)
@@ -20,6 +22,7 @@ namespace PAFProject.Forms
             _mainForm = mainForm;
             _editingProduct = editingProduct;
             _editingIndex = editingIndex;
+            _avgDailySalesComputation = new AverageDailySalesComputation();
 
             selectProductButton.Click += new System.EventHandler(this.selectProductButton_Click);
             doneButton.Click += new System.EventHandler(this.doneButton_Click);
@@ -41,7 +44,8 @@ namespace PAFProject.Forms
         }
         private void Select_Product_Form_Load(object sender, EventArgs e)
         {
-            MonthsDropdownManager.InitializeMonthlyDropdown(monthlyDropdown);
+            // Initialize dropdowns with the period change callback
+            MonthsDropdownManager.InitializeMonthlyDropdown(monthlyDropdown, UpdateAverageDailySalesCalculation);
             LimitSelectionDropdown.InitializeMonthlyDropdown(limitSelectionDropdown);
         }
         public void ClearAllTextBoxes()
@@ -302,6 +306,34 @@ namespace PAFProject.Forms
             else
             {
                 budgetAmountTextBox.Text = budget;
+            }
+        }
+        private void UpdateAverageDailySalesCalculation(bool isThreeMonths)
+        {
+            if (!string.IsNullOrEmpty(nameTextBox.Text))
+            {
+                _avgDailySalesComputation.SetPeriod(isThreeMonths);
+
+                string formattedAverageDailySales = _avgDailySalesComputation.ComputeAverageDailySales(nameTextBox.Text);
+                UpdateAverageDailySales(formattedAverageDailySales);
+
+                // Recalculate days to go and over/short stocks
+                if (decimal.TryParse(qtyTextBox.Text, out decimal quantityOnHand))
+                {
+                    decimal numericAverageDailySales = _avgDailySalesComputation.GetNumericAverageDailySales(nameTextBox.Text);
+
+                    var daysToGoComputation = new DaysToGoComputation();
+                    string daysToGo = daysToGoComputation.ComputeDaysToGo(quantityOnHand, numericAverageDailySales);
+                    UpdateDaysToGo(daysToGo);
+
+                    var overShortStocksComputation = new OverShortStocksComputation();
+                    string overShortStocks = overShortStocksComputation.ComputeOverShortStocks(
+                        decimal.Parse(daysToGo),
+                        quantityOnHand,
+                        numericAverageDailySales
+                    );
+                    UpdateOverShortStocks(overShortStocks);
+                }
             }
         }
         private void weeklyBudgetLabel_Click(object sender, EventArgs e)
