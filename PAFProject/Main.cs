@@ -1,11 +1,7 @@
-using MaterialSkin;
 using MaterialSkin.Controls;
-using System;
-using MySql.Data.MySqlClient;
-using PAFProject.Database;
+using PAFProject.Export;
 using PAFProject.Forms;
 using PAFProject.Models;
-using PAFProject.Export;
 
 namespace PAFProject
 {
@@ -42,6 +38,12 @@ namespace PAFProject
             kryptonDataGridView1.AutoGenerateColumns = false;
 
             kryptonDataGridView1.Rows.Clear();
+
+            // Center-align all column headers
+            foreach (DataGridViewColumn column in kryptonDataGridView1.Columns)
+            {
+                column.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            }
         }
         private void KryptonDataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -107,6 +109,19 @@ namespace PAFProject
                     product.Remarks
                 );
             }
+            // Align specific columns to the right
+            kryptonDataGridView1.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // AverageDaily
+            kryptonDataGridView1.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // QuantityOnHand
+            kryptonDataGridView1.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // DaysToGo
+            kryptonDataGridView1.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // OverShortStocks
+            kryptonDataGridView1.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // PurchaseLimit
+            kryptonDataGridView1.Columns[7].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // AveragePrice
+            kryptonDataGridView1.Columns[8].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // BudgetAmount
+
+            // Align remaining columns to the left
+            kryptonDataGridView1.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft; // Description
+            kryptonDataGridView1.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft; // BarCode
+            kryptonDataGridView1.Columns[9].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft; // Remarks
         }
 
         private void ProcessButton_Click(object sender, EventArgs e)
@@ -130,30 +145,6 @@ namespace PAFProject
             proposedBudgetTextBox.Text = totalBudget.ToString("N2");
         }
 
-        private void Main_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void weekLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void kryptonTextBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void kryptonTextBox3_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void selectButton_Click(object sender, EventArgs e)
         {
@@ -211,6 +202,31 @@ namespace PAFProject
         }
 
         private void kryptonPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void weekLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void kryptonTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void kryptonTextBox3_TextChanged(object sender, EventArgs e)
         {
 
         }

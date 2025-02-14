@@ -1,6 +1,4 @@
 ﻿//DaysToGoComputation.cs
-using System;
-
 namespace PAFProject.Computations
 {
     public class DaysToGoComputation

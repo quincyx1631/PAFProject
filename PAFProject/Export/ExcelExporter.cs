@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Windows.Forms;
-using ClosedXML.Excel;
+﻿using ClosedXML.Excel;
 
 namespace PAFProject.Export
 {
@@ -135,7 +132,7 @@ namespace PAFProject.Export
                     // ----------------------------
                     worksheet.Column(1).Width = 10;   // "No." Column
                     worksheet.Column(2).Width = 30;  // Description column
-                    worksheet.Column(2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;// Description column
+                    worksheet.Column(2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;// Description column
                     worksheet.Column(3).Width = 25;  // Bar Code column
                     worksheet.Column(4).Width = 25;  // Average Daily column
                     worksheet.Column(5).Width = 20;  // Qty On Hand

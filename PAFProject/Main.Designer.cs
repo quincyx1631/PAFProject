@@ -131,6 +131,7 @@
             shortOverTextBox.Name = "shortOverTextBox";
             shortOverTextBox.Size = new Size(143, 30);
             shortOverTextBox.TabIndex = 11;
+            shortOverTextBox.TextAlign = HorizontalAlignment.Right;
             shortOverTextBox.TextChanged += kryptonTextBox3_TextChanged;
             // 
             // proposedBudgetTextBox
@@ -140,6 +141,7 @@
             proposedBudgetTextBox.Name = "proposedBudgetTextBox";
             proposedBudgetTextBox.Size = new Size(143, 30);
             proposedBudgetTextBox.TabIndex = 10;
+            proposedBudgetTextBox.TextAlign = HorizontalAlignment.Right;
             // 
             // shortOverLabel
             // 
@@ -170,6 +172,7 @@
             weeklyBudgetTextBox.Name = "weeklyBudgetTextBox";
             weeklyBudgetTextBox.Size = new Size(143, 30);
             weeklyBudgetTextBox.TabIndex = 7;
+            weeklyBudgetTextBox.TextAlign = HorizontalAlignment.Right;
             // 
             // weeklyBudgetLabel
             // 
@@ -239,8 +242,9 @@
             // kryptonDataGridView1
             // 
             kryptonDataGridView1.BorderStyle = BorderStyle.None;
+            kryptonDataGridView1.ColumnHeadersHeight = 30;
             kryptonDataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4, Column5, Column6, Column7, Column8, Column9, Column10 });
-            kryptonDataGridView1.Location = new Point(3, 0);
+            kryptonDataGridView1.Location = new Point(2, 0);
             kryptonDataGridView1.Name = "kryptonDataGridView1";
             kryptonDataGridView1.ReadOnly = true;
             kryptonDataGridView1.RowHeadersVisible = false;
@@ -249,7 +253,7 @@
             // 
             // Column1
             // 
-            Column1.HeaderText = "Description";
+            Column1.HeaderText = "DESCRIPTION";
             Column1.Name = "Column1";
             Column1.ReadOnly = true;
             Column1.Width = 200;
@@ -257,62 +261,62 @@
             // Column2
             // 
             Column2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Column2.HeaderText = "Bar Code";
+            Column2.HeaderText = "BAR CODE";
             Column2.Name = "Column2";
             Column2.ReadOnly = true;
             // 
             // Column3
             // 
             Column3.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Column3.HeaderText = "Average Daily";
+            Column3.HeaderText = "AVERAGE DAILY";
             Column3.Name = "Column3";
             Column3.ReadOnly = true;
             // 
             // Column4
             // 
             Column4.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Column4.HeaderText = "Qty On Hand";
+            Column4.HeaderText = "QTY ON HAND";
             Column4.Name = "Column4";
             Column4.ReadOnly = true;
             // 
             // Column5
             // 
             Column5.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Column5.HeaderText = "Days To Go";
+            Column5.HeaderText = "DAYS TO GO";
             Column5.Name = "Column5";
             Column5.ReadOnly = true;
             // 
             // Column6
             // 
             Column6.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Column6.HeaderText = "Over/Short Stocks";
+            Column6.HeaderText = "OVER SHORT STOCKS";
             Column6.Name = "Column6";
             Column6.ReadOnly = true;
             // 
             // Column7
             // 
             Column7.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Column7.HeaderText = "Purchase Limit";
+            Column7.HeaderText = "PURCHASE LIMIT";
             Column7.Name = "Column7";
             Column7.ReadOnly = true;
             // 
             // Column8
             // 
             Column8.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Column8.HeaderText = "Average Price";
+            Column8.HeaderText = "AVERAGE PRICE";
             Column8.Name = "Column8";
             Column8.ReadOnly = true;
             // 
             // Column9
             // 
             Column9.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Column9.HeaderText = "Budget Amount";
+            Column9.HeaderText = "BUDGET AMOUNT";
             Column9.Name = "Column9";
             Column9.ReadOnly = true;
             // 
             // Column10
             // 
-            Column10.HeaderText = "Remarks";
+            Column10.HeaderText = "REMARKS";
             Column10.Name = "Column10";
             Column10.ReadOnly = true;
             // 
@@ -352,6 +356,10 @@
         private Label weeklyBudgetLabel;
         private Krypton.Toolkit.KryptonTextBox shortOverTextBox;
         private Krypton.Toolkit.KryptonTextBox proposedBudgetTextBox;
+        private Button addBranch;
+        private Krypton.Toolkit.KryptonDropButton branchSelect;
+        private Label branchName;
+        private Krypton.Toolkit.KryptonTextBox branchNameLabel;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
         private DataGridViewTextBoxColumn Column3;
@@ -362,9 +370,5 @@
         private DataGridViewTextBoxColumn Column8;
         private DataGridViewTextBoxColumn Column9;
         private DataGridViewTextBoxColumn Column10;
-        private Button addBranch;
-        private Krypton.Toolkit.KryptonDropButton branchSelect;
-        private Label branchName;
-        private Krypton.Toolkit.KryptonTextBox branchNameLabel;
     }
 }

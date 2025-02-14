@@ -1,5 +1,4 @@
-﻿using System;
-namespace PAFProject.Computations
+﻿namespace PAFProject.Computations
 {
     public class BudgetComputation
     {

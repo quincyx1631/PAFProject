@@ -1,8 +1,6 @@
 ﻿// ProductManager.cs
-using System;
-using System.Data;
-using System.Windows.Forms;
 using PAFProject.Models;
+using System.Data;
 
 namespace PAFProject.Class
 {
@@ -41,6 +39,11 @@ namespace PAFProject.Class
 
             // Set minimum width for the SalesDesc column
             grid.Columns["SalesDesc"].MinimumWidth = 200;
+
+            // Align text in columns
+            grid.Columns["SalesDesc"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft; // Left-aligned
+            grid.Columns["QuantityOnHand"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // Right-aligned
+            grid.Columns["AverageCost"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // Right-aligned
         }
     }
 }

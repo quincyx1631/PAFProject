@@ -1,8 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
 using PAFProject.Database;
-using System;
-using System.Collections.Generic;
-using System.Data;
 
 namespace PAFProject.Models
 {

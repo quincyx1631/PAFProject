@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace PAFProject.Models
+﻿namespace PAFProject.Models
 {
     public class ProductData
     {

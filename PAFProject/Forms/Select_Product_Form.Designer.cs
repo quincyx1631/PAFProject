@@ -140,7 +140,7 @@
             kryptonDataGridView1.ClipboardCopyMode = DataGridViewClipboardCopyMode.Disable;
             kryptonDataGridView1.ColumnHeadersHeight = 30;
             kryptonDataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3 });
-            kryptonDataGridView1.Location = new Point(193, 223);
+            kryptonDataGridView1.Location = new Point(193, 256);
             kryptonDataGridView1.MultiSelect = false;
             kryptonDataGridView1.Name = "kryptonDataGridView1";
             kryptonDataGridView1.RowHeadersVisible = false;
@@ -174,7 +174,7 @@
             // 
             // limitSelectionDropdown
             // 
-            limitSelectionDropdown.Location = new Point(15, 254);
+            limitSelectionDropdown.Location = new Point(15, 287);
             limitSelectionDropdown.Name = "limitSelectionDropdown";
             limitSelectionDropdown.Size = new Size(130, 30);
             limitSelectionDropdown.TabIndex = 27;
@@ -186,7 +186,7 @@
             // 
             limitSelectionLabel.BackColor = Color.Transparent;
             limitSelectionLabel.Font = new Font("Segoe UI", 12F);
-            limitSelectionLabel.Location = new Point(15, 223);
+            limitSelectionLabel.Location = new Point(15, 256);
             limitSelectionLabel.Name = "limitSelectionLabel";
             limitSelectionLabel.Size = new Size(172, 28);
             limitSelectionLabel.TabIndex = 26;
@@ -195,17 +195,17 @@
             // 
             // remarksTextBox
             // 
-            remarksTextBox.Location = new Point(193, 493);
+            remarksTextBox.Location = new Point(193, 415);
             remarksTextBox.Multiline = true;
             remarksTextBox.Name = "remarksTextBox";
-            remarksTextBox.Size = new Size(279, 30);
+            remarksTextBox.Size = new Size(279, 96);
             remarksTextBox.TabIndex = 25;
             // 
             // remarksLabel
             // 
             remarksLabel.BackColor = Color.Transparent;
             remarksLabel.Font = new Font("Segoe UI", 12F);
-            remarksLabel.Location = new Point(15, 493);
+            remarksLabel.Location = new Point(15, 415);
             remarksLabel.Name = "remarksLabel";
             remarksLabel.Size = new Size(172, 28);
             remarksLabel.TabIndex = 24;
@@ -214,7 +214,7 @@
             // 
             // budgetAmountTextBox
             // 
-            budgetAmountTextBox.Location = new Point(193, 336);
+            budgetAmountTextBox.Location = new Point(193, 369);
             budgetAmountTextBox.Multiline = true;
             budgetAmountTextBox.Name = "budgetAmountTextBox";
             budgetAmountTextBox.Size = new Size(279, 30);
@@ -226,7 +226,7 @@
             // 
             budgetAmountLabel.BackColor = Color.Transparent;
             budgetAmountLabel.Font = new Font("Segoe UI", 12F);
-            budgetAmountLabel.Location = new Point(15, 336);
+            budgetAmountLabel.Location = new Point(15, 369);
             budgetAmountLabel.Name = "budgetAmountLabel";
             budgetAmountLabel.Size = new Size(172, 28);
             budgetAmountLabel.TabIndex = 22;
@@ -236,7 +236,7 @@
             // 
             // AVGPriceTextBox
             // 
-            AVGPriceTextBox.Location = new Point(193, 296);
+            AVGPriceTextBox.Location = new Point(193, 329);
             AVGPriceTextBox.Multiline = true;
             AVGPriceTextBox.Name = "AVGPriceTextBox";
             AVGPriceTextBox.Size = new Size(279, 30);
@@ -247,7 +247,7 @@
             // 
             AVGPriceLabel.BackColor = Color.Transparent;
             AVGPriceLabel.Font = new Font("Segoe UI", 12F);
-            AVGPriceLabel.Location = new Point(15, 296);
+            AVGPriceLabel.Location = new Point(15, 329);
             AVGPriceLabel.Name = "AVGPriceLabel";
             AVGPriceLabel.Size = new Size(172, 28);
             AVGPriceLabel.TabIndex = 20;
@@ -257,7 +257,7 @@
             // 
             // overShortSTextBox
             // 
-            overShortSTextBox.Location = new Point(193, 176);
+            overShortSTextBox.Location = new Point(193, 209);
             overShortSTextBox.Multiline = true;
             overShortSTextBox.Name = "overShortSTextBox";
             overShortSTextBox.Size = new Size(279, 30);
@@ -268,7 +268,7 @@
             // 
             stocksLabel.BackColor = Color.Transparent;
             stocksLabel.Font = new Font("Segoe UI", 12F);
-            stocksLabel.Location = new Point(15, 176);
+            stocksLabel.Location = new Point(15, 209);
             stocksLabel.Name = "stocksLabel";
             stocksLabel.Size = new Size(172, 28);
             stocksLabel.TabIndex = 18;
@@ -278,7 +278,7 @@
             // 
             // daysTGTextBox
             // 
-            daysTGTextBox.Location = new Point(193, 136);
+            daysTGTextBox.Location = new Point(193, 169);
             daysTGTextBox.Multiline = true;
             daysTGTextBox.Name = "daysTGTextBox";
             daysTGTextBox.Size = new Size(279, 30);
@@ -289,7 +289,7 @@
             // 
             DTGLabel.BackColor = Color.Transparent;
             DTGLabel.Font = new Font("Segoe UI", 12F);
-            DTGLabel.Location = new Point(15, 136);
+            DTGLabel.Location = new Point(15, 169);
             DTGLabel.Name = "DTGLabel";
             DTGLabel.Size = new Size(127, 28);
             DTGLabel.TabIndex = 16;
@@ -300,7 +300,7 @@
             // 
             qtyOHLabel.BackColor = Color.Transparent;
             qtyOHLabel.Font = new Font("Segoe UI", 12F);
-            qtyOHLabel.Location = new Point(15, 96);
+            qtyOHLabel.Location = new Point(15, 129);
             qtyOHLabel.Name = "qtyOHLabel";
             qtyOHLabel.Size = new Size(127, 28);
             qtyOHLabel.TabIndex = 15;
@@ -328,7 +328,7 @@
             // 
             // qtyTextBox
             // 
-            qtyTextBox.Location = new Point(193, 96);
+            qtyTextBox.Location = new Point(193, 129);
             qtyTextBox.Multiline = true;
             qtyTextBox.Name = "qtyTextBox";
             qtyTextBox.Size = new Size(279, 30);
@@ -338,7 +338,7 @@
             // 
             // avgTextBox
             // 
-            avgTextBox.Location = new Point(193, 56);
+            avgTextBox.Location = new Point(193, 89);
             avgTextBox.Multiline = true;
             avgTextBox.Name = "avgTextBox";
             avgTextBox.Size = new Size(279, 30);
@@ -351,7 +351,7 @@
             nameTextBox.Multiline = true;
             nameTextBox.Name = "nameTextBox";
             nameTextBox.ReadOnly = true;
-            nameTextBox.Size = new Size(279, 30);
+            nameTextBox.Size = new Size(279, 67);
             nameTextBox.TabIndex = 10;
             nameTextBox.TextChanged += nameTextBox_TextChanged;
             // 
@@ -359,7 +359,7 @@
             // 
             avgLabel.BackColor = Color.Transparent;
             avgLabel.Font = new Font("Segoe UI", 12F);
-            avgLabel.Location = new Point(15, 56);
+            avgLabel.Location = new Point(15, 89);
             avgLabel.Name = "avgLabel";
             avgLabel.Size = new Size(127, 28);
             avgLabel.TabIndex = 8;
@@ -370,11 +370,11 @@
             // 
             nameLabel.BackColor = Color.Transparent;
             nameLabel.Font = new Font("Segoe UI", 12F);
-            nameLabel.Location = new Point(15, 16);
+            nameLabel.Location = new Point(15, 18);
             nameLabel.Name = "nameLabel";
             nameLabel.Size = new Size(127, 28);
             nameLabel.TabIndex = 7;
-            nameLabel.Text = "NAME: ";
+            nameLabel.Text = "DESCRIPTION: ";
             nameLabel.TextAlign = ContentAlignment.MiddleLeft;
             nameLabel.Click += weeklyBudgetLabel_Click;
             // 

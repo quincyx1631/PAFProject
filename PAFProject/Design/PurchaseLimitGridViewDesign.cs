@@ -1,6 +1,5 @@
 ﻿using Krypton.Toolkit;
 using PAFProject.Computations;
-using System.Numerics;
 
 public class PurchaseLimitGridViewDesign
 {
@@ -10,6 +9,8 @@ public class PurchaseLimitGridViewDesign
     private readonly PurchaseLimitComputation _purchaseLimitComputation;
     public decimal totalBudget = 0;
     private string _userInput = "0";
+    private bool _isEditingExisting = false;
+    private string _originalSystemValue = "0";
 
     public event Action<string> OnBudgetCalculated;
 
@@ -47,6 +48,10 @@ public class PurchaseLimitGridViewDesign
             _dataGridView.Columns.Add(CreateColumn("Column2", "User"));
             _dataGridView.Columns.Add(CreateColumn("Column3", "Total"));
         }
+        // Align text in all columns to the right
+        _dataGridView.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+        _dataGridView.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+        _dataGridView.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
         // Configure column properties
         _dataGridView.Columns[0].ReadOnly = true;  // System column
@@ -65,7 +70,19 @@ public class PurchaseLimitGridViewDesign
         _dataGridView.LostFocus += KryptonDataGridView1_LostFocus;
         _dataGridView.KeyDown += KryptonDataGridView1_KeyDown;
     }
-
+    public void InitializeWithExistingData(string purchaseLimit)
+    {
+        if (_dataGridView.Rows.Count > 0)
+        {
+            // Set the existing purchase limit as the system value
+            _dataGridView.Rows[0].Cells[0].Value = purchaseLimit;
+            // Set user input to 0 initially
+            _dataGridView.Rows[0].Cells[1].Value = "0";
+            // Set total to match the purchase limit initially
+            _dataGridView.Rows[0].Cells[2].Value = purchaseLimit;
+            _userInput = "0"; // Reset user input
+        }
+    }
     private void KryptonDataGridView1_KeyDown(object sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Enter)
@@ -166,13 +183,20 @@ public class PurchaseLimitGridViewDesign
     {
         try
         {
+            // Store current user input
+            string currentUserInput = _dataGridView.Rows[0].Cells[1].Value?.ToString() ?? "0";
+
+            // Calculate the new purchase limit
             int days = _purchaseLimitComputation.GetDaysFromSelection(limitSelectionText);
-            int purchaseLimit = _purchaseLimitComputation.ComputePurchaseLimit(averageDailySales, days);
-            _dataGridView.Rows[0].Cells[0].Value = purchaseLimit.ToString();
+            int newPurchaseLimit = _purchaseLimitComputation.ComputePurchaseLimit(averageDailySales, days);
 
-            // Preserve user input
-            _dataGridView.Rows[0].Cells[1].Value = _userInput;
+            // Update system value with new purchase limit
+            _dataGridView.Rows[0].Cells[0].Value = newPurchaseLimit.ToString();
 
+            // Restore user input
+            _dataGridView.Rows[0].Cells[1].Value = currentUserInput;
+
+            // Update total
             UpdateTotal();
         }
         catch
