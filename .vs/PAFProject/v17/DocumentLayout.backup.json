@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\admin\\source\\repos\\PAFProject\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\export\\excelexporter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\export\\excelexporter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\forms\\select_product_form.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\forms\\select_product_form.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\forms\\product_list_form.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\forms\\product_list_form.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,29 +30,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Main.cs",
+              "DocumentIndex": 2,
+              "Title": "Main.cs [Design]",
               "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Main.cs",
               "RelativeDocumentMoniker": "PAFProject\\Main.cs",
-              "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Main.cs",
-              "RelativeToolTip": "PAFProject\\Main.cs",
-              "ViewState": "AgIAAHoAAAAAAAAAAAAkwIcAAAAJAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Main.cs [Design]",
+              "RelativeToolTip": "PAFProject\\Main.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-14T05:28:59.588Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-17T00:55:52.828Z",
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ExcelExporter.cs",
-              "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Export\\ExcelExporter.cs",
-              "RelativeDocumentMoniker": "PAFProject\\Export\\ExcelExporter.cs",
-              "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Export\\ExcelExporter.cs",
-              "RelativeToolTip": "PAFProject\\Export\\ExcelExporter.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAswD0AAAAVAAAAAAAAAA==",
+              "Title": "Select_Product_Form.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Forms\\Select_Product_Form.cs",
+              "RelativeDocumentMoniker": "PAFProject\\Forms\\Select_Product_Form.cs",
+              "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Forms\\Select_Product_Form.cs [Design]",
+              "RelativeToolTip": "PAFProject\\Forms\\Select_Product_Form.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-14T05:21:44.336Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-17T00:54:08.414Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Product_List_Form.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Forms\\Product_List_Form.cs",
+              "RelativeDocumentMoniker": "PAFProject\\Forms\\Product_List_Form.cs",
+              "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Forms\\Product_List_Form.cs [Design]",
+              "RelativeToolTip": "PAFProject\\Forms\\Product_List_Form.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-17T00:54:05.459Z",
+              "EditorCaption": " [Design]"
             }
           ]
         }

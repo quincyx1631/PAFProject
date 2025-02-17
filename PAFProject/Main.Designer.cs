@@ -49,6 +49,7 @@
             Column1 = new DataGridViewTextBoxColumn();
             Column2 = new DataGridViewTextBoxColumn();
             Column3 = new DataGridViewTextBoxColumn();
+            Column11 = new DataGridViewTextBoxColumn();
             Column4 = new DataGridViewTextBoxColumn();
             Column5 = new DataGridViewTextBoxColumn();
             Column6 = new DataGridViewTextBoxColumn();
@@ -129,6 +130,7 @@
             shortOverTextBox.Location = new Point(938, 81);
             shortOverTextBox.Multiline = true;
             shortOverTextBox.Name = "shortOverTextBox";
+            shortOverTextBox.ReadOnly = true;
             shortOverTextBox.Size = new Size(143, 30);
             shortOverTextBox.TabIndex = 11;
             shortOverTextBox.TextAlign = HorizontalAlignment.Right;
@@ -139,6 +141,7 @@
             proposedBudgetTextBox.Location = new Point(938, 45);
             proposedBudgetTextBox.Multiline = true;
             proposedBudgetTextBox.Name = "proposedBudgetTextBox";
+            proposedBudgetTextBox.ReadOnly = true;
             proposedBudgetTextBox.Size = new Size(143, 30);
             proposedBudgetTextBox.TabIndex = 10;
             proposedBudgetTextBox.TextAlign = HorizontalAlignment.Right;
@@ -243,7 +246,7 @@
             // 
             kryptonDataGridView1.BorderStyle = BorderStyle.None;
             kryptonDataGridView1.ColumnHeadersHeight = 30;
-            kryptonDataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4, Column5, Column6, Column7, Column8, Column9, Column10 });
+            kryptonDataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column11, Column4, Column5, Column6, Column7, Column8, Column9, Column10 });
             kryptonDataGridView1.Location = new Point(2, 0);
             kryptonDataGridView1.Name = "kryptonDataGridView1";
             kryptonDataGridView1.ReadOnly = true;
@@ -271,6 +274,13 @@
             Column3.HeaderText = "AVERAGE DAILY";
             Column3.Name = "Column3";
             Column3.ReadOnly = true;
+            // 
+            // Column11
+            // 
+            Column11.HeaderText = "PREFERRED SUPPLIER";
+            Column11.Name = "Column11";
+            Column11.ReadOnly = true;
+            Column11.Width = 120;
             // 
             // Column4
             // 
@@ -363,6 +373,7 @@
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
         private DataGridViewTextBoxColumn Column3;
+        private DataGridViewTextBoxColumn Column11;
         private DataGridViewTextBoxColumn Column4;
         private DataGridViewTextBoxColumn Column5;
         private DataGridViewTextBoxColumn Column6;

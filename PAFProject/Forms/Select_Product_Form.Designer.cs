@@ -57,12 +57,14 @@
             nameTextBox = new Krypton.Toolkit.KryptonTextBox();
             avgLabel = new Label();
             nameLabel = new Label();
+            kryptonDataGridView2 = new Krypton.Toolkit.KryptonDataGridView();
             ((System.ComponentModel.ISupportInitialize)kryptonPanel1).BeginInit();
             kryptonPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)kryptonSeparator1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)kryptonPanel2).BeginInit();
             kryptonPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)kryptonDataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)kryptonDataGridView2).BeginInit();
             SuspendLayout();
             // 
             // kryptonPanel1
@@ -72,14 +74,14 @@
             kryptonPanel1.Controls.Add(kryptonSeparator1);
             kryptonPanel1.Location = new Point(3, 63);
             kryptonPanel1.Name = "kryptonPanel1";
-            kryptonPanel1.Size = new Size(844, 71);
+            kryptonPanel1.Size = new Size(945, 71);
             kryptonPanel1.TabIndex = 0;
             // 
             // monthsSelectionLabel
             // 
             monthsSelectionLabel.BackColor = Color.Transparent;
             monthsSelectionLabel.Font = new Font("Segoe UI", 12F);
-            monthsSelectionLabel.Location = new Point(617, 12);
+            monthsSelectionLabel.Location = new Point(714, 12);
             monthsSelectionLabel.Name = "monthsSelectionLabel";
             monthsSelectionLabel.Size = new Size(85, 28);
             monthsSelectionLabel.TabIndex = 8;
@@ -88,7 +90,7 @@
             // 
             // monthlyDropdown
             // 
-            monthlyDropdown.Location = new Point(708, 12);
+            monthlyDropdown.Location = new Point(805, 12);
             monthlyDropdown.Name = "monthlyDropdown";
             monthlyDropdown.Size = new Size(130, 30);
             monthlyDropdown.TabIndex = 1;
@@ -99,11 +101,12 @@
             // 
             kryptonSeparator1.Location = new Point(12, 48);
             kryptonSeparator1.Name = "kryptonSeparator1";
-            kryptonSeparator1.Size = new Size(826, 16);
+            kryptonSeparator1.Size = new Size(923, 16);
             kryptonSeparator1.TabIndex = 0;
             // 
             // kryptonPanel2
             // 
+            kryptonPanel2.Controls.Add(kryptonDataGridView2);
             kryptonPanel2.Controls.Add(kryptonDataGridView1);
             kryptonPanel2.Controls.Add(limitSelectionDropdown);
             kryptonPanel2.Controls.Add(limitSelectionLabel);
@@ -127,7 +130,7 @@
             kryptonPanel2.Controls.Add(nameLabel);
             kryptonPanel2.Location = new Point(3, 133);
             kryptonPanel2.Name = "kryptonPanel2";
-            kryptonPanel2.Size = new Size(844, 565);
+            kryptonPanel2.Size = new Size(945, 565);
             kryptonPanel2.TabIndex = 1;
             // 
             // kryptonDataGridView1
@@ -217,6 +220,7 @@
             budgetAmountTextBox.Location = new Point(193, 369);
             budgetAmountTextBox.Multiline = true;
             budgetAmountTextBox.Name = "budgetAmountTextBox";
+            budgetAmountTextBox.ReadOnly = true;
             budgetAmountTextBox.Size = new Size(279, 30);
             budgetAmountTextBox.TabIndex = 23;
             budgetAmountTextBox.TextAlign = HorizontalAlignment.Right;
@@ -239,6 +243,7 @@
             AVGPriceTextBox.Location = new Point(193, 329);
             AVGPriceTextBox.Multiline = true;
             AVGPriceTextBox.Name = "AVGPriceTextBox";
+            AVGPriceTextBox.ReadOnly = true;
             AVGPriceTextBox.Size = new Size(279, 30);
             AVGPriceTextBox.TabIndex = 21;
             AVGPriceTextBox.TextAlign = HorizontalAlignment.Right;
@@ -260,6 +265,7 @@
             overShortSTextBox.Location = new Point(193, 209);
             overShortSTextBox.Multiline = true;
             overShortSTextBox.Name = "overShortSTextBox";
+            overShortSTextBox.ReadOnly = true;
             overShortSTextBox.Size = new Size(279, 30);
             overShortSTextBox.TabIndex = 19;
             overShortSTextBox.TextAlign = HorizontalAlignment.Right;
@@ -281,6 +287,7 @@
             daysTGTextBox.Location = new Point(193, 169);
             daysTGTextBox.Multiline = true;
             daysTGTextBox.Name = "daysTGTextBox";
+            daysTGTextBox.ReadOnly = true;
             daysTGTextBox.Size = new Size(279, 30);
             daysTGTextBox.TabIndex = 17;
             daysTGTextBox.TextAlign = HorizontalAlignment.Right;
@@ -310,7 +317,7 @@
             // doneButton
             // 
             doneButton.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            doneButton.Location = new Point(735, 515);
+            doneButton.Location = new Point(835, 515);
             doneButton.Name = "doneButton";
             doneButton.Size = new Size(100, 40);
             doneButton.TabIndex = 14;
@@ -331,6 +338,7 @@
             qtyTextBox.Location = new Point(193, 129);
             qtyTextBox.Multiline = true;
             qtyTextBox.Name = "qtyTextBox";
+            qtyTextBox.ReadOnly = true;
             qtyTextBox.Size = new Size(279, 30);
             qtyTextBox.TabIndex = 12;
             qtyTextBox.TextAlign = HorizontalAlignment.Right;
@@ -341,6 +349,7 @@
             avgTextBox.Location = new Point(193, 89);
             avgTextBox.Multiline = true;
             avgTextBox.Name = "avgTextBox";
+            avgTextBox.ReadOnly = true;
             avgTextBox.Size = new Size(279, 30);
             avgTextBox.TabIndex = 11;
             avgTextBox.TextChanged += avgTextBox_TextChanged;
@@ -378,12 +387,20 @@
             nameLabel.TextAlign = ContentAlignment.MiddleLeft;
             nameLabel.Click += weeklyBudgetLabel_Click;
             // 
+            // kryptonDataGridView2
+            // 
+            kryptonDataGridView2.BorderStyle = BorderStyle.None;
+            kryptonDataGridView2.Location = new Point(540, 89);
+            kryptonDataGridView2.Name = "kryptonDataGridView2";
+            kryptonDataGridView2.Size = new Size(368, 338);
+            kryptonDataGridView2.TabIndex = 31;
+            // 
             // Select_Product_Form
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(850, 700);
+            ClientSize = new Size(950, 700);
             Controls.Add(kryptonPanel1);
             Controls.Add(kryptonPanel2);
             MaximizeBox = false;
@@ -401,6 +418,7 @@
             kryptonPanel2.ResumeLayout(false);
             kryptonPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)kryptonDataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)kryptonDataGridView2).EndInit();
             ResumeLayout(false);
         }
 
@@ -435,5 +453,6 @@
         private DataGridViewTextBoxColumn Column3;
         private Krypton.Toolkit.KryptonDropButton limitSelectionDropdown;
         private Label limitSelectionLabel;
+        private Krypton.Toolkit.KryptonDataGridView kryptonDataGridView2;
     }
 }
