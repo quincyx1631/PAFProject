@@ -12,6 +12,7 @@ namespace PAFProject.Models
         public string ManufacturerPartNumber { get; set; }
         public decimal QuantityOnHand { get; set; }
         public decimal AverageCost { get; set; }
+
     }
 
     public class ProductDataAccess
@@ -47,6 +48,33 @@ namespace PAFProject.Models
                 }
             }
         }
+
+        public string GetPrefVendorRefFullName(string salesDesc)
+        {
+            using (var conn = _dbConnector.GetConnection())
+            {
+                try
+                {
+                    conn.Open();
+                    string query = @"
+                        SELECT PrefVendorRef_FullName 
+                        FROM item_inventory_active 
+                        WHERE SalesDesc = @salesDesc";
+
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@salesDesc", salesDesc);
+                        var result = cmd.ExecuteScalar();
+                        return result?.ToString() ?? string.Empty;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Error fetching PrefVendorRef_FullName: {ex.Message}");
+                }
+            }
+        }
+
         public (DataTable DataTable, int TotalPages, List<decimal> QuantityOnHandList) GetInventoryData(string searchTerm, int currentPage, int recordsPerPage)
         {
             using (var conn = _dbConnector.GetConnection())

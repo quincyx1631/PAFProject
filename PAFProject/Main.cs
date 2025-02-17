@@ -25,6 +25,10 @@ namespace PAFProject
 
             // Add double-click event handler
             kryptonDataGridView1.CellDoubleClick += KryptonDataGridView1_CellDoubleClick;
+
+            // Event handlers for row selection and deletion
+            kryptonDataGridView1.CellClick += KryptonDataGridView1_CellClick;
+            deleteButton.Click += DeleteButton_Click;
         }
 
         private void InitializeDataGridView()
@@ -56,13 +60,14 @@ namespace PAFProject
                     Description = kryptonDataGridView1.Rows[e.RowIndex].Cells[0].Value?.ToString(),
                     BarCode = kryptonDataGridView1.Rows[e.RowIndex].Cells[1].Value?.ToString(),
                     AverageDaily = kryptonDataGridView1.Rows[e.RowIndex].Cells[2].Value?.ToString(),
-                    QuantityOnHand = kryptonDataGridView1.Rows[e.RowIndex].Cells[3].Value?.ToString(),
-                    DaysToGo = kryptonDataGridView1.Rows[e.RowIndex].Cells[4].Value?.ToString(),
-                    OverShortStocks = kryptonDataGridView1.Rows[e.RowIndex].Cells[5].Value?.ToString(),
-                    PurchaseLimit = kryptonDataGridView1.Rows[e.RowIndex].Cells[6].Value?.ToString(),
-                    AveragePrice = kryptonDataGridView1.Rows[e.RowIndex].Cells[7].Value?.ToString(),
-                    BudgetAmount = kryptonDataGridView1.Rows[e.RowIndex].Cells[8].Value?.ToString(),
-                    Remarks = kryptonDataGridView1.Rows[e.RowIndex].Cells[9].Value?.ToString()
+                    PrefVendor = kryptonDataGridView1.Rows[e.RowIndex].Cells[3].Value?.ToString(),
+                    QuantityOnHand = kryptonDataGridView1.Rows[e.RowIndex].Cells[4].Value?.ToString(),
+                    DaysToGo = kryptonDataGridView1.Rows[e.RowIndex].Cells[5].Value?.ToString(),
+                    OverShortStocks = kryptonDataGridView1.Rows[e.RowIndex].Cells[6].Value?.ToString(),
+                    PurchaseLimit = kryptonDataGridView1.Rows[e.RowIndex].Cells[7].Value?.ToString(),
+                    AveragePrice = kryptonDataGridView1.Rows[e.RowIndex].Cells[8].Value?.ToString(),
+                    BudgetAmount = kryptonDataGridView1.Rows[e.RowIndex].Cells[9].Value?.ToString(),
+                    Remarks = kryptonDataGridView1.Rows[e.RowIndex].Cells[10].Value?.ToString()
                 };
 
                 Select_Product_Form selectProductForm = new Select_Product_Form(this, currentProduct, selectedRowIndex);
@@ -85,13 +90,14 @@ namespace PAFProject
                 row.Cells[0].Value = product.Description;
                 row.Cells[1].Value = product.BarCode;
                 row.Cells[2].Value = product.AverageDaily;
-                row.Cells[3].Value = product.QuantityOnHand;
-                row.Cells[4].Value = product.DaysToGo;
-                row.Cells[5].Value = product.OverShortStocks;
-                row.Cells[6].Value = product.PurchaseLimit;
-                row.Cells[7].Value = product.AveragePrice;
-                row.Cells[8].Value = product.BudgetAmount;
-                row.Cells[9].Value = product.Remarks;
+                row.Cells[3].Value = product.PrefVendor;
+                row.Cells[4].Value = product.QuantityOnHand;
+                row.Cells[5].Value = product.DaysToGo;
+                row.Cells[6].Value = product.OverShortStocks;
+                row.Cells[7].Value = product.PurchaseLimit;
+                row.Cells[8].Value = product.AveragePrice;
+                row.Cells[9].Value = product.BudgetAmount;
+                row.Cells[10].Value = product.Remarks;
             }
             else
             {
@@ -100,6 +106,7 @@ namespace PAFProject
                     product.Description,
                     product.BarCode,
                     product.AverageDaily,
+                    product.PrefVendor,
                     product.QuantityOnHand,
                     product.DaysToGo,
                     product.OverShortStocks,
@@ -111,17 +118,18 @@ namespace PAFProject
             }
             // Align specific columns to the right
             kryptonDataGridView1.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // AverageDaily
-            kryptonDataGridView1.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // QuantityOnHand
-            kryptonDataGridView1.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // DaysToGo
-            kryptonDataGridView1.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // OverShortStocks
-            kryptonDataGridView1.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // PurchaseLimit
-            kryptonDataGridView1.Columns[7].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // AveragePrice
-            kryptonDataGridView1.Columns[8].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // BudgetAmount
+            kryptonDataGridView1.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // QuantityOnHand
+            kryptonDataGridView1.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // DaysToGo
+            kryptonDataGridView1.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // OverShortStocks
+            kryptonDataGridView1.Columns[7].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // PurchaseLimit
+            kryptonDataGridView1.Columns[8].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // AveragePrice
+            kryptonDataGridView1.Columns[9].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // BudgetAmount
 
             // Align remaining columns to the left
             kryptonDataGridView1.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft; // Description
             kryptonDataGridView1.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft; // BarCode
-            kryptonDataGridView1.Columns[9].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft; // Remarks
+            kryptonDataGridView1.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft; //Pref Vendor
+            kryptonDataGridView1.Columns[10].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft; // Remarks
         }
 
         private void ProcessButton_Click(object sender, EventArgs e)
@@ -200,7 +208,28 @@ namespace PAFProject
                 shortOverTextBox.Text = weeklyBudgetTextBox.Text;
             }
         }
-
+        private void KryptonDataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                selectedRowIndex = e.RowIndex;
+                deleteButton.Visible = true; // Show the delete button when a row is selected
+            }
+            else
+            {
+                selectedRowIndex = -1;
+                deleteButton.Visible = false; // Hide the delete button when no row is selected
+            }
+        }
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            if (selectedRowIndex >= 0 && selectedRowIndex < kryptonDataGridView1.Rows.Count)
+            {
+                kryptonDataGridView1.Rows.RemoveAt(selectedRowIndex);
+                selectedRowIndex = -1;
+                deleteButton.Visible = false; // Hide delete button after deletion
+            }
+        }
         private void kryptonPanel1_Paint(object sender, PaintEventArgs e)
         {
 

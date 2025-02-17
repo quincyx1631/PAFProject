@@ -43,7 +43,7 @@ public class AverageDailySalesComputation
     {
         try
         {
-            decimal averageDailySales = GetNumericAverageDailySales(productDescription);
+            decimal averageDailySales = GetNumericAverageDailySales(productDescription); // Keep original logic
             string periodText = _isThreeMonths ? "3 Months" : "6 Months";
 
             if (averageDailySales >= 1)
@@ -67,4 +67,11 @@ public class AverageDailySalesComputation
             return "0";
         }
     }
+
+    // New function to extract precise value with 5 decimals (for calculations)
+    public decimal GetPreciseAverageDailySales(string productDescription)
+    {
+        return Math.Round(GetNumericAverageDailySales(productDescription), 5);
+    }
+
 }

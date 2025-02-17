@@ -1,5 +1,4 @@
 ﻿//Select_Product_Form.cs
-using Krypton.Toolkit;
 using MaterialSkin.Controls;
 using PAFProject.Computations;
 using PAFProject.Design;
@@ -150,12 +149,14 @@ namespace PAFProject.Forms
                 }
 
                 string manufacturerPartNumber = _productDataAccess.GetManufacturerPartNumber(nameTextBox.Text);
+                string prefVendor = _productDataAccess.GetPrefVendorRefFullName(nameTextBox.Text);
 
                 var productData = new ProductData
                 {
                     Description = nameTextBox.Text,
                     BarCode = manufacturerPartNumber,
                     AverageDaily = avgTextBox.Text,
+                    PrefVendor = prefVendor,
                     QuantityOnHand = qtyTextBox.Text,
                     DaysToGo = daysTGTextBox.Text,
                     OverShortStocks = overShortSTextBox.Text,

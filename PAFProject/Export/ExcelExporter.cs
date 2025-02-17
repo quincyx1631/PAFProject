@@ -14,7 +14,7 @@ namespace PAFProject.Export
 
                     // Title Section - Merged & Centered
                     worksheet.Cell(1, 1).Value = "PURCHASE APPROVAL FORM";
-                    var titleRange = worksheet.Range("A1:K1");
+                    var titleRange = worksheet.Range("A1:L1");
                     titleRange.Merge();
                     titleRange.Style.Font.Bold = true;
                     titleRange.Style.Font.FontSize = 14;
@@ -34,32 +34,34 @@ namespace PAFProject.Export
                     worksheet.Cell(4, 2).Style.Fill.BackgroundColor = XLColor.Yellow;
 
                     // ✅ **Weekly Budget (Corrected)**
-                    worksheet.Cell(2, 10).Value = "Weekly Budget:";
+                    worksheet.Cell(2, 11).Value = "Weekly Budget:";
                     if (decimal.TryParse(weeklyBudget, out decimal weeklyBudgetValue))
                     {
-                        worksheet.Cell(2, 11).Value = weeklyBudgetValue;
-                        worksheet.Cell(2, 11).Style.NumberFormat.Format = "\"₱\" #,##0.00";  // Proper format
+                        worksheet.Cell(2, 12).Value = weeklyBudgetValue;
+                        worksheet.Cell(2, 12).Style.NumberFormat.Format = "\"₱\" #,##0.00";
+                        worksheet.Cell(2, 12).Style.Fill.BackgroundColor = XLColor.LightGoldenrodYellow;
                     }
 
                     // ✅ **Proposed Budget (Corrected)**
-                    worksheet.Cell(3, 10).Value = "Proposed Budget:";
+                    worksheet.Cell(3, 11).Value = "Proposed Budget:";
                     if (decimal.TryParse(proposedBudget, out decimal proposedBudgetValue))
                     {
-                        worksheet.Cell(3, 11).Value = proposedBudgetValue;
-                        worksheet.Cell(3, 11).Style.NumberFormat.Format = "\"₱\" #,##0.00";
+                        worksheet.Cell(3, 12).Value = proposedBudgetValue;
+                        worksheet.Cell(3, 12).Style.NumberFormat.Format = "\"₱\" #,##0.00";
+                        worksheet.Cell(3, 12).Style.Fill.BackgroundColor = XLColor.GreenYellow;
                     }
 
                     // ✅ **Short/Over Budget (Corrected)**
-                    worksheet.Cell(4, 10).Value = "Short/Over:";
+                    worksheet.Cell(4, 11).Value = "Short/Over:";
                     if (decimal.TryParse(shortOver, out decimal shortOverValue))
                     {
-                        worksheet.Cell(4, 11).Value = shortOverValue;
-                        worksheet.Cell(4, 11).Style.NumberFormat.Format = "\"₱\" #,##0.00";
+                        worksheet.Cell(4, 12).Value = shortOverValue;
+                        worksheet.Cell(4, 12).Style.NumberFormat.Format = "\"₱\" #,##0.00";
                         if (shortOverValue < 0)
                         {
-                            worksheet.Cell(4, 11).Style.Font.FontColor = XLColor.Red;
+                            worksheet.Cell(4, 12).Style.Fill.BackgroundColor = XLColor.Red;
                         }
-                    }   
+                    }
 
                     // ----------------------------
                     // New two-row header with a first "No." column
@@ -114,8 +116,8 @@ namespace PAFProject.Export
                             {
                                 cell.Value = cellValue.ToString();
 
-                                int[] targetColumnsRight = { 3, 4, 5, 6, 7, 8 };
-                                int[] targetColumnLeft = { 0, 2, 9 };
+                                int[] targetColumnsRight = { 4, 5, 6, 7, 8, 9 };
+                                int[] targetColumnLeft = { 0, 2, 3, 10 };
                                 // For example, if column index 9 (j==8) is a currency value,
                                 // align it to the right and color negatives red.
                                 if (targetColumnsRight.Contains(j))
@@ -126,7 +128,7 @@ namespace PAFProject.Export
                                         cell.Style.Font.FontColor = XLColor.Red;
                                     }
                                 }
-                                else if(targetColumnLeft.Contains(j))
+                                else if (targetColumnLeft.Contains(j))
                                 {
                                     cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
                                 }
@@ -145,17 +147,18 @@ namespace PAFProject.Export
                     worksheet.Column(1).Width = 10;   // "No." Column
                     worksheet.Column(2).AdjustToContents();// Description column
                     worksheet.Column(3).Width = 25;  // Bar Code column
-                    worksheet.Column(4).Width = 30;  // Average Daily column
-                    worksheet.Column(5).Width = 20;  // Qty On Hand
-                    worksheet.Column(6).Width = 20;  // Days to Go
-                    worksheet.Column(7).Width = 20;  // Over/Short Stocks   
-                    worksheet.Column(8).Width = 20;  // Purchase Limit
-                    worksheet.Column(9).Width = 20;  // Average Price
-                    worksheet.Column(10).Width = 20; // Budget Amount
-                    worksheet.Column(11).Width = 40; // Remarks
+                    worksheet.Column(4).Width = 25; // Pref Vendor
+                    worksheet.Column(5).Width = 30;  // Average Daily column
+                    worksheet.Column(6).Width = 20;  // Qty On Hand
+                    worksheet.Column(7).Width = 20;  // Days to Go
+                    worksheet.Column(8).Width = 20;  // Over/Short Stocks   
+                    worksheet.Column(9).Width = 20;  // Purchase Limit
+                    worksheet.Column(10).Width = 20;  // Average Price
+                    worksheet.Column(11).Width = 20; // Budget Amount
+                    worksheet.Column(12).Width = 40; // Remarks
 
                     // Ensure the entire column (all rows) adjusts to content
-                    
+
 
                     // Save File
                     string fileName = $"PurchaseApprovalForm_{DateTime.Now:yyyyMMdd}.xlsx";

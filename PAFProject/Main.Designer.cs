@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             kryptonPanel1 = new Krypton.Toolkit.KryptonPanel();
+            deleteButton = new Button();
             branchNameLabel = new Krypton.Toolkit.KryptonTextBox();
             branchName = new Label();
             branchSelect = new Krypton.Toolkit.KryptonDropButton();
@@ -67,6 +68,7 @@
             // 
             // kryptonPanel1
             // 
+            kryptonPanel1.Controls.Add(deleteButton);
             kryptonPanel1.Controls.Add(branchNameLabel);
             kryptonPanel1.Controls.Add(branchName);
             kryptonPanel1.Controls.Add(branchSelect);
@@ -87,6 +89,16 @@
             kryptonPanel1.Size = new Size(1369, 145);
             kryptonPanel1.TabIndex = 0;
             kryptonPanel1.Paint += kryptonPanel1_Paint;
+            // 
+            // deleteButton
+            // 
+            deleteButton.Location = new Point(1149, 74);
+            deleteButton.Name = "deleteButton";
+            deleteButton.Size = new Size(100, 35);
+            deleteButton.TabIndex = 16;
+            deleteButton.Text = "DELETE";
+            deleteButton.UseVisualStyleBackColor = true;
+            deleteButton.Visible = false;
             // 
             // branchNameLabel
             // 
@@ -109,7 +121,7 @@
             // 
             // branchSelect
             // 
-            branchSelect.Location = new Point(1255, 74);
+            branchSelect.Location = new Point(292, 9);
             branchSelect.Name = "branchSelect";
             branchSelect.Size = new Size(100, 35);
             branchSelect.TabIndex = 13;
@@ -118,7 +130,7 @@
             // 
             // addBranch
             // 
-            addBranch.Location = new Point(1149, 74);
+            addBranch.Location = new Point(186, 9);
             addBranch.Name = "addBranch";
             addBranch.Size = new Size(100, 35);
             addBranch.TabIndex = 12;
@@ -381,5 +393,6 @@
         private DataGridViewTextBoxColumn Column8;
         private DataGridViewTextBoxColumn Column9;
         private DataGridViewTextBoxColumn Column10;
+        private Button deleteButton;
     }
 }

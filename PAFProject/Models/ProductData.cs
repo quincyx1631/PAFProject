@@ -5,6 +5,7 @@
         public string Description { get; set; }
         public string BarCode { get; set; }
         public string AverageDaily { get; set; }
+        public string PrefVendor { get; set; }
         public string QuantityOnHand { get; set; }
         public string DaysToGo { get; set; }
         public string OverShortStocks { get; set; }

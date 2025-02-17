@@ -33,6 +33,7 @@
             monthlyDropdown = new Krypton.Toolkit.KryptonDropButton();
             kryptonSeparator1 = new Krypton.Toolkit.KryptonSeparator();
             kryptonPanel2 = new Krypton.Toolkit.KryptonPanel();
+            productListSelection = new Krypton.Toolkit.KryptonDataGridView();
             kryptonDataGridView1 = new Krypton.Toolkit.KryptonDataGridView();
             Column1 = new DataGridViewTextBoxColumn();
             Column2 = new DataGridViewTextBoxColumn();
@@ -57,14 +58,13 @@
             nameTextBox = new Krypton.Toolkit.KryptonTextBox();
             avgLabel = new Label();
             nameLabel = new Label();
-            kryptonDataGridView2 = new Krypton.Toolkit.KryptonDataGridView();
             ((System.ComponentModel.ISupportInitialize)kryptonPanel1).BeginInit();
             kryptonPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)kryptonSeparator1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)kryptonPanel2).BeginInit();
             kryptonPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)productListSelection).BeginInit();
             ((System.ComponentModel.ISupportInitialize)kryptonDataGridView1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)kryptonDataGridView2).BeginInit();
             SuspendLayout();
             // 
             // kryptonPanel1
@@ -106,7 +106,7 @@
             // 
             // kryptonPanel2
             // 
-            kryptonPanel2.Controls.Add(kryptonDataGridView2);
+            kryptonPanel2.Controls.Add(productListSelection);
             kryptonPanel2.Controls.Add(kryptonDataGridView1);
             kryptonPanel2.Controls.Add(limitSelectionDropdown);
             kryptonPanel2.Controls.Add(limitSelectionLabel);
@@ -132,6 +132,14 @@
             kryptonPanel2.Name = "kryptonPanel2";
             kryptonPanel2.Size = new Size(945, 565);
             kryptonPanel2.TabIndex = 1;
+            // 
+            // productListSelection
+            // 
+            productListSelection.BorderStyle = BorderStyle.None;
+            productListSelection.Location = new Point(540, 89);
+            productListSelection.Name = "productListSelection";
+            productListSelection.Size = new Size(368, 338);
+            productListSelection.TabIndex = 31;
             // 
             // kryptonDataGridView1
             // 
@@ -387,14 +395,6 @@
             nameLabel.TextAlign = ContentAlignment.MiddleLeft;
             nameLabel.Click += weeklyBudgetLabel_Click;
             // 
-            // kryptonDataGridView2
-            // 
-            kryptonDataGridView2.BorderStyle = BorderStyle.None;
-            kryptonDataGridView2.Location = new Point(540, 89);
-            kryptonDataGridView2.Name = "kryptonDataGridView2";
-            kryptonDataGridView2.Size = new Size(368, 338);
-            kryptonDataGridView2.TabIndex = 31;
-            // 
             // Select_Product_Form
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -417,8 +417,8 @@
             ((System.ComponentModel.ISupportInitialize)kryptonPanel2).EndInit();
             kryptonPanel2.ResumeLayout(false);
             kryptonPanel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)productListSelection).EndInit();
             ((System.ComponentModel.ISupportInitialize)kryptonDataGridView1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)kryptonDataGridView2).EndInit();
             ResumeLayout(false);
         }
 
@@ -453,6 +453,6 @@
         private DataGridViewTextBoxColumn Column3;
         private Krypton.Toolkit.KryptonDropButton limitSelectionDropdown;
         private Label limitSelectionLabel;
-        private Krypton.Toolkit.KryptonDataGridView kryptonDataGridView2;
+        private Krypton.Toolkit.KryptonDataGridView productListSelection;
     }
 }
