@@ -25,14 +25,12 @@ namespace PAFProject
 
             InitializeDataGridView();
 
-            // Add double-click event handler
             kryptonDataGridView1.CellDoubleClick += KryptonDataGridView1_CellDoubleClick;
-
-            // Event handlers for row selection and deletion
             kryptonDataGridView1.CellClick += KryptonDataGridView1_CellClick;
             deleteButton.Click += DeleteButton_Click;
-
             _branchDropdownManager = new BranchDropdownManager(branchSelect, branchNameLabel);
+
+            PDFButton.Click += new System.EventHandler(this.pdfButton_Click);
         }
         public void RefreshBranchList()
         {
@@ -151,9 +149,19 @@ namespace PAFProject
 
             ExcelExporter.ExportToExcel(kryptonDataGridView1, branchName, week, weeklyBudget, proposedBudget, shortOver);
         }
+        private void pdfButton_Click(object sender, EventArgs e)
+        {
+            string branchName = branchNameLabel.Text;
+            string week = weekTextBox.Text;
+            string weeklyBudget = weeklyBudgetTextBox.Text;
+            string proposedBudget = proposedBudgetTextBox.Text;
+            string shortOver = shortOverTextBox.Text;
+
+            PdfExporter.ExportToPdf(kryptonDataGridView1, branchName, week, weeklyBudget, proposedBudget, shortOver);
+        }
 
         private void UpdateProposedBudget(decimal totalBudget)
-        {
+        {   
             if (this.InvokeRequired)
             {
                 this.Invoke(new Action<decimal>(UpdateProposedBudget), totalBudget);

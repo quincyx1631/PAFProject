@@ -11,17 +11,18 @@
           "ClosedXML": "0.104.2",
           "Krypton.Toolkit": "90.24.11.317",
           "MaterialSkin": "0.2.1",
-          "MySql.Data": "9.2.0"
+          "MySql.Data": "9.2.0",
+          "iTextSharp": "5.5.13.4"
         },
         "runtime": {
           "PAFProject.dll": {}
         }
       },
-      "BouncyCastle.Cryptography/2.3.1": {
+      "BouncyCastle.Cryptography/2.4.0": {
         "runtime": {
           "lib/net6.0/BouncyCastle.Cryptography.dll": {
             "assemblyVersion": "2.0.0.0",
-            "fileVersion": "2.3.1.17862"
+            "fileVersion": "2.4.0.33771"
           }
         }
       },
@@ -86,6 +87,17 @@
           }
         }
       },
+      "iTextSharp/5.5.13.4": {
+        "dependencies": {
+          "BouncyCastle.Cryptography": "2.4.0"
+        },
+        "runtime": {
+          "lib/net461/itextsharp.dll": {
+            "assemblyVersion": "5.5.13.4",
+            "fileVersion": "5.5.13.4"
+          }
+        }
+      },
       "K4os.Compression.LZ4/1.3.8": {
         "runtime": {
           "lib/net6.0/K4os.Compression.LZ4.dll": {
@@ -135,7 +147,7 @@
       "Microsoft.NETCore.Targets/1.1.0": {},
       "MySql.Data/9.2.0": {
         "dependencies": {
-          "BouncyCastle.Cryptography": "2.3.1",
+          "BouncyCastle.Cryptography": "2.4.0",
           "Google.Protobuf": "3.26.1",
           "K4os.Compression.LZ4.Streams": "1.3.8",
           "System.Buffers": "4.5.1",
@@ -330,12 +342,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "BouncyCastle.Cryptography/2.3.1": {
+    "BouncyCastle.Cryptography/2.4.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-buwoISwecYke3CmgG1AQSg+sNZjJeIb93vTAtJiHZX35hP/teYMxsfg0NDXGUKjGx6BKBTNKc77O2M3vKvlXZQ==",
-      "path": "bouncycastle.cryptography/2.3.1",
-      "hashPath": "bouncycastle.cryptography.2.3.1.nupkg.sha512"
+      "sha512": "sha512-SwXsAV3sMvAU/Nn31pbjhWurYSjJ+/giI/0n6tCrYoupEK34iIHCuk3STAd9fx8yudM85KkLSVdn951vTng/vQ==",
+      "path": "bouncycastle.cryptography/2.4.0",
+      "hashPath": "bouncycastle.cryptography.2.4.0.nupkg.sha512"
     },
     "ClosedXML/0.104.2": {
       "type": "package",
@@ -378,6 +390,13 @@
       "sha512": "sha512-CHZX8zXqhF/fdUtd+AYzew8T2HFkAoe5c7lbGxZY/qryAlQXckDvM5BfOJjXlMS7kyICqQTMszj4w1bX5uBJ/w==",
       "path": "google.protobuf/3.26.1",
       "hashPath": "google.protobuf.3.26.1.nupkg.sha512"
+    },
+    "iTextSharp/5.5.13.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/cvCNv8AJ+XuD99u4NfHSSxkBJKTdvP36wcfQF9V1Cjzi1ycyFSa4vJ64a3DhFVUTKVO60WF8OmAqngQDTHgYA==",
+      "path": "itextsharp/5.5.13.4",
+      "hashPath": "itextsharp.5.5.13.4.nupkg.sha512"
     },
     "K4os.Compression.LZ4/1.3.8": {
       "type": "package",

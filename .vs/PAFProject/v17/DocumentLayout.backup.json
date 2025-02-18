@@ -7,28 +7,12 @@
       "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\design\\branchdropdownmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\design\\branchdropdownmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\models\\branchmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\models\\branchmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\forms\\add_branch_form.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\forms\\add_branch_form.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\forms\\add_branch_form.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\forms\\add_branch_form.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\models\\productmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\models\\productmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\export\\pdfexporter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\export\\pdfexporter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,78 +30,27 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
+              "Title": "PdfExporter.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Export\\PdfExporter.cs",
+              "RelativeDocumentMoniker": "PAFProject\\Export\\PdfExporter.cs",
+              "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Export\\PdfExporter.cs",
+              "RelativeToolTip": "PAFProject\\Export\\PdfExporter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-18T07:57:47.696Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Main.cs [Design]",
               "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Main.cs",
               "RelativeDocumentMoniker": "PAFProject\\Main.cs",
               "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Main.cs [Design]",
               "RelativeToolTip": "PAFProject\\Main.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T07:13:24.83Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "BranchDropdownManager.cs",
-              "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Design\\BranchDropdownManager.cs",
-              "RelativeDocumentMoniker": "PAFProject\\Design\\BranchDropdownManager.cs",
-              "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Design\\BranchDropdownManager.cs",
-              "RelativeToolTip": "PAFProject\\Design\\BranchDropdownManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADEAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T06:45:15.545Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "BranchModel.cs",
-              "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Models\\BranchModel.cs",
-              "RelativeDocumentMoniker": "PAFProject\\Models\\BranchModel.cs",
-              "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Models\\BranchModel.cs",
-              "RelativeToolTip": "PAFProject\\Models\\BranchModel.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAwDQAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T06:42:13.543Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ProductModel.cs",
-              "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Models\\ProductModel.cs",
-              "RelativeDocumentMoniker": "PAFProject\\Models\\ProductModel.cs",
-              "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Models\\ProductModel.cs",
-              "RelativeToolTip": "PAFProject\\Models\\ProductModel.cs",
-              "ViewState": "AgIAAIQAAAAAAAAAAAAswKAAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T06:41:21.098Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Add_Branch_Form.cs",
-              "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Forms\\Add_Branch_Form.cs",
-              "RelativeDocumentMoniker": "PAFProject\\Forms\\Add_Branch_Form.cs",
-              "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Forms\\Add_Branch_Form.cs",
-              "RelativeToolTip": "PAFProject\\Forms\\Add_Branch_Form.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAowDMAAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T06:24:59.34Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Add_Branch_Form.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Forms\\Add_Branch_Form.cs",
-              "RelativeDocumentMoniker": "PAFProject\\Forms\\Add_Branch_Form.cs",
-              "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Forms\\Add_Branch_Form.cs [Design]",
-              "RelativeToolTip": "PAFProject\\Forms\\Add_Branch_Form.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T06:22:12.494Z",
+              "WhenOpened": "2025-02-18T07:51:34.696Z",
               "EditorCaption": " [Design]"
             },
             {
@@ -128,9 +61,9 @@
               "RelativeDocumentMoniker": "PAFProject\\Main.cs",
               "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Main.cs",
               "RelativeToolTip": "PAFProject\\Main.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAgwCYAAABUAAAAAAAAAA==",
+              "ViewState": "AgIAAJAAAAAAAAAAAAAmwKMAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T05:49:48.098Z",
+              "WhenOpened": "2025-02-18T07:50:11.421Z",
               "EditorCaption": ""
             }
           ]

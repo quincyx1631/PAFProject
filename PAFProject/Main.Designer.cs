@@ -58,6 +58,7 @@
             Column8 = new DataGridViewTextBoxColumn();
             Column9 = new DataGridViewTextBoxColumn();
             Column10 = new DataGridViewTextBoxColumn();
+            PDFButton = new Button();
             ((System.ComponentModel.ISupportInitialize)kryptonPanel1).BeginInit();
             kryptonPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)kryptonSeparator1).BeginInit();
@@ -68,6 +69,7 @@
             // 
             // kryptonPanel1
             // 
+            kryptonPanel1.Controls.Add(PDFButton);
             kryptonPanel1.Controls.Add(deleteButton);
             kryptonPanel1.Controls.Add(branchNameLabel);
             kryptonPanel1.Controls.Add(branchName);
@@ -340,6 +342,15 @@
             Column10.Name = "Column10";
             Column10.ReadOnly = true;
             // 
+            // PDFButton
+            // 
+            PDFButton.Location = new Point(1255, 74);
+            PDFButton.Name = "PDFButton";
+            PDFButton.Size = new Size(100, 35);
+            PDFButton.TabIndex = 17;
+            PDFButton.Text = "EXPORT PDF";
+            PDFButton.UseVisualStyleBackColor = true;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -392,5 +403,6 @@
         private DataGridViewTextBoxColumn Column9;
         private DataGridViewTextBoxColumn Column10;
         private Button deleteButton;
+        private Button PDFButton;
     }
 }
