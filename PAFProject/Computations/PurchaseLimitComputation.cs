@@ -1,4 +1,5 @@
-﻿namespace PAFProject.Computations
+﻿//PurchaseLimitComputation.cs
+namespace PAFProject.Computations
 {
     public class PurchaseLimitComputation
     {

@@ -1,4 +1,5 @@
-﻿namespace PAFProject.Computations
+﻿//BudgetComputation.cs
+namespace PAFProject.Computations
 {
     public class BudgetComputation
     {

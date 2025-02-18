@@ -1,4 +1,5 @@
 using MaterialSkin.Controls;
+using PAFProject.Design;
 using PAFProject.Export;
 using PAFProject.Forms;
 using PAFProject.Models;
@@ -8,12 +9,13 @@ namespace PAFProject
     public partial class Main : MaterialForm
     {
         private int selectedRowIndex = -1;
-
+        private BranchDropdownManager _branchDropdownManager;
 
         public Main()
         {
             InitializeComponent();
             selectButton.Click += new System.EventHandler(this.selectButton_Click);
+            addBranch.Click += new System.EventHandler(this.AddBranch_Click);
 
             ProductDataManager.OnProductAdded += HandleNewProduct;
             ProductDataManager.OnProposedBudget += UpdateProposedBudget;
@@ -29,8 +31,13 @@ namespace PAFProject
             // Event handlers for row selection and deletion
             kryptonDataGridView1.CellClick += KryptonDataGridView1_CellClick;
             deleteButton.Click += DeleteButton_Click;
-        }
 
+            _branchDropdownManager = new BranchDropdownManager(branchSelect, branchNameLabel);
+        }
+        public void RefreshBranchList()
+        {
+            _branchDropdownManager = new BranchDropdownManager(branchSelect, branchNameLabel);
+        }
         private void InitializeDataGridView()
         {
             kryptonDataGridView1.AllowUserToAddRows = false;
@@ -72,6 +79,8 @@ namespace PAFProject
 
                 Select_Product_Form selectProductForm = new Select_Product_Form(this, currentProduct, selectedRowIndex);
                 selectProductForm.Show();
+
+                selectProductForm.DisableEdit();
             }
         }
 
@@ -153,12 +162,12 @@ namespace PAFProject
             proposedBudgetTextBox.Text = totalBudget.ToString("N2");
         }
 
-
         private void selectButton_Click(object sender, EventArgs e)
         {
             try
             {
                 Select_Product_Form selectProductForm = new Select_Product_Form(this);
+                selectProductForm.EnableEdit();
                 selectProductForm.Show();
             }
             catch (Exception ex)
@@ -181,23 +190,11 @@ namespace PAFProject
 
                     // Display the result in shortOverTextBox
                     shortOverTextBox.Text = difference.ToString("N2");
-
-                    // Optionally, you can change the text color based on whether it's short or over
-                    if (difference < 0)
-                    {
-                        shortOverTextBox.ForeColor = System.Drawing.Color.Red;
-                        // You might want to show a warning message or indicator here
-                    }
-                    else
-                    {
-                        shortOverTextBox.ForeColor = System.Drawing.Color.Green;
-                    }
                 }
                 else
                 {
                     // If the input is not a valid number, clear the shortOverTextBox
                     shortOverTextBox.Text = "0.00";
-                    shortOverTextBox.ForeColor = System.Drawing.Color.Black;
                 }
             }
             catch (Exception ex)
@@ -213,39 +210,58 @@ namespace PAFProject
             if (e.RowIndex >= 0)
             {
                 selectedRowIndex = e.RowIndex;
-                deleteButton.Visible = true; // Show the delete button when a row is selected
+                deleteButton.Visible = true; 
             }
             else
             {
                 selectedRowIndex = -1;
-                deleteButton.Visible = false; // Hide the delete button when no row is selected
+                deleteButton.Visible = false; 
             }
         }
         private void DeleteButton_Click(object sender, EventArgs e)
         {
             if (selectedRowIndex >= 0 && selectedRowIndex < kryptonDataGridView1.Rows.Count)
             {
+                // Remove the selected row
                 kryptonDataGridView1.Rows.RemoveAt(selectedRowIndex);
                 selectedRowIndex = -1;
-                deleteButton.Visible = false; // Hide delete button after deletion
+                deleteButton.Visible = false; 
+
+                // Recalculate total budget
+                UpdateTotalBudget();
             }
         }
-        private void kryptonPanel1_Paint(object sender, PaintEventArgs e)
+        private void UpdateTotalBudget()
         {
+            decimal totalBudget = 0;
 
+            foreach (DataGridViewRow row in kryptonDataGridView1.Rows)
+            {
+                if (row.Cells[9].Value != null && decimal.TryParse(row.Cells[9].Value.ToString(), out decimal budget))
+                {
+                    totalBudget += budget;
+                }
+            }
+
+            // Update the proposed budget text box
+            proposedBudgetTextBox.Text = totalBudget.ToString("N2");
+
+            // Trigger weekly budget computation
+            weeklyBudgetTextBox_TextChanged(this, EventArgs.Empty);
         }
-
+        private void AddBranch_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Add_Branch_Form addBranchForm = new Add_Branch_Form(this);
+                addBranchForm.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error opening Add Branch Form: " + ex.Message);
+            }
+        }
         private void Main_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void weekLabel_Click(object sender, EventArgs e)
         {
 
         }

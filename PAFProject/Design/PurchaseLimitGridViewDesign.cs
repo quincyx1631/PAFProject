@@ -1,4 +1,5 @@
-﻿using Krypton.Toolkit;
+﻿//PurchaseLimitGridViewDesign.cs
+using Krypton.Toolkit;
 using PAFProject.Computations;
 
 public class PurchaseLimitGridViewDesign
@@ -7,10 +8,8 @@ public class PurchaseLimitGridViewDesign
     private decimal _currentAverageDailySales = 0;
     private decimal _averageCost = 0;
     private readonly PurchaseLimitComputation _purchaseLimitComputation;
-    public decimal totalBudget = 0;
     private string _userInput = "0";
-    private bool _isEditingExisting = false;
-    private string _originalSystemValue = "0";
+    private string _currentLimitSelection = "7 Days";
 
     public event Action<string> OnBudgetCalculated;
 
@@ -21,6 +20,11 @@ public class PurchaseLimitGridViewDesign
         InitializeGridView();
     }
 
+    public void SetLimitSelection(string limitSelection)
+    {
+        _currentLimitSelection = limitSelection;
+    }
+
     public void SetUserInput(string userValue)
     {
         _userInput = userValue;
@@ -29,6 +33,12 @@ public class PurchaseLimitGridViewDesign
             _dataGridView.Rows[0].Cells[1].Value = userValue;
             UpdateTotal();
         }
+    }
+
+    public void SetAverageCost(decimal averageCost)
+    {
+        _averageCost = averageCost;
+        UpdateTotal();
     }
     private void InitializeGridView()
     {
@@ -141,7 +151,8 @@ public class PurchaseLimitGridViewDesign
         }
     }
 
-    public void UpdateTotal()
+    //ETO RIN NEED PARA SA PURCHASE LIMIT BUKAS
+    private void UpdateTotal()
     {
         try
         {
@@ -151,16 +162,10 @@ public class PurchaseLimitGridViewDesign
             if (int.TryParse(systemValueStr, out int systemValue) &&
                 int.TryParse(userValueStr, out int userValue))
             {
-                // Store the user input
                 _userInput = userValue.ToString();
-
-                // Calculate total
-                int total = systemValue + userValue;
-                total = Math.Max(0, total);
-
+                int total = Math.Max(0, systemValue + userValue);
                 _dataGridView.Rows[0].Cells[2].Value = total.ToString();
 
-                // Calculate budget
                 var budgetComputation = new BudgetComputation();
                 string budget = budgetComputation.ComputeBudget(total, _averageCost);
                 OnBudgetCalculated?.Invoke(budget);
@@ -173,30 +178,22 @@ public class PurchaseLimitGridViewDesign
         }
     }
 
-    public void SetAverageCost(decimal averageCost)
-    {
-        _averageCost = averageCost;
-        UpdateTotal(); // Recalculate budget with new average cost
-    }
-
+    //SYSTEM VALUE KAILANGAN PARA BUKAS
     public void UpdateSystemValue(string limitSelectionText, decimal averageDailySales)
     {
         try
         {
-            // Store current user input
+            _currentAverageDailySales = averageDailySales;
+            _currentLimitSelection = limitSelectionText;
+
             string currentUserInput = _dataGridView.Rows[0].Cells[1].Value?.ToString() ?? "0";
 
-            // Calculate the new purchase limit
             int days = _purchaseLimitComputation.GetDaysFromSelection(limitSelectionText);
             int newPurchaseLimit = _purchaseLimitComputation.ComputePurchaseLimit(averageDailySales, days);
 
-            // Update system value with new purchase limit
             _dataGridView.Rows[0].Cells[0].Value = newPurchaseLimit.ToString();
-
-            // Restore user input
             _dataGridView.Rows[0].Cells[1].Value = currentUserInput;
 
-            // Update total
             UpdateTotal();
         }
         catch

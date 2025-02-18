@@ -138,6 +138,7 @@
             productListSelection.BorderStyle = BorderStyle.None;
             productListSelection.Location = new Point(540, 89);
             productListSelection.Name = "productListSelection";
+            productListSelection.RowHeadersVisible = false;
             productListSelection.Size = new Size(368, 338);
             productListSelection.TabIndex = 31;
             // 
@@ -244,7 +245,6 @@
             budgetAmountLabel.TabIndex = 22;
             budgetAmountLabel.Text = "BUDGET AMOUNT:";
             budgetAmountLabel.TextAlign = ContentAlignment.MiddleLeft;
-            budgetAmountLabel.Click += budgetAmountLabel_Click;
             // 
             // AVGPriceTextBox
             // 
@@ -266,7 +266,6 @@
             AVGPriceLabel.TabIndex = 20;
             AVGPriceLabel.Text = "AVERAGE PRICE: ";
             AVGPriceLabel.TextAlign = ContentAlignment.MiddleLeft;
-            AVGPriceLabel.Click += label1_Click;
             // 
             // overShortSTextBox
             // 
@@ -288,7 +287,6 @@
             stocksLabel.TabIndex = 18;
             stocksLabel.Text = "OVER/SHORT STOCKS: ";
             stocksLabel.TextAlign = ContentAlignment.MiddleLeft;
-            stocksLabel.Click += label4_Click;
             // 
             // daysTGTextBox
             // 
@@ -393,7 +391,6 @@
             nameLabel.TabIndex = 7;
             nameLabel.Text = "DESCRIPTION: ";
             nameLabel.TextAlign = ContentAlignment.MiddleLeft;
-            nameLabel.Click += weeklyBudgetLabel_Click;
             // 
             // Select_Product_Form
             // 

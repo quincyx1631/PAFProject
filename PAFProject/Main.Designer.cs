@@ -88,7 +88,6 @@
             kryptonPanel1.Name = "kryptonPanel1";
             kryptonPanel1.Size = new Size(1369, 145);
             kryptonPanel1.TabIndex = 0;
-            kryptonPanel1.Paint += kryptonPanel1_Paint;
             // 
             // deleteButton
             // 
@@ -123,7 +122,7 @@
             // 
             branchSelect.Location = new Point(292, 9);
             branchSelect.Name = "branchSelect";
-            branchSelect.Size = new Size(100, 35);
+            branchSelect.Size = new Size(116, 35);
             branchSelect.TabIndex = 13;
             branchSelect.Values.DropDownArrowColor = Color.Empty;
             branchSelect.Values.Text = "Select Branch";
@@ -219,7 +218,6 @@
             weekLabel.TabIndex = 4;
             weekLabel.Text = "Week No.";
             weekLabel.TextAlign = ContentAlignment.MiddleLeft;
-            weekLabel.Click += weekLabel_Click;
             // 
             // selectButton
             // 

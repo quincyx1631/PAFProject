@@ -2,6 +2,7 @@
 using MaterialSkin.Controls;
 using PAFProject.Class;
 using PAFProject.Computations;
+using PAFProject.Models;
 
 namespace PAFProject.Forms
 {
@@ -11,11 +12,13 @@ namespace PAFProject.Forms
         private Select_Product_Form _parentForm;
         private int currentPage = 1;
         private const int RecordsPerPage = 30;
+        private readonly ProductDataAccess _productDataAccess;
 
         public Product_List_Form(Select_Product_Form parentForm = null)
         {
             InitializeComponent();
             _productManager = new ProductManager();
+            _productDataAccess = new ProductDataAccess();
             _parentForm = parentForm;
 
             // Configure DataGridView properties
@@ -41,51 +44,33 @@ namespace PAFProject.Forms
             {
                 try
                 {
-                    // Clear all textboxes first
-                    _parentForm.ClearAllTextBoxes();
-
-                    // Get values from the clicked row
                     string salesDesc = productListDataGrid.Rows[e.RowIndex].Cells["SalesDesc"].Value.ToString();
                     decimal quantityOnHand = decimal.Parse(productListDataGrid.Rows[e.RowIndex].Cells["QuantityOnHand"].Value.ToString());
                     decimal averageCost = decimal.Parse(productListDataGrid.Rows[e.RowIndex].Cells["AverageCost"].Value.ToString());
-                    int roundedQuantity = (int)Math.Round(quantityOnHand, 0);
 
-                    // Create instance of AverageDailySalesComputation
                     var avgDailySalesComputation = new AverageDailySalesComputation();
-
-                    // Get both numeric and formatted average daily sales
                     decimal numericAverageDailySales = avgDailySalesComputation.GetNumericAverageDailySales(salesDesc);
-                    string formattedAverageDailySales = avgDailySalesComputation.ComputeAverageDailySales(salesDesc);
 
-                    // Create instance of DaysToGoComputation
                     var daysToGoComputation = new DaysToGoComputation();
-
-                    // Compute days to go using numeric values
                     string daysToGoStr = daysToGoComputation.ComputeDaysToGo(quantityOnHand, numericAverageDailySales);
 
-                    // Create instance of OverShortStocksComputation
                     var overShortStocksComputation = new OverShortStocksComputation();
-
-                    // Compute over/short stocks
                     string overShortStocks = overShortStocksComputation.ComputeOverShortStocks(
                         decimal.Parse(daysToGoStr),
                         quantityOnHand,
                         numericAverageDailySales
                     );
 
-                    // Create instance of BudgetComputation
-                    var budgetComputation = new BudgetComputation();
-
-                    // Update the parent form's textboxes
-                    _parentForm.UpdateProductName(salesDesc);
-                    _parentForm.UpdateAverageDailySales(formattedAverageDailySales);
-                    _parentForm.UpdateQuantityOnHand(roundedQuantity.ToString());
-                    _parentForm.UpdateDaysToGo(daysToGoStr);
-                    _parentForm.UpdateOverShortStocks(overShortStocks);
-                    _parentForm.UpdateAverageCost(averageCost.ToString("N2")); // This will trigger initial budget calculation
-
-                    // Close this form
-                    this.Close();
+                    _parentForm.AddSelectedProduct(
+                        salesDesc,
+                        numericAverageDailySales,
+                        quantityOnHand,
+                        daysToGoStr,
+                        overShortStocks,
+                        averageCost,
+                        _productDataAccess.GetManufacturerPartNumber(salesDesc),
+                        _productDataAccess.GetPrefVendorRefFullName(salesDesc)
+                    );
                 }
                 catch (Exception ex)
                 {
