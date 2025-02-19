@@ -47,3 +47,4 @@ C:\Users\admin\source\repos\PAFProject\PAFProject\bin\Debug\net8.0-windows\SixLa
 C:\Users\admin\source\repos\PAFProject\PAFProject\bin\Debug\net8.0-windows\System.IO.Packaging.dll
 C:\Users\admin\source\repos\PAFProject\PAFProject\obj\Debug\net8.0-windows\PAFProject.Forms.Add_Branch_Form.resources
 C:\Users\admin\source\repos\PAFProject\PAFProject\bin\Debug\net8.0-windows\itextsharp.dll
+C:\Users\admin\source\repos\PAFProject\PAFProject\bin\Debug\net8.0-windows\PAFProject.dll.config

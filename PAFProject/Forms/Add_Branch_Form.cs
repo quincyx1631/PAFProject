@@ -36,12 +36,12 @@ namespace PAFProject.Forms
                 using (var conn = _dbConnector.GetConnection())
                 {
                     conn.Open();
-                    string query = @"INSERT INTO yulitodb.branch (branchName, branchLocation, isActive) VALUES (@branchName, @branchLocation, 1)";
+                    string query = @"INSERT INTO yulitodb.branch (name, location, isActive) VALUES (@name, @location, 1)";
 
                     using (var cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@branchName", branchName);
-                        cmd.Parameters.AddWithValue("@branchLocation", string.IsNullOrEmpty(branchLocation) ? DBNull.Value : branchLocation);
+                        cmd.Parameters.AddWithValue("@name", branchName);
+                        cmd.Parameters.AddWithValue("@location", string.IsNullOrEmpty(branchLocation) ? DBNull.Value : branchLocation);
 
                         int rowsAffected = cmd.ExecuteNonQuery();
                         if (rowsAffected > 0)

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             kryptonPanel1 = new Krypton.Toolkit.KryptonPanel();
+            PDFButton = new Button();
             deleteButton = new Button();
             branchNameLabel = new Krypton.Toolkit.KryptonTextBox();
             branchName = new Label();
@@ -58,7 +59,6 @@
             Column8 = new DataGridViewTextBoxColumn();
             Column9 = new DataGridViewTextBoxColumn();
             Column10 = new DataGridViewTextBoxColumn();
-            PDFButton = new Button();
             ((System.ComponentModel.ISupportInitialize)kryptonPanel1).BeginInit();
             kryptonPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)kryptonSeparator1).BeginInit();
@@ -91,11 +91,20 @@
             kryptonPanel1.Size = new Size(1369, 145);
             kryptonPanel1.TabIndex = 0;
             // 
+            // PDFButton
+            // 
+            PDFButton.Location = new Point(1245, 74);
+            PDFButton.Name = "PDFButton";
+            PDFButton.Size = new Size(110, 35);
+            PDFButton.TabIndex = 17;
+            PDFButton.Text = "EXPORT PDF";
+            PDFButton.UseVisualStyleBackColor = true;
+            // 
             // deleteButton
             // 
-            deleteButton.Location = new Point(1149, 74);
+            deleteButton.Location = new Point(1129, 74);
             deleteButton.Name = "deleteButton";
-            deleteButton.Size = new Size(100, 35);
+            deleteButton.Size = new Size(110, 35);
             deleteButton.TabIndex = 16;
             deleteButton.Text = "DELETE";
             deleteButton.UseVisualStyleBackColor = true;
@@ -106,6 +115,7 @@
             branchNameLabel.Location = new Point(102, 10);
             branchNameLabel.Multiline = true;
             branchNameLabel.Name = "branchNameLabel";
+            branchNameLabel.ReadOnly = true;
             branchNameLabel.Size = new Size(78, 30);
             branchNameLabel.TabIndex = 15;
             // 
@@ -223,20 +233,20 @@
             // 
             // selectButton
             // 
-            selectButton.Location = new Point(1149, 15);
+            selectButton.Location = new Point(1129, 15);
             selectButton.Name = "selectButton";
-            selectButton.Size = new Size(100, 35);
+            selectButton.Size = new Size(110, 35);
             selectButton.TabIndex = 0;
-            selectButton.Text = "SELECT";
+            selectButton.Text = "SELECT PRODUCT";
             selectButton.UseVisualStyleBackColor = true;
             // 
             // processButton
             // 
-            processButton.Location = new Point(1255, 15);
+            processButton.Location = new Point(1245, 15);
             processButton.Name = "processButton";
-            processButton.Size = new Size(100, 35);
+            processButton.Size = new Size(110, 35);
             processButton.TabIndex = 1;
-            processButton.Text = "PROCESS";
+            processButton.Text = "EXPORT EXCEL";
             processButton.UseVisualStyleBackColor = true;
             // 
             // kryptonSeparator1
@@ -341,15 +351,6 @@
             Column10.HeaderText = "REMARKS";
             Column10.Name = "Column10";
             Column10.ReadOnly = true;
-            // 
-            // PDFButton
-            // 
-            PDFButton.Location = new Point(1255, 74);
-            PDFButton.Name = "PDFButton";
-            PDFButton.Size = new Size(100, 35);
-            PDFButton.TabIndex = 17;
-            PDFButton.Text = "EXPORT PDF";
-            PDFButton.UseVisualStyleBackColor = true;
             // 
             // Main
             // 

@@ -2,8 +2,6 @@
 // This file handles loading branch names into a KryptonDropButton.
 using Krypton.Toolkit;
 using PAFProject.Models;
-using System;
-using System.Collections.Generic;
 
 namespace PAFProject.Design
 {

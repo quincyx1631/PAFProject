@@ -320,9 +320,9 @@ namespace PAFProject.Forms
                     var productData = new ProductData
                     {
                         Description = nameTextBox.Text,
-                        BarCode = _editingProduct.BarCode, // Preserve original barcode
+                        BarCode = _editingProduct.BarCode, 
                         AverageDaily = _avgDailySalesComputation.ComputeAverageDailySalesFromValue(_currentAverageDailySales),
-                        PrefVendor = _editingProduct.PrefVendor, // Preserve original vendor
+                        PrefVendor = _editingProduct.PrefVendor, 
                         QuantityOnHand = qtyTextBox.Text,
                         DaysToGo = daysTGTextBox.Text,
                         OverShortStocks = overShortSTextBox.Text,

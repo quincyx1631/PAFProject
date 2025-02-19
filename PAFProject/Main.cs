@@ -3,6 +3,7 @@ using PAFProject.Design;
 using PAFProject.Export;
 using PAFProject.Forms;
 using PAFProject.Models;
+using PAFProject.Properties;
 
 namespace PAFProject
 {
@@ -14,6 +15,7 @@ namespace PAFProject
         public Main()
         {
             InitializeComponent();
+            weeklyBudgetTextBox.Text = Settings.Default.WeeklyBudget.ToString("N2");
             selectButton.Click += new System.EventHandler(this.selectButton_Click);
             addBranch.Click += new System.EventHandler(this.AddBranch_Click);
 
@@ -31,6 +33,10 @@ namespace PAFProject
             _branchDropdownManager = new BranchDropdownManager(branchSelect, branchNameLabel);
 
             PDFButton.Click += new System.EventHandler(this.pdfButton_Click);
+
+            proposedBudgetTextBox.TextChanged += new System.EventHandler(this.proposedBudgetTextBox_TextChanged);
+            this.Load += new System.EventHandler(this.Main_Load);
+            CalculateShortOver();
         }
         public void RefreshBranchList()
         {
@@ -187,31 +193,62 @@ namespace PAFProject
         {
             try
             {
-                // Get the total budget from proposedBudget
-                decimal totalBudget = decimal.Parse(proposedBudgetTextBox.Text);
+                // Remove any existing commas from the input
+                string cleanInput = weeklyBudgetTextBox.Text.Replace(",", "");
 
-                // Try to parse the Weekly budget
-                if (decimal.TryParse(weeklyBudgetTextBox.Text, out decimal weeklyBudgetAmount))
+                if (decimal.TryParse(cleanInput, out decimal weeklyBudgetAmount))
                 {
-                    // Calculate the difference
-                    decimal difference = weeklyBudgetAmount - totalBudget;
+                    // Store the cursor position
+                    int cursorPosition = weeklyBudgetTextBox.SelectionStart;
 
-                    // Display the result in shortOverTextBox
-                    shortOverTextBox.Text = difference.ToString("N2");
-                }
-                else
-                {
-                    // If the input is not a valid number, clear the shortOverTextBox
-                    shortOverTextBox.Text = "0.00";
+                    // Update Settings with new value
+                    Properties.Settings.Default.WeeklyBudget = weeklyBudgetAmount;
+                    Properties.Settings.Default.Save();
+
+                    // Format the number with commas and two decimal places
+                    weeklyBudgetTextBox.Text = weeklyBudgetAmount.ToString("N2");
+
+                    // Restore cursor position, accounting for added characters
+                    weeklyBudgetTextBox.SelectionStart = cursorPosition;
+
+                    CalculateShortOver();
                 }
             }
             catch (Exception ex)
             {
-                // Handle any potential errors (like invalid number format)
                 MessageBox.Show("Please enter a valid number.");
-                weeklyBudgetTextBox.Text = "0";
-                shortOverTextBox.Text = weeklyBudgetTextBox.Text;
+                weeklyBudgetTextBox.Text = Properties.Settings.Default.WeeklyBudget.ToString("N2");
+                CalculateShortOver();
             }
+        }
+        private void CalculateShortOver()
+        {
+            try
+            {
+                // Get the weekly budget from settings
+                decimal weeklyBudget = Properties.Settings.Default.WeeklyBudget;
+
+                // Get the proposed budget
+                decimal totalBudget = 0;
+                if (decimal.TryParse(proposedBudgetTextBox.Text.Replace(",", ""), out decimal proposedBudget))
+                {
+                    totalBudget = proposedBudget;
+                }
+
+                // Calculate the difference
+                decimal difference = weeklyBudget - totalBudget;
+
+                // Update the shortOverTextBox
+                shortOverTextBox.Text = difference.ToString("N2");
+            }
+            catch
+            {
+                shortOverTextBox.Text = "0.00";
+            }
+        }
+        private void proposedBudgetTextBox_TextChanged(object sender, EventArgs e)
+        {
+            CalculateShortOver();
         }
         private void KryptonDataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {

@@ -21,7 +21,8 @@ namespace PAFProject.Export
                 {
                     using (FileStream fs = new FileStream(saveFileDialog.FileName, FileMode.Create))
                     {
-                        Document document = new Document(PageSize.A4.Rotate(), 10f, 10f, 50f, 50f);
+                        // Changed to portrait by removing .Rotate()
+                        Document document = new Document(PageSize.A4, 25f, 25f, 50f, 50f);
                         PdfWriter writer = PdfWriter.GetInstance(document, fs);
 
                         // Open document
@@ -30,9 +31,18 @@ namespace PAFProject.Export
                         // Add header
                         AddHeader(document, branchName, week, weeklyBudget, proposedBudget, shortOver);
 
-                        // Add table
+                        // Add table with adjusted column count
                         PdfPTable table = new PdfPTable(dataGridView.Columns.Count);
                         table.WidthPercentage = 100;
+
+                        // Set relative column widths for better portrait layout
+                        float[] columnWidths = new float[dataGridView.Columns.Count];
+                        for (int i = 0; i < columnWidths.Length; i++)
+                        {
+                            // Make text columns slightly wider than number columns
+                            columnWidths[i] = (i <= 3 || i == 10) ? 1.5f : 1f;
+                        }
+                        table.SetWidths(columnWidths);
 
                         // Add headers
                         AddTableHeaders(table, dataGridView);
@@ -58,15 +68,14 @@ namespace PAFProject.Export
         private static void AddHeader(Document document, string branchName, string week,
             string weeklyBudget, string proposedBudget, string shortOver)
         {
-            // Using explicit iTextSharp.text.Font
-            iTextSharp.text.Font headerFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12f, iTextSharp.text.Font.BOLD);
-            iTextSharp.text.Font normalFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 10f, iTextSharp.text.Font.NORMAL);
+            // Adjusted font sizes for portrait layout
+            iTextSharp.text.Font headerFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 14f, iTextSharp.text.Font.BOLD);
+            iTextSharp.text.Font normalFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12f, iTextSharp.text.Font.NORMAL);
 
             Paragraph header = new Paragraph();
             header.Add(new Chunk($"Branch: {branchName}\n", headerFont));
             header.Add(new Chunk($"Week: {week}\n", normalFont));
 
-            // Handle potential empty or invalid strings
             decimal weeklyBudgetValue = 0;
             decimal proposedBudgetValue = 0;
             decimal shortOverValue = 0;
@@ -84,8 +93,8 @@ namespace PAFProject.Export
 
         private static void AddTableHeaders(PdfPTable table, KryptonDataGridView dataGridView)
         {
-            // Using explicit iTextSharp.text.Font
-            iTextSharp.text.Font headerFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 10f, iTextSharp.text.Font.BOLD);
+            // Adjusted font size for portrait layout
+            iTextSharp.text.Font headerFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 9f, iTextSharp.text.Font.BOLD);
 
             foreach (DataGridViewColumn column in dataGridView.Columns)
             {
@@ -93,7 +102,8 @@ namespace PAFProject.Export
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     BackgroundColor = new BaseColor(240, 240, 240),
-                    Padding = 5
+                    Padding = 4,
+                    MinimumHeight = 25f
                 };
                 table.AddCell(cell);
             }
@@ -101,7 +111,7 @@ namespace PAFProject.Export
 
         private static void AddTableData(PdfPTable table, KryptonDataGridView dataGridView)
         {
-            // Using explicit iTextSharp.text.Font
+            // Adjusted font size for portrait layout
             iTextSharp.text.Font cellFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8f, iTextSharp.text.Font.NORMAL);
 
             foreach (DataGridViewRow row in dataGridView.Rows)
@@ -110,7 +120,6 @@ namespace PAFProject.Export
                 {
                     string cellValue = cell.Value?.ToString() ?? "";
 
-                    // Try to format numeric values
                     if (decimal.TryParse(cellValue, out decimal numericValue))
                     {
                         cellValue = numericValue.ToString("N2");
@@ -121,7 +130,8 @@ namespace PAFProject.Export
                         HorizontalAlignment = cell.ColumnIndex <= 3 || cell.ColumnIndex == 10
                             ? Element.ALIGN_LEFT
                             : Element.ALIGN_RIGHT,
-                        Padding = 4
+                        Padding = 3,
+                        MinimumHeight = 20f
                     };
                     table.AddCell(pdfCell);
                 }

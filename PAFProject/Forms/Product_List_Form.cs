@@ -71,6 +71,7 @@ namespace PAFProject.Forms
                         _productDataAccess.GetManufacturerPartNumber(salesDesc),
                         _productDataAccess.GetPrefVendorRefFullName(salesDesc)
                     );
+                    this.Close();
                 }
                 catch (Exception ex)
                 {

@@ -30,14 +30,14 @@ namespace PAFProject.Models
                 using (var conn = _dbConnector.GetConnection())
                 {
                     conn.Open();
-                    string query = "SELECT branchName FROM yulitodb.branch WHERE isActive = 1";
+                    string query = "SELECT name FROM yulitodb.branch WHERE isActive = 1";
 
                     using (var cmd = new MySqlCommand(query, conn))
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            branches.Add(reader["branchName"].ToString());
+                            branches.Add(reader["name"].ToString());
                         }
                     }
                 }
