@@ -1,12 +1,14 @@
 ﻿//PurchaseLimitGridViewDesign.cs
 using Krypton.Toolkit;
 using PAFProject.Computations;
+using System.Diagnostics;
 
 public class PurchaseLimitGridViewDesign
 {
     public readonly KryptonDataGridView _dataGridView;
     private decimal _currentAverageDailySales = 0;
     private decimal _averageCost = 0;
+    private decimal _quantityOnHand = 0;
     private readonly PurchaseLimitComputation _purchaseLimitComputation;
     private string _userInput = "0";
     private string _currentLimitSelection = "7 Days";
@@ -30,7 +32,7 @@ public class PurchaseLimitGridViewDesign
         _userInput = userValue;
         if (_dataGridView.Rows.Count > 0)
         {
-            _dataGridView.Rows[0].Cells[1].Value = userValue;
+            _dataGridView.Rows[0].Cells[2].Value = userValue;
             UpdateTotal();
         }
     }
@@ -40,6 +42,11 @@ public class PurchaseLimitGridViewDesign
         _averageCost = averageCost;
         UpdateTotal();
     }
+    public void SetQuantityOnHand(decimal quantityOnHand)
+    {
+        _quantityOnHand = quantityOnHand;
+        UpdateAllowedPurchase();
+    }
     private void InitializeGridView()
     {
         // Configure grid properties
@@ -48,25 +55,28 @@ public class PurchaseLimitGridViewDesign
         _dataGridView.RowHeadersVisible = false;
         _dataGridView.RowHeadersWidth = 45;
         _dataGridView.ScrollBars = ScrollBars.None;
-        _dataGridView.Size = new System.Drawing.Size(279, 61);
         _dataGridView.BorderStyle = BorderStyle.None;
 
         // Configure columns
         if (_dataGridView.Columns.Count == 0)
         {
             _dataGridView.Columns.Add(CreateColumn("Column1", "System"));
-            _dataGridView.Columns.Add(CreateColumn("Column2", "User"));
-            _dataGridView.Columns.Add(CreateColumn("Column3", "Total"));
+            _dataGridView.Columns.Add(CreateColumn("Column2", "Allowed Purchase"));
+            _dataGridView.Columns.Add(CreateColumn("Column3", "User"));
+            _dataGridView.Columns.Add(CreateColumn("Column4", "Total"));
         }
+
         // Align text in all columns to the right
         _dataGridView.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
         _dataGridView.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
         _dataGridView.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+        _dataGridView.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
         // Configure column properties
         _dataGridView.Columns[0].ReadOnly = true;  // System column
-        _dataGridView.Columns[1].ReadOnly = false; // User column
-        _dataGridView.Columns[2].ReadOnly = true;  // Total column
+        _dataGridView.Columns[1].ReadOnly = true;  // Allowed Purchase column
+        _dataGridView.Columns[2].ReadOnly = false; // User column
+        _dataGridView.Columns[3].ReadOnly = true;  // Total column
 
         // Add a new row if none exists
         if (_dataGridView.Rows.Count == 0)
@@ -86,11 +96,35 @@ public class PurchaseLimitGridViewDesign
         {
             // Set the existing purchase limit as the system value
             _dataGridView.Rows[0].Cells[0].Value = purchaseLimit;
+            // Calculate Allowed Purchase (System - QuantityOnHand)
+            UpdateAllowedPurchase();
             // Set user input to 0 initially
-            _dataGridView.Rows[0].Cells[1].Value = "0";
+            _dataGridView.Rows[0].Cells[2].Value = "0";
             // Set total to match the purchase limit initially
-            _dataGridView.Rows[0].Cells[2].Value = purchaseLimit;
+            UpdateTotal();
             _userInput = "0"; // Reset user input
+        }
+    }
+    private void UpdateAllowedPurchase()
+    {
+        try
+        {
+            string systemValueStr = _dataGridView.Rows[0].Cells[0].Value?.ToString() ?? "0";
+
+            if (int.TryParse(systemValueStr, out int systemValue))
+            {
+                // Calculate allowed purchase (System - QuantityOnHand)
+                int allowedPurchase = Math.Max(0, systemValue - (int)_quantityOnHand);
+                _dataGridView.Rows[0].Cells[1].Value = allowedPurchase.ToString();
+            }
+            else
+            {
+                _dataGridView.Rows[0].Cells[1].Value = "0";
+            }
+        }
+        catch
+        {
+            _dataGridView.Rows[0].Cells[1].Value = "0";
         }
     }
     private void KryptonDataGridView1_KeyDown(object sender, KeyEventArgs e)
@@ -112,7 +146,7 @@ public class PurchaseLimitGridViewDesign
 
     private void KryptonDataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
     {
-        if (_dataGridView.CurrentCell.ColumnIndex == 1) // User column
+        if (_dataGridView.CurrentCell.ColumnIndex == 2) // User column (now index 2)
         {
             if (e.Control is TextBox tb)
             {
@@ -145,26 +179,25 @@ public class PurchaseLimitGridViewDesign
 
     private void KryptonDataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
     {
-        if (e.ColumnIndex == 1) // User column
+        if (e.ColumnIndex == 2) // User column (now index 2)
         {
             UpdateTotal();
         }
     }
 
-    //ETO RIN NEED PARA SA PURCHASE LIMIT BUKAS
     private void UpdateTotal()
     {
         try
         {
-            string systemValueStr = _dataGridView.Rows[0].Cells[0].Value?.ToString() ?? "0";
-            string userValueStr = _dataGridView.Rows[0].Cells[1].Value?.ToString() ?? "0";
+            string allowedPurchaseStr = _dataGridView.Rows[0].Cells[1].Value?.ToString() ?? "0";
+            string userValueStr = _dataGridView.Rows[0].Cells[2].Value?.ToString() ?? "0";
 
-            if (int.TryParse(systemValueStr, out int systemValue) &&
+            if (int.TryParse(allowedPurchaseStr, out int allowedPurchase) &&
                 int.TryParse(userValueStr, out int userValue))
             {
                 _userInput = userValue.ToString();
-                int total = Math.Max(0, systemValue + userValue);
-                _dataGridView.Rows[0].Cells[2].Value = total.ToString();
+                int total = Math.Max(0, allowedPurchase + userValue);
+                _dataGridView.Rows[0].Cells[3].Value = total.ToString();
 
                 var budgetComputation = new BudgetComputation();
                 string budget = budgetComputation.ComputeBudget(total, _averageCost);
@@ -173,12 +206,11 @@ public class PurchaseLimitGridViewDesign
         }
         catch
         {
-            _dataGridView.Rows[0].Cells[2].Value = "0";
+            _dataGridView.Rows[0].Cells[3].Value = "0";
             OnBudgetCalculated?.Invoke("0.00");
         }
     }
 
-    //SYSTEM VALUE KAILANGAN PARA BUKAS
     public void UpdateSystemValue(string limitSelectionText, decimal averageDailySales)
     {
         try
@@ -186,23 +218,27 @@ public class PurchaseLimitGridViewDesign
             _currentAverageDailySales = averageDailySales;
             _currentLimitSelection = limitSelectionText;
 
-            string currentUserInput = _dataGridView.Rows[0].Cells[1].Value?.ToString() ?? "0";
-
             int days = _purchaseLimitComputation.GetDaysFromSelection(limitSelectionText);
             int newPurchaseLimit = _purchaseLimitComputation.ComputePurchaseLimit(averageDailySales, days);
 
-            _dataGridView.Rows[0].Cells[0].Value = newPurchaseLimit.ToString();
-            _dataGridView.Rows[0].Cells[1].Value = currentUserInput;
+            // Debugging line: Verify values being computed
+            Debug.WriteLine($"Recomputing with {days} days, Avg Sales: {averageDailySales}, New Limit: {newPurchaseLimit}");
 
+            _dataGridView.Rows[0].Cells[0].Value = newPurchaseLimit.ToString();
+            _dataGridView.Rows[0].Cells[2].Value = _userInput;
+
+            UpdateAllowedPurchase();
             UpdateTotal();
         }
         catch
         {
             _dataGridView.Rows[0].Cells[0].Value = "0";
-            _dataGridView.Rows[0].Cells[1].Value = _userInput;
+            _dataGridView.Rows[0].Cells[1].Value = "0";
+            _dataGridView.Rows[0].Cells[2].Value = _userInput;
             UpdateTotal();
         }
     }
+
 
     private DataGridViewTextBoxColumn CreateColumn(string name, string headerText)
     {

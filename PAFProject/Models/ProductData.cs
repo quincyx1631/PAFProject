@@ -2,17 +2,17 @@
 {
     public class ProductData
     {
-        public string Description { get; set; }
-        public string BarCode { get; set; }
-        public string AverageDaily { get; set; }
-        public string PrefVendor { get; set; }
-        public string QuantityOnHand { get; set; }
-        public string DaysToGo { get; set; }
-        public string OverShortStocks { get; set; }
-        public string PurchaseLimit { get; set; }
-        public string AveragePrice { get; set; }
-        public string BudgetAmount { get; set; }
-        public string Remarks { get; set; }
+        public string? Description { get; set; }
+        public string? BarCode { get; set; }
+        public string? AverageDaily { get; set; }
+        public string? PrefVendor { get; set; }
+        public string? QuantityOnHand { get; set; }
+        public string? DaysToGo { get; set; }
+        public string? OverShortStocks { get; set; }
+        public string? PurchaseLimit { get; set; }
+        public string? AveragePrice { get; set; }
+        public string? BudgetAmount { get; set; }
+        public string? Remarks { get; set; }
     }
 
     public static class ProductDataManager

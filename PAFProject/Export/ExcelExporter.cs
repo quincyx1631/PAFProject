@@ -4,10 +4,22 @@ namespace PAFProject.Export
 {
     public class ExcelExporter
     {
-        public static void ExportToExcel(DataGridView dataGridView, string branchName, string week, string weeklyBudget, string proposedBudget, string shortOver)
+        public static void ExportToExcel(DataGridView dataGridView, string filePath, string branchName,
+    string week, string date, string weeklyBudget, string proposedBudget, string shortOver)
         {
             try
             {
+                // Validate input parameters
+                if (string.IsNullOrWhiteSpace(branchName) || string.IsNullOrWhiteSpace(week))
+                {
+                    throw new ArgumentException("Branch name and week are required.");
+                }
+
+                if (dataGridView == null || dataGridView.Rows.Count == 0)
+                {
+                    throw new ArgumentException("DataGridView cannot be empty.");
+                }
+
                 using (var workbook = new XLWorkbook())
                 {
                     var worksheet = workbook.Worksheets.Add("Purchase Approval");
@@ -30,6 +42,11 @@ namespace PAFProject.Export
                     worksheet.Cell(2, 2).Value = branchName;
                     worksheet.Cell(2, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
 
+                    worksheet.Cell(3, 1).Value = "Date:";
+                    worksheet.Cell(3, 2).Value = date;
+                    worksheet.Cell(3, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
+
+                    worksheet.Cell(3, 2).Style.Fill.BackgroundColor = XLColor.Yellow;
                     worksheet.Cell(2, 2).Style.Fill.BackgroundColor = XLColor.Yellow;
                     worksheet.Cell(4, 2).Style.Fill.BackgroundColor = XLColor.Yellow;
 
@@ -100,6 +117,9 @@ namespace PAFProject.Export
                     // ----------------------------
                     for (int i = 0; i < dataGridView.Rows.Count; i++)
                     {
+                        // Set entire row to have middle vertical alignment
+                        var rowNum = i + dataStartRow;
+                        worksheet.Row(rowNum).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
                         // Insert serial number in the first column ("No.")
                         var noCell = worksheet.Cell(i + dataStartRow, 1);
                         noCell.Value = (i + 1).ToString();
@@ -118,8 +138,11 @@ namespace PAFProject.Export
 
                                 int[] targetColumnsRight = { 4, 5, 6, 7, 8, 9 };
                                 int[] targetColumnLeft = { 0, 2, 3, 10 };
-                                // For example, if column index 9 (j==8) is a currency value,
-                                // align it to the right and color negatives red.
+
+                                if (j == dataGridView.Columns.Count - 1)
+                                {
+                                    cell.Style.Alignment.WrapText = true;
+                                }
                                 if (targetColumnsRight.Contains(j))
                                 {
                                     cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
@@ -147,8 +170,8 @@ namespace PAFProject.Export
                     worksheet.Column(1).Width = 10;   // "No." Column
                     worksheet.Column(2).AdjustToContents();// Description column
                     worksheet.Column(3).Width = 25;  // Bar Code column
-                    worksheet.Column(4).Width = 25; // Pref Vendor
-                    worksheet.Column(5).Width = 30;  // Average Daily column
+                    worksheet.Column(4).Width = 30; // Average Daily column
+                    worksheet.Column(5).Width = 25;  // Pref Vendor
                     worksheet.Column(6).Width = 20;  // Qty On Hand
                     worksheet.Column(7).Width = 20;  // Days to Go
                     worksheet.Column(8).Width = 20;  // Over/Short Stocks   
@@ -157,20 +180,16 @@ namespace PAFProject.Export
                     worksheet.Column(11).Width = 20; // Budget Amount
                     worksheet.Column(12).Width = 40; // Remarks
 
-                    // Ensure the entire column (all rows) adjusts to content
-
-
                     // Save File
-                    string fileName = $"PurchaseApprovalForm_{DateTime.Now:yyyyMMdd}.xlsx";
-                    string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), fileName);
-
                     workbook.SaveAs(filePath);
-                    MessageBox.Show($"Excel file saved to {filePath}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Excel file exported successfully!", "Success",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error exporting to Excel: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw;
             }
         }
     }

@@ -1,7 +1,4 @@
 ﻿using MaterialSkin.Controls;
-using System;
-using System.Windows.Forms;
-using PAFProject.Models;
 using MySql.Data.MySqlClient;
 using PAFProject.Database;
 
@@ -36,12 +33,12 @@ namespace PAFProject.Forms
                 using (var conn = _dbConnector.GetConnection())
                 {
                     conn.Open();
-                    string query = @"INSERT INTO yulitodb.branch (name, location, isActive) VALUES (@name, @location, 1)";
+                    string query = @"INSERT INTO yulitodb.branch (name, address, isActive) VALUES (@name, @address, 1)";
 
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@name", branchName);
-                        cmd.Parameters.AddWithValue("@location", string.IsNullOrEmpty(branchLocation) ? DBNull.Value : branchLocation);
+                        cmd.Parameters.AddWithValue("@address", string.IsNullOrEmpty(branchLocation) ? DBNull.Value : branchLocation);
 
                         int rowsAffected = cmd.ExecuteNonQuery();
                         if (rowsAffected > 0)

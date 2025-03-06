@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PAFProject.Models
+﻿namespace PAFProject.Models
 {
     public class SelectedProduct
     {
@@ -18,10 +12,11 @@ namespace PAFProject.Models
         public string PrefVendor { get; set; }
         public string UserValue { get; set; }
         public string SystemValue { get; set; }
+        public string AllowedPurchase { get; set; } // New property
         public string TotalValue { get; set; }
         public string BudgetAmount { get; set; }
         public string Remarks { get; set; }
-        public string LimitSelection { get; set; } = "7 Days";
-        public bool IsThreeMonthPeriod { get; set; } = true;
+        public string LimitSelection { get; set; }
+        public bool IsThreeMonthPeriod { get; set; }
     }
 }

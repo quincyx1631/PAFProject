@@ -33,7 +33,7 @@ namespace PAFProject.Design
                     branchItem.Click += (s, e) =>
                     {
                         _branchSelectDropdown.Values.Text = branch;
-                        _branchNameTextBox.Text = branch;  // Update the textbox text
+                        _branchNameTextBox.Text = branch;
                     };
                     menuItems.Items.Add(branchItem);
                 }

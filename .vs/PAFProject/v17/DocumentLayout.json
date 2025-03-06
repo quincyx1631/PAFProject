@@ -3,38 +3,50 @@
   "WorkspaceRootPath": "C:\\Users\\admin\\source\\repos\\PAFProject\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\export\\excelexporter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\export\\excelexporter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\forms\\product_list_form.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\forms\\product_list_form.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\models\\salesmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\models\\salesmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|c:\\users\\admin\\source\\repos\\pafproject\\pafproject\\database\\databaseconnector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}|PAFProject\\PAFProject.csproj|solutionrelative:pafproject\\database\\databaseconnector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
     {
-      "Orientation": 0,
+      "Orientation": 1,
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "DockedHeight": 248,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ExcelExporter.cs",
-              "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Export\\ExcelExporter.cs",
-              "RelativeDocumentMoniker": "PAFProject\\Export\\ExcelExporter.cs",
-              "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Export\\ExcelExporter.cs",
-              "RelativeToolTip": "PAFProject\\Export\\ExcelExporter.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAANAAAAAAAAAA==",
+              "Title": "Product_List_Form.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Forms\\Product_List_Form.cs",
+              "RelativeDocumentMoniker": "PAFProject\\Forms\\Product_List_Form.cs",
+              "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Forms\\Product_List_Form.cs",
+              "RelativeToolTip": "PAFProject\\Forms\\Product_List_Form.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-19T03:01:04.3Z",
+              "WhenOpened": "2025-03-06T00:31:52.939Z",
               "EditorCaption": ""
             },
             {
@@ -45,10 +57,58 @@
               "RelativeDocumentMoniker": "PAFProject\\Main.cs",
               "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Main.cs",
               "RelativeToolTip": "PAFProject\\Main.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJgAAAA/AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-19T02:51:07.244Z",
+              "WhenOpened": "2025-03-06T00:31:19.275Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DatabaseConnector.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Database\\DatabaseConnector.cs",
+              "RelativeDocumentMoniker": "PAFProject\\Database\\DatabaseConnector.cs",
+              "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Database\\DatabaseConnector.cs",
+              "RelativeToolTip": "PAFProject\\Database\\DatabaseConnector.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-28T03:58:49.196Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SalesModel.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Models\\SalesModel.cs",
+              "RelativeDocumentMoniker": "PAFProject\\Models\\SalesModel.cs",
+              "ToolTip": "C:\\Users\\admin\\source\\repos\\PAFProject\\PAFProject\\Models\\SalesModel.cs",
+              "RelativeToolTip": "PAFProject\\Models\\SalesModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADQAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-28T03:58:39.462Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedHeight": 84,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:3:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             }
           ]
         }

@@ -17,7 +17,9 @@ namespace PAFProject
             InitializeComponent();
             weeklyBudgetTextBox.Text = Settings.Default.WeeklyBudget.ToString("N2");
             selectButton.Click += new System.EventHandler(this.selectButton_Click);
-            addBranch.Click += new System.EventHandler(this.AddBranch_Click);
+            //addBranch.Click += new System.EventHandler(this.AddBranch_Click);
+
+            dateTextBox.Text = DateTime.Now.ToString("MM/dd/yyyy");
 
             ProductDataManager.OnProductAdded += HandleNewProduct;
             ProductDataManager.OnProposedBudget += UpdateProposedBudget;
@@ -68,17 +70,17 @@ namespace PAFProject
 
                 var currentProduct = new ProductData
                 {
-                    Description = kryptonDataGridView1.Rows[e.RowIndex].Cells[0].Value?.ToString(),
-                    BarCode = kryptonDataGridView1.Rows[e.RowIndex].Cells[1].Value?.ToString(),
-                    AverageDaily = kryptonDataGridView1.Rows[e.RowIndex].Cells[2].Value?.ToString(),
-                    PrefVendor = kryptonDataGridView1.Rows[e.RowIndex].Cells[3].Value?.ToString(),
-                    QuantityOnHand = kryptonDataGridView1.Rows[e.RowIndex].Cells[4].Value?.ToString(),
-                    DaysToGo = kryptonDataGridView1.Rows[e.RowIndex].Cells[5].Value?.ToString(),
-                    OverShortStocks = kryptonDataGridView1.Rows[e.RowIndex].Cells[6].Value?.ToString(),
-                    PurchaseLimit = kryptonDataGridView1.Rows[e.RowIndex].Cells[7].Value?.ToString(),
-                    AveragePrice = kryptonDataGridView1.Rows[e.RowIndex].Cells[8].Value?.ToString(),
-                    BudgetAmount = kryptonDataGridView1.Rows[e.RowIndex].Cells[9].Value?.ToString(),
-                    Remarks = kryptonDataGridView1.Rows[e.RowIndex].Cells[10].Value?.ToString()
+                    Description = kryptonDataGridView1.Rows[e.RowIndex].Cells[0].Value?.ToString() ?? string.Empty,
+                    BarCode = kryptonDataGridView1.Rows[e.RowIndex].Cells[1].Value?.ToString() ?? string.Empty,
+                    AverageDaily = kryptonDataGridView1.Rows[e.RowIndex].Cells[2].Value?.ToString() ?? string.Empty,
+                    PrefVendor = kryptonDataGridView1.Rows[e.RowIndex].Cells[3].Value?.ToString() ?? string.Empty,
+                    QuantityOnHand = kryptonDataGridView1.Rows[e.RowIndex].Cells[4].Value?.ToString() ?? string.Empty,
+                    DaysToGo = kryptonDataGridView1.Rows[e.RowIndex].Cells[5].Value?.ToString() ?? string.Empty,
+                    OverShortStocks = kryptonDataGridView1.Rows[e.RowIndex].Cells[6].Value?.ToString() ?? string.Empty,
+                    PurchaseLimit = kryptonDataGridView1.Rows[e.RowIndex].Cells[7].Value?.ToString() ?? string.Empty,
+                    AveragePrice = kryptonDataGridView1.Rows[e.RowIndex].Cells[8].Value?.ToString() ?? string.Empty,
+                    BudgetAmount = kryptonDataGridView1.Rows[e.RowIndex].Cells[9].Value?.ToString() ?? string.Empty,
+                    Remarks = kryptonDataGridView1.Rows[e.RowIndex].Cells[10].Value?.ToString() ?? string.Empty
                 };
 
                 Select_Product_Form selectProductForm = new Select_Product_Form(this, currentProduct, selectedRowIndex);
@@ -145,29 +147,208 @@ namespace PAFProject
             kryptonDataGridView1.Columns[10].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft; // Remarks
         }
 
-        private void ProcessButton_Click(object sender, EventArgs e)
+        private async void ProcessButton_Click(object sender, EventArgs e)
         {
-            string branchName = branchNameLabel.Text;
-            string week = weekTextBox.Text;
-            string weeklyBudget = weeklyBudgetTextBox.Text;
-            string proposedBudget = proposedBudgetTextBox.Text;
-            string shortOver = shortOverTextBox.Text;
+            try
+            {
+                // Validate TextBoxes
+                List<string> emptyFields = new List<string>();
 
-            ExcelExporter.ExportToExcel(kryptonDataGridView1, branchName, week, weeklyBudget, proposedBudget, shortOver);
+                if (string.IsNullOrWhiteSpace(branchNameLabel.Text))
+                    emptyFields.Add("Branch Name");
+                if (string.IsNullOrWhiteSpace(weekTextBox.Text))
+                    emptyFields.Add("Week");
+                if (string.IsNullOrWhiteSpace(weeklyBudgetTextBox.Text))
+                    emptyFields.Add("Weekly Budget");
+                if (string.IsNullOrWhiteSpace(dateTextBox.Text))
+                    emptyFields.Add("Date");
+                if (string.IsNullOrWhiteSpace(proposedBudgetTextBox.Text))
+                    emptyFields.Add("Proposed Budget");
+                if (string.IsNullOrWhiteSpace(shortOverTextBox.Text))
+                    emptyFields.Add("Short/Over");
+
+                // Validate DataGridView
+                bool hasValidData = false;
+                if (kryptonDataGridView1.Rows.Count > 0)
+                {
+                    foreach (DataGridViewRow row in kryptonDataGridView1.Rows)
+                    {
+                        bool rowHasValue = false;
+                        foreach (DataGridViewCell cell in row.Cells)
+                        {
+                            if (cell.Value != null && !string.IsNullOrWhiteSpace(cell.Value.ToString()))
+                            {
+                                rowHasValue = true;
+                                break;
+                            }
+                        }
+                        if (rowHasValue)
+                        {
+                            hasValidData = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!hasValidData)
+                    emptyFields.Add("DataGridView (no data available)");
+
+                // Show error if validation fails
+                if (emptyFields.Count > 0)
+                {
+                    string errorMessage = "The following required fields are empty or missing:\n\n";
+                    errorMessage += string.Join("\n", emptyFields);
+                    errorMessage += "\n\nPlease fill in all required fields before exporting to Excel.";
+
+                    MessageBox.Show(errorMessage, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Proceed with Excel export if validation passes
+                this.Cursor = Cursors.WaitCursor;
+                processButton.Enabled = false;
+                string branchName = branchNameLabel.Text;
+                string week = weekTextBox.Text;
+                string date = dateTextBox.Text;
+                string weeklyBudget = weeklyBudgetTextBox.Text;
+                string proposedBudget = proposedBudgetTextBox.Text;
+                string shortOver = shortOverTextBox.Text;
+                string defaultFileName = $"PurchaseApprovalForm_{DateTime.Now:yyyyMMdd}.xlsx";
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "Excel files (*.xlsx)|*.xlsx",
+                    FileName = defaultFileName
+                };
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    await Task.Run(() =>
+                    {
+                        this.Invoke(new Action(() =>
+                        {
+                            ExcelExporter.ExportToExcel(kryptonDataGridView1, saveFileDialog.FileName,
+                                branchName, week, date, weeklyBudget, proposedBudget, shortOver);
+                        }));
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error during export: " + ex.Message, "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                this.Invoke(new Action(() =>
+                {
+                    this.Cursor = Cursors.Default;
+                    processButton.Enabled = true;
+                }));
+            }
         }
-        private void pdfButton_Click(object sender, EventArgs e)
-        {
-            string branchName = branchNameLabel.Text;
-            string week = weekTextBox.Text;
-            string weeklyBudget = weeklyBudgetTextBox.Text;
-            string proposedBudget = proposedBudgetTextBox.Text;
-            string shortOver = shortOverTextBox.Text;
 
-            PdfExporter.ExportToPdf(kryptonDataGridView1, branchName, week, weeklyBudget, proposedBudget, shortOver);
+        private async void pdfButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Validate TextBoxes
+                List<string> emptyFields = new List<string>();
+
+                if (string.IsNullOrWhiteSpace(branchNameLabel.Text))
+                    emptyFields.Add("Branch Name");
+                if (string.IsNullOrWhiteSpace(weekTextBox.Text))
+                    emptyFields.Add("Week");
+                if (string.IsNullOrWhiteSpace(dateTextBox.Text))
+                    emptyFields.Add("Date");
+                if (string.IsNullOrWhiteSpace(weeklyBudgetTextBox.Text))
+                    emptyFields.Add("Weekly Budget");
+                if (string.IsNullOrWhiteSpace(proposedBudgetTextBox.Text))
+                    emptyFields.Add("Proposed Budget");
+                if (string.IsNullOrWhiteSpace(shortOverTextBox.Text))
+                    emptyFields.Add("Short/Over");
+
+                // Validate DataGridView
+                bool hasValidData = false;
+                if (kryptonDataGridView1.Rows.Count > 0)
+                {
+                    foreach (DataGridViewRow row in kryptonDataGridView1.Rows)
+                    {
+                        bool rowHasValue = false;
+                        foreach (DataGridViewCell cell in row.Cells)
+                        {
+                            if (cell.Value != null && !string.IsNullOrWhiteSpace(cell.Value.ToString()))
+                            {
+                                rowHasValue = true;
+                                break;
+                            }
+                        }
+                        if (rowHasValue)
+                        {
+                            hasValidData = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!hasValidData)
+                    emptyFields.Add("DataGridView (no data available)");
+
+                // Show error if validation fails
+                if (emptyFields.Count > 0)
+                {
+                    string errorMessage = "The following required fields are empty or missing:\n\n";
+                    errorMessage += string.Join("\n", emptyFields);
+                    errorMessage += "\n\nPlease fill in all required fields before exporting to PDF.";
+
+                    MessageBox.Show(errorMessage, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Proceed with PDF export if validation passes
+                this.Cursor = Cursors.WaitCursor;
+                PDFButton.Enabled = false;
+                string branchName = branchNameLabel.Text;
+                string week = weekTextBox.Text;
+                string date = dateTextBox.Text;
+                string weeklyBudget = weeklyBudgetTextBox.Text;
+                string proposedBudget = proposedBudgetTextBox.Text;
+                string shortOver = shortOverTextBox.Text;
+                string defaultFileName = $"PurchaseApprovalForm_{DateTime.Now:yyyyMMdd}.pdf";
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "PDF files (*.pdf)|*.pdf",
+                    FileName = defaultFileName
+                };
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    await Task.Run(() =>
+                    {
+                        this.Invoke(new Action(() =>
+                        {
+                            PdfExporter.ExportToPdf(kryptonDataGridView1, saveFileDialog.FileName,
+                                branchName, week, date, weeklyBudget, proposedBudget, shortOver);
+                        }));
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error during export: " + ex.Message, "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                this.Invoke(new Action(() =>
+                {
+                    this.Cursor = Cursors.Default;
+                    PDFButton.Enabled = true;
+                }));
+            }
         }
 
         private void UpdateProposedBudget(decimal totalBudget)
-        {   
+        {
             if (this.InvokeRequired)
             {
                 this.Invoke(new Action<decimal>(UpdateProposedBudget), totalBudget);
@@ -182,7 +363,7 @@ namespace PAFProject
             {
                 Select_Product_Form selectProductForm = new Select_Product_Form(this);
                 selectProductForm.EnableEdit();
-                selectProductForm.Show();
+                selectProductForm.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -255,12 +436,12 @@ namespace PAFProject
             if (e.RowIndex >= 0)
             {
                 selectedRowIndex = e.RowIndex;
-                deleteButton.Visible = true; 
+                deleteButton.Visible = true;
             }
             else
             {
                 selectedRowIndex = -1;
-                deleteButton.Visible = false; 
+                deleteButton.Visible = false;
             }
         }
         private void DeleteButton_Click(object sender, EventArgs e)
@@ -270,9 +451,8 @@ namespace PAFProject
                 // Remove the selected row
                 kryptonDataGridView1.Rows.RemoveAt(selectedRowIndex);
                 selectedRowIndex = -1;
-                deleteButton.Visible = false; 
+                deleteButton.Visible = false;
 
-                // Recalculate total budget
                 UpdateTotalBudget();
             }
         }
@@ -294,29 +474,19 @@ namespace PAFProject
             // Trigger weekly budget computation
             weeklyBudgetTextBox_TextChanged(this, EventArgs.Empty);
         }
-        private void AddBranch_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Add_Branch_Form addBranchForm = new Add_Branch_Form(this);
-                addBranchForm.Show();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error opening Add Branch Form: " + ex.Message);
-            }
-        }
+        //private void AddBranch_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        Add_Branch_Form addBranchForm = new Add_Branch_Form(this);
+        //        addBranchForm.Show();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("Error opening Add Branch Form: " + ex.Message);
+        //    }
+        //}
         private void Main_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void kryptonTextBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void kryptonTextBox3_TextChanged(object sender, EventArgs e)
         {
 
         }

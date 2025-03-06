@@ -3,6 +3,7 @@ using MaterialSkin.Controls;
 using PAFProject.Computations;
 using PAFProject.Design;
 using PAFProject.Models;
+using System.Text;
 namespace PAFProject.Forms
 {
     public partial class Select_Product_Form : MaterialForm
@@ -14,9 +15,7 @@ namespace PAFProject.Forms
         private ProductData _editingProduct;
         private AverageDailySalesComputation _avgDailySalesComputation;
         private int? _editingIndex;
-
         private List<SelectedProduct> selectedProducts = new List<SelectedProduct>();
-
         private int currentProductIndex = -1;
 
         public Select_Product_Form(Main mainForm, ProductData editingProduct = null, int? editingIndex = null)
@@ -40,10 +39,42 @@ namespace PAFProject.Forms
             }
             InitializeProductListSelection();
         }
-        public void AddSelectedProduct(string description, decimal avgDaily, decimal qtyOnHand,
-     string daysToGo, string overShort, decimal avgCost, string barCode, string prefVendor)
+        private bool IsQuantityExceedingLimit(decimal quantityOnHand, int systemValue)
         {
-            SaveCurrentFormValues();
+            return quantityOnHand > systemValue;
+        }
+        private string GenerateWarningMessage(decimal quantityOnHand, int systemValue, string allowedPurchase)
+        {
+            // If the user has manually set an Allowed Purchase value that's not zero
+            if (!string.IsNullOrEmpty(allowedPurchase) && decimal.TryParse(allowedPurchase, out decimal allowedValue) && allowedValue > 0)
+            {
+                // Don't show warning when user has manually set an Allowed Purchase
+                return "";
+            }
+
+            if (IsQuantityExceedingLimit(quantityOnHand, systemValue))
+            {
+                return "WARNING: You have enough STOCKS ON HAND, It exceeds purchase limit";
+            }
+
+            return "";
+        }
+        public void AddSelectedProduct(string description, decimal avgDaily, decimal qtyOnHand,
+    string daysToGo, string overShort, decimal avgCost, string barCode, string prefVendor)
+        {
+            // First clear any existing remarks/warnings since we're adding a new or updating a product
+            remarksTextBox.Text = "";
+            remarksTextBox.ForeColor = SystemColors.WindowText;
+
+            // Default for new products
+            string limitSelectionValue = "7 Days";
+
+            int existingIndex = selectedProducts.FindIndex(p => p.Description == description);
+            if (existingIndex >= 0)
+            {
+                // For existing products, preserve their limit selection
+                limitSelectionValue = selectedProducts[existingIndex].LimitSelection;
+            }
 
             var product = new SelectedProduct
             {
@@ -57,15 +88,15 @@ namespace PAFProject.Forms
                 PrefVendor = prefVendor,
                 UserValue = "0",
                 Remarks = "",
-                LimitSelection = limitSelectionDropdown.Values.Text,
+                LimitSelection = limitSelectionValue,
                 IsThreeMonthPeriod = monthlyDropdown.Values.Text == "3 Months"
             };
 
-            int existingIndex = selectedProducts.FindIndex(p => p.Description == description);
             if (existingIndex >= 0)
             {
                 product.UserValue = selectedProducts[existingIndex].UserValue;
                 product.SystemValue = selectedProducts[existingIndex].SystemValue;
+                product.AllowedPurchase = selectedProducts[existingIndex].AllowedPurchase;
                 product.TotalValue = selectedProducts[existingIndex].TotalValue;
                 product.BudgetAmount = selectedProducts[existingIndex].BudgetAmount;
                 product.Remarks = selectedProducts[existingIndex].Remarks;
@@ -76,6 +107,7 @@ namespace PAFProject.Forms
             }
             else
             {
+                limitSelectionDropdown.Values.Text = "7 Days";
                 selectedProducts.Add(product);
                 productListSelection.Rows.Add(description);
                 currentProductIndex = selectedProducts.Count - 1;
@@ -88,42 +120,67 @@ namespace PAFProject.Forms
             }
 
             PopulateFormWithSelectedData(currentProductIndex);
+
             // Calculate initial purchase limit based on average daily sales and selected period
             var purchaseLimitComputation = new PurchaseLimitComputation();
             int days = purchaseLimitComputation.GetDaysFromSelection(limitSelectionDropdown.Values.Text);
             int systemValue = purchaseLimitComputation.ComputePurchaseLimit(avgDaily, days);
 
-            // Update the grid with the system value
+            // Update the grid with the system value and quantity on hand
+            _gridViewDesign.SetQuantityOnHand(qtyOnHand);
             _gridViewDesign.UpdateSystemValue(limitSelectionDropdown.Values.Text, avgDaily);
             _gridViewDesign.SetAverageCost(avgCost);
 
             // Get the total value from the grid after it's updated
             if (_gridViewDesign._dataGridView.Rows.Count > 0)
             {
-                var totalValueCell = _gridViewDesign._dataGridView.Rows[0].Cells[2].Value;
+                var totalValueCell = _gridViewDesign._dataGridView.Rows[0].Cells[3].Value; // Now column 3 is Total
                 if (totalValueCell != null && decimal.TryParse(totalValueCell.ToString(), out decimal totalValue))
                 {
                     // Calculate and update budget amount
                     decimal budgetAmount = totalValue * avgCost;
                     UpdateBudgetAmount(budgetAmount.ToString("N2"));
 
-                    // Update the product's budget amount in the list
+                    // Update the product's values in the list
                     if (currentProductIndex >= 0 && currentProductIndex < selectedProducts.Count)
                     {
+                        var allowedPurchaseCell = _gridViewDesign._dataGridView.Rows[0].Cells[1].Value;
+                        string allowedPurchaseValue = allowedPurchaseCell?.ToString() ?? "0";
+
                         selectedProducts[currentProductIndex].BudgetAmount = budgetAmount.ToString("N2");
                         selectedProducts[currentProductIndex].SystemValue = systemValue.ToString();
+                        selectedProducts[currentProductIndex].AllowedPurchase = allowedPurchaseValue;
                         selectedProducts[currentProductIndex].TotalValue = totalValue.ToString();
+
+                        // Check if we need to add a warning message, considering the allowed purchase value
+                        string warningMessage = GenerateWarningMessage(qtyOnHand, systemValue, allowedPurchaseValue);
+                        if (!string.IsNullOrEmpty(warningMessage))
+                        {
+                            // Add the warning to remarks
+                            remarksTextBox.Text = warningMessage;
+                            selectedProducts[currentProductIndex].Remarks = warningMessage;
+                            remarksTextBox.ForeColor = Color.Red;
+                        }
+                        else if (remarksTextBox.Text.Contains("WARNING:"))
+                        {
+                            // Clear the warning if it exists
+                            remarksTextBox.Text = remarksTextBox.Text.Replace("WARNING: You have enough STOCKS ON HAND, It exceeds purchase limit", "").Trim();
+                            remarksTextBox.ForeColor = SystemColors.WindowText;
+                            selectedProducts[currentProductIndex].Remarks = remarksTextBox.Text;
+                        }
                     }
                 }
             }
-            }
+            limitSelectionDropdown.Values.Text = product.LimitSelection;
+        }
 
         private void PopulateFormWithSelectedData(int index)
         {
             if (index >= 0 && index < selectedProducts.Count)
             {
                 var product = selectedProducts[index];
-
+                // Use the precise average daily sales value
+                _currentAverageDailySales = _avgDailySalesComputation.GetPreciseAverageDailySales(product.Description);
                 nameTextBox.Text = product.Description;
                 string formattedAverageDailySales = _avgDailySalesComputation.ComputeAverageDailySalesFromValue(product.AverageDaily);
                 avgTextBox.Text = formattedAverageDailySales;
@@ -137,9 +194,42 @@ namespace PAFProject.Forms
                 monthlyDropdown.Values.Text = product.IsThreeMonthPeriod ? "3 Months" : "6 Months";
 
                 _gridViewDesign.SetLimitSelection(product.LimitSelection);
+                _gridViewDesign.SetQuantityOnHand(product.QuantityOnHand);
                 _gridViewDesign.UpdateSystemValue(product.LimitSelection, product.AverageDaily);
                 _gridViewDesign.SetUserInput(product.UserValue ?? "0");
                 _gridViewDesign.SetAverageCost(product.AverageCost);
+
+                // Get the current system value and check if warning is needed
+                string systemValueStr = _gridViewDesign._dataGridView.Rows[0].Cells[0].Value?.ToString() ?? "0";
+                string allowedPurchaseValue = _gridViewDesign._dataGridView.Rows[0].Cells[1].Value?.ToString() ?? "0";
+
+                if (int.TryParse(systemValueStr, out int systemValue))
+                {
+                    string warningMessage = GenerateWarningMessage(product.QuantityOnHand, systemValue, allowedPurchaseValue);
+
+                    // Clear any existing warning regardless of the outcome
+                    if (remarksTextBox.Text.Contains("WARNING: You have enough STOCKS ON HAND"))
+                    {
+                        remarksTextBox.Text = remarksTextBox.Text.Replace("WARNING: You have enough STOCKS ON HAND, It exceeds purchase limit\n\n", "")
+                                                               .Replace("WARNING: You have enough STOCKS ON HAND, It exceeds purchase limit", "")
+                                                               .Trim();
+                    }
+
+                    if (!string.IsNullOrEmpty(warningMessage))
+                    {
+                        // Add the warning to remarks if not already present
+                        remarksTextBox.Text = warningMessage +
+                            (string.IsNullOrEmpty(remarksTextBox.Text) ? "" : "\n\n" + remarksTextBox.Text);
+
+                        // Highlight the warning message visually
+                        remarksTextBox.ForeColor = Color.Red;
+                    }
+                    else
+                    {
+                        // Reset color if there's no warning
+                        remarksTextBox.ForeColor = SystemColors.WindowText;
+                    }
+                }
 
                 budgetAmountTextBox.Text = product.BudgetAmount ?? "0.00";
             }
@@ -162,7 +252,13 @@ namespace PAFProject.Forms
             limitSelectionDropdown.TextChanged += LimitSelectionDropdown_TextChanged;
             _gridViewDesign.OnBudgetCalculated += UpdateBudgetAmount;
 
-            MonthsDropdownManager.InitializeMonthlyDropdown(monthlyDropdown, (isThreeMonths) => {
+            if (string.IsNullOrEmpty(limitSelectionDropdown.Values.Text))
+            {
+                limitSelectionDropdown.Values.Text = "7 Days";
+            }
+
+            MonthsDropdownManager.InitializeMonthlyDropdown(monthlyDropdown, (isThreeMonths) =>
+            {
                 if (currentProductIndex >= 0 && currentProductIndex < selectedProducts.Count)
                 {
                     selectedProducts[currentProductIndex].IsThreeMonthPeriod = isThreeMonths;
@@ -197,55 +293,30 @@ namespace PAFProject.Forms
             MonthsDropdownManager.InitializeMonthlyDropdown(monthlyDropdown, UpdateAverageDailySalesCalculation);
             LimitSelectionDropdown.InitializeMonthlyDropdown(limitSelectionDropdown);
         }
-        public void ClearAllTextBoxes()
+
+        private List<string> GetProductsWithWarnings()
         {
-            if (this.InvokeRequired)
+            List<string> productsWithWarnings = new List<string>();
+
+            foreach (var product in selectedProducts)
             {
-                this.Invoke(new Action(() =>
+                // Check if there's a non-zero allowed purchase value
+                if (!string.IsNullOrEmpty(product.AllowedPurchase) &&
+                    decimal.TryParse(product.AllowedPurchase, out decimal allowedValue) &&
+                    allowedValue > 0)
                 {
-                    nameTextBox.Clear();
-                    avgTextBox.Clear();
-                    qtyTextBox.Clear();
-                    daysTGTextBox.Clear();
-                    overShortSTextBox.Clear();
-                    AVGPriceTextBox.Clear();
-                    budgetAmountTextBox.Clear();
-                    remarksTextBox.Clear();
-                }));
+                    // Skip warning check if allowed purchase is set
+                    continue;
+                }
+
+                if (int.TryParse(product.SystemValue, out int systemValue) &&
+                    IsQuantityExceedingLimit(product.QuantityOnHand, systemValue))
+                {
+                    productsWithWarnings.Add(product.Description);
+                }
             }
-            else
-            {
-                nameTextBox.Clear();
-                avgTextBox.Clear();
-                qtyTextBox.Clear();
-                daysTGTextBox.Clear();
-                overShortSTextBox.Clear();
-                AVGPriceTextBox.Clear();
-                budgetAmountTextBox.Clear();
-                remarksTextBox.Clear();
-            }
-        }
-        public void UpdateProductName(string salesDesc)
-        {
-            if (nameTextBox.InvokeRequired)
-            {
-                nameTextBox.Invoke(new Action(() => nameTextBox.Text = salesDesc));
-            }
-            else
-            {
-                nameTextBox.Text = salesDesc;
-            }
-        }
-        public void UpdateQuantityOnHand(string quantity)
-        {
-            if (qtyTextBox.InvokeRequired)
-            {
-                qtyTextBox.Invoke(new Action(() => qtyTextBox.Text = quantity));
-            }
-            else
-            {
-                qtyTextBox.Text = quantity;
-            }
+
+            return productsWithWarnings;
         }
         private void PopulateFormWithExistingData()
         {
@@ -258,14 +329,11 @@ namespace PAFProject.Forms
             budgetAmountTextBox.Text = _editingProduct.BudgetAmount;
             remarksTextBox.Text = _editingProduct.Remarks;
 
-            // Initialize grid with existing purchase limit
             _gridViewDesign.InitializeWithExistingData(_editingProduct.PurchaseLimit);
 
             if (decimal.TryParse(_editingProduct.AverageDaily, out decimal avgDaily))
             {
                 _currentAverageDailySales = avgDaily;
-
-                // Calculate the days from purchase limit and average daily sales
                 if (decimal.TryParse(_editingProduct.PurchaseLimit, out decimal purchaseLimit))
                 {
                     int calculatedDays = (int)Math.Round(purchaseLimit / avgDaily);
@@ -294,8 +362,9 @@ namespace PAFProject.Forms
                 if (_gridViewDesign._dataGridView.Rows.Count > 0)
                 {
                     product.SystemValue = _gridViewDesign._dataGridView.Rows[0].Cells[0].Value?.ToString() ?? "0";
-                    product.UserValue = _gridViewDesign._dataGridView.Rows[0].Cells[1].Value?.ToString() ?? "0";
-                    product.TotalValue = _gridViewDesign._dataGridView.Rows[0].Cells[2].Value?.ToString() ?? "0";
+                    product.AllowedPurchase = _gridViewDesign._dataGridView.Rows[0].Cells[1].Value?.ToString() ?? "0";
+                    product.UserValue = _gridViewDesign._dataGridView.Rows[0].Cells[2].Value?.ToString() ?? "0";
+                    product.TotalValue = _gridViewDesign._dataGridView.Rows[0].Cells[3].Value?.ToString() ?? "0";
                 }
 
                 product.BudgetAmount = budgetAmountTextBox.Text;
@@ -310,9 +379,42 @@ namespace PAFProject.Forms
         {
             try
             {
-                EnableEdit();
-                // Save the current form values before processing
+                this.Cursor = Cursors.WaitCursor;
+
                 SaveCurrentFormValues();
+                List<string> productsWithWarnings = GetProductsWithWarnings();
+
+                if (productsWithWarnings.Count > 0)
+                {
+                    // Build the warning message
+                    StringBuilder warningMessage = new StringBuilder();
+                    warningMessage.AppendLine("The following products have enough stocks quantity exceeding purchase limit:");
+                    warningMessage.AppendLine();
+
+                    foreach (var product in productsWithWarnings)
+                    {
+                        warningMessage.AppendLine("• " + product);
+                    }
+
+                    warningMessage.AppendLine();
+                    warningMessage.Append("Do you want to continue?");
+
+                    // Show confirmation dialog
+                    DialogResult result = MessageBox.Show(
+                        warningMessage.ToString(),
+                        "Warning: Stocks Quantity Exceeds Purchase Limit, You still have enough stocks!",
+                        MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Warning);
+
+                    if (result == DialogResult.Cancel)
+                    {
+                        this.Cursor = Cursors.Default;
+                        return; // Exit without saving
+                    }
+                }
+
+                doneButton.Enabled = false;
+                EnableEdit();
 
                 // If we're editing a single product
                 if (_editingProduct != null && _editingIndex.HasValue)
@@ -320,18 +422,17 @@ namespace PAFProject.Forms
                     var productData = new ProductData
                     {
                         Description = nameTextBox.Text,
-                        BarCode = _editingProduct.BarCode, 
-                        AverageDaily = _avgDailySalesComputation.ComputeAverageDailySalesFromValue(_currentAverageDailySales),
-                        PrefVendor = _editingProduct.PrefVendor, 
+                        BarCode = _editingProduct.BarCode,
+                        AverageDaily = _editingProduct.AverageDaily,
+                        PrefVendor = _editingProduct.PrefVendor,
                         QuantityOnHand = qtyTextBox.Text,
                         DaysToGo = daysTGTextBox.Text,
                         OverShortStocks = overShortSTextBox.Text,
-                        PurchaseLimit = _gridViewDesign._dataGridView.Rows[0].Cells[2].Value?.ToString() ?? "0",
+                        PurchaseLimit = _gridViewDesign._dataGridView.Rows[0].Cells[3].Value?.ToString() ?? "0", // Now column 3 is Total
                         AveragePrice = AVGPriceTextBox.Text,
                         BudgetAmount = budgetAmountTextBox.Text,
                         Remarks = remarksTextBox.Text
                     };
-
                     // Use existing UpdateProduct method for editing
                     ProductDataManager.UpdateProduct(productData, _editingIndex.Value);
                 }
@@ -349,21 +450,24 @@ namespace PAFProject.Forms
                             QuantityOnHand = product.QuantityOnHand.ToString("N0"),
                             DaysToGo = product.DaysToGo,
                             OverShortStocks = product.OverShortStocks,
-                            PurchaseLimit = product.TotalValue ?? "0",
+                            PurchaseLimit = product.TotalValue ?? "0", // This should now be the value from column 3
                             AveragePrice = product.AverageCost.ToString("N2"),
                             BudgetAmount = product.BudgetAmount ?? "0.00",
                             Remarks = product.Remarks ?? ""
                         };
-
                         ProductDataManager.AddProduct(productData);
                     }
                 }
-
                 this.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error processing products: " + ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+                doneButton.Enabled = true;
             }
         }
         public void EnableEdit()
@@ -386,12 +490,23 @@ namespace PAFProject.Forms
         {
             try
             {
+                this.Cursor = Cursors.WaitCursor;
+                selectProductButton.Enabled = false;
+
+                SaveCurrentFormValues();
+
                 Product_List_Form selectProductListForm = new Product_List_Form(this);
-                selectProductListForm.Show();
+                selectProductListForm.ShowDialog();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+                selectProductButton.Enabled = true;
+
             }
         }
         private void LimitSelectionDropdown_TextChanged(object sender, EventArgs e)
@@ -406,19 +521,47 @@ namespace PAFProject.Forms
                     string numericPart = new string(avgTextBox.Text.TakeWhile(c => char.IsDigit(c) || c == '.').ToArray());
                     if (decimal.TryParse(numericPart, out decimal averageDailySales))
                     {
-                        _currentAverageDailySales = averageDailySales;
                         _gridViewDesign.SetLimitSelection(limitSelectionDropdown.Values.Text);
-                        _gridViewDesign.UpdateSystemValue(limitSelectionDropdown.Values.Text, averageDailySales);
+                        _gridViewDesign.UpdateSystemValue(limitSelectionDropdown.Values.Text, _currentAverageDailySales);
 
                         if (_gridViewDesign._dataGridView.Rows.Count > 0)
                         {
-                            product.SystemValue = _gridViewDesign._dataGridView.Rows[0].Cells[0].Value?.ToString() ?? "0";
-                            product.TotalValue = _gridViewDesign._dataGridView.Rows[0].Cells[2].Value?.ToString() ?? "0";
+                            string systemValue = _gridViewDesign._dataGridView.Rows[0].Cells[0].Value?.ToString() ?? "0";
+                            string allowedPurchase = _gridViewDesign._dataGridView.Rows[0].Cells[1].Value?.ToString() ?? "0";
+                            string totalValue = _gridViewDesign._dataGridView.Rows[0].Cells[3].Value?.ToString() ?? "0";
+
+                            product.SystemValue = systemValue;
+                            product.TotalValue = totalValue;
+
+                            // Only update the warning message if needed, considering allowed purchase
+                            if (int.TryParse(systemValue, out int sysValue) && decimal.TryParse(qtyTextBox.Text, out decimal qtyOnHand))
+                            {
+                                string warningMessage = GenerateWarningMessage(qtyOnHand, sysValue, allowedPurchase);
+
+                                // Clear any existing warning
+                                if (remarksTextBox.Text.Contains("WARNING: You have enough STOCKS ON HAND"))
+                                {
+                                    remarksTextBox.Text = remarksTextBox.Text.Replace("WARNING: You have enough STOCKS ON HAND, It exceeds purchase limit\n\n", "")
+                                                                       .Replace("WARNING: You have enough STOCKS ON HAND, It exceeds purchase limit", "")
+                                                                       .Trim();
+                                    remarksTextBox.ForeColor = SystemColors.WindowText;
+                                }
+
+                                if (!string.IsNullOrEmpty(warningMessage))
+                                {
+                                    // Add the new warning
+                                    remarksTextBox.Text = warningMessage +
+                                        (string.IsNullOrEmpty(remarksTextBox.Text) ? "" : "\n\n" + remarksTextBox.Text);
+                                    remarksTextBox.ForeColor = Color.Red;
+                                }
+
+                                product.Remarks = remarksTextBox.Text;
+                            }
                         }
                     }
-
                     selectedProducts[currentProductIndex] = product;
                 }
+                SaveCurrentFormValues();
             }
             catch (Exception ex)
             {
@@ -443,7 +586,6 @@ namespace PAFProject.Forms
             else
             {
                 avgTextBox.Text = averageDailySales;
-                // Extract numeric value from the formatted string
                 string numericPart = new string(averageDailySales.TakeWhile(c => char.IsDigit(c) || c == '.').ToArray());
                 if (decimal.TryParse(numericPart, out decimal value))
                 {
@@ -476,28 +618,7 @@ namespace PAFProject.Forms
                 overShortSTextBox.Text = overShortStocks;
             }
         }
-        public void UpdateAverageCost(string averageCost)
-        {
-            if (AVGPriceTextBox.InvokeRequired)
-            {
-                AVGPriceTextBox.Invoke(new Action(() =>
-                {
-                    AVGPriceTextBox.Text = averageCost;
-                    if (decimal.TryParse(averageCost, out decimal cost))
-                    {
-                        _gridViewDesign.SetAverageCost(cost);
-                    }
-                }));
-            }
-            else
-            {
-                AVGPriceTextBox.Text = averageCost;
-                if (decimal.TryParse(averageCost, out decimal cost))
-                {
-                    _gridViewDesign.SetAverageCost(cost);
-                }
-            }
-        }
+
         public void UpdateBudgetAmount(string budget)
         {
             if (budgetAmountTextBox.InvokeRequired)
@@ -516,14 +637,19 @@ namespace PAFProject.Forms
             {
                 _avgDailySalesComputation.SetPeriod(isThreeMonths);
 
-                string formattedAverageDailySales = _avgDailySalesComputation.ComputeAverageDailySales(nameTextBox.Text);
-                UpdateAverageDailySales(formattedAverageDailySales);
+                // Force recalculation of Average Daily Sales
+                decimal numericAverageDailySales = _avgDailySalesComputation.GetNumericAverageDailySales(nameTextBox.Text);
+                string formattedAverageDailySales = _avgDailySalesComputation.ComputeAverageDailySalesFromValue(numericAverageDailySales);
 
-                // Recalculate days to go and over/short stocks
+                avgTextBox.Text = formattedAverageDailySales;
+                _currentAverageDailySales = numericAverageDailySales;
+
+                // Force recalculation of Purchase Limit
+                _gridViewDesign.UpdateSystemValue(limitSelectionDropdown.Values.Text, numericAverageDailySales);
+
+                // Refresh dependent calculations
                 if (decimal.TryParse(qtyTextBox.Text, out decimal quantityOnHand))
                 {
-                    decimal numericAverageDailySales = _avgDailySalesComputation.GetNumericAverageDailySales(nameTextBox.Text);
-
                     var daysToGoComputation = new DaysToGoComputation();
                     string daysToGo = daysToGoComputation.ComputeDaysToGo(quantityOnHand, numericAverageDailySales);
                     UpdateDaysToGo(daysToGo);
@@ -535,26 +661,61 @@ namespace PAFProject.Forms
                         numericAverageDailySales
                     );
                     UpdateOverShortStocks(overShortStocks);
+
+                    // Get updated system value from grid after recalculation
+                    if (_gridViewDesign._dataGridView.Rows.Count > 0)
+                    {
+                        string systemValueStr = _gridViewDesign._dataGridView.Rows[0].Cells[0].Value?.ToString() ?? "0";
+                        string allowedPurchaseValue = _gridViewDesign._dataGridView.Rows[0].Cells[1].Value?.ToString() ?? "0";
+
+                        if (int.TryParse(systemValueStr, out int systemValue))
+                        {
+                            // Update warning message based on new values
+                            string warningMessage = GenerateWarningMessage(quantityOnHand, systemValue, allowedPurchaseValue);
+
+                            // Clear any existing warning
+                            if (remarksTextBox.Text.Contains("WARNING: You have enough STOCKS ON HAND"))
+                            {
+                                remarksTextBox.Text = remarksTextBox.Text.Replace("WARNING: You have enough STOCKS ON HAND, It exceeds purchase limit\n\n", "")
+                                                                   .Replace("WARNING: You have enough STOCKS ON HAND, It exceeds purchase limit", "")
+                                                                   .Trim();
+                                remarksTextBox.ForeColor = SystemColors.WindowText;
+                            }
+
+                            if (!string.IsNullOrEmpty(warningMessage))
+                            {
+                                // Add the new warning
+                                remarksTextBox.Text = warningMessage +
+                                    (string.IsNullOrEmpty(remarksTextBox.Text) ? "" : "\n\n" + remarksTextBox.Text);
+                                remarksTextBox.ForeColor = Color.Red;
+                            }
+
+                            // Update the current product's remarks
+                            if (currentProductIndex >= 0 && currentProductIndex < selectedProducts.Count)
+                            {
+                                selectedProducts[currentProductIndex].Remarks = remarksTextBox.Text;
+                                selectedProducts[currentProductIndex].SystemValue = systemValueStr;
+
+                                // Update other calculated values that may have changed
+                                var totalValueCell = _gridViewDesign._dataGridView.Rows[0].Cells[3].Value;
+                                if (totalValueCell != null)
+                                {
+                                    selectedProducts[currentProductIndex].TotalValue = totalValueCell.ToString();
+
+                                    // Update budget if needed
+                                    if (decimal.TryParse(totalValueCell.ToString(), out decimal totalValue) &&
+                                        decimal.TryParse(AVGPriceTextBox.Text, out decimal avgCost))
+                                    {
+                                        decimal budgetAmount = totalValue * avgCost;
+                                        UpdateBudgetAmount(budgetAmount.ToString("N2"));
+                                        selectedProducts[currentProductIndex].BudgetAmount = budgetAmount.ToString("N2");
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
-        }
-        private void nameTextBox_TextChanged(object sender, EventArgs e)
-        {
-        }
-        private void avgTextBox_TextChanged(object sender, EventArgs e)
-        {
-        }
-        private void qtyTextBox_TextChanged(object sender, EventArgs e)
-        {
-        }
-        private void budgetAmountTextBox_TextChanged(object sender, EventArgs e)
-        {
-        }
-        private void limitSelectionDropdown_Click(object sender, EventArgs e)
-        {
-        }
-        private void kryptonDataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
         }
     }
 }

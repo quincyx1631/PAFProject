@@ -2,8 +2,6 @@
 // This file manages access to branch data.
 using MySql.Data.MySqlClient;
 using PAFProject.Database;
-using System.Data;
-using System.Collections.Generic;
 
 namespace PAFProject.Models
 {

@@ -38,6 +38,7 @@
             Column1 = new DataGridViewTextBoxColumn();
             Column2 = new DataGridViewTextBoxColumn();
             Column3 = new DataGridViewTextBoxColumn();
+            Column4 = new DataGridViewTextBoxColumn();
             limitSelectionDropdown = new Krypton.Toolkit.KryptonDropButton();
             limitSelectionLabel = new Label();
             remarksTextBox = new Krypton.Toolkit.KryptonTextBox();
@@ -74,14 +75,14 @@
             kryptonPanel1.Controls.Add(kryptonSeparator1);
             kryptonPanel1.Location = new Point(3, 63);
             kryptonPanel1.Name = "kryptonPanel1";
-            kryptonPanel1.Size = new Size(945, 71);
+            kryptonPanel1.Size = new Size(993, 71);
             kryptonPanel1.TabIndex = 0;
             // 
             // monthsSelectionLabel
             // 
             monthsSelectionLabel.BackColor = Color.Transparent;
             monthsSelectionLabel.Font = new Font("Segoe UI", 12F);
-            monthsSelectionLabel.Location = new Point(714, 12);
+            monthsSelectionLabel.Location = new Point(764, 12);
             monthsSelectionLabel.Name = "monthsSelectionLabel";
             monthsSelectionLabel.Size = new Size(85, 28);
             monthsSelectionLabel.TabIndex = 8;
@@ -90,7 +91,7 @@
             // 
             // monthlyDropdown
             // 
-            monthlyDropdown.Location = new Point(805, 12);
+            monthlyDropdown.Location = new Point(855, 12);
             monthlyDropdown.Name = "monthlyDropdown";
             monthlyDropdown.Size = new Size(130, 30);
             monthlyDropdown.TabIndex = 1;
@@ -101,7 +102,7 @@
             // 
             kryptonSeparator1.Location = new Point(12, 48);
             kryptonSeparator1.Name = "kryptonSeparator1";
-            kryptonSeparator1.Size = new Size(923, 16);
+            kryptonSeparator1.Size = new Size(973, 16);
             kryptonSeparator1.TabIndex = 0;
             // 
             // kryptonPanel2
@@ -130,16 +131,16 @@
             kryptonPanel2.Controls.Add(nameLabel);
             kryptonPanel2.Location = new Point(3, 133);
             kryptonPanel2.Name = "kryptonPanel2";
-            kryptonPanel2.Size = new Size(945, 565);
+            kryptonPanel2.Size = new Size(994, 565);
             kryptonPanel2.TabIndex = 1;
             // 
             // productListSelection
             // 
             productListSelection.BorderStyle = BorderStyle.None;
-            productListSelection.Location = new Point(540, 89);
+            productListSelection.Location = new Point(617, 89);
             productListSelection.Name = "productListSelection";
             productListSelection.RowHeadersVisible = false;
-            productListSelection.Size = new Size(368, 338);
+            productListSelection.Size = new Size(368, 420);
             productListSelection.TabIndex = 31;
             // 
             // kryptonDataGridView1
@@ -151,7 +152,7 @@
             kryptonDataGridView1.BorderStyle = BorderStyle.None;
             kryptonDataGridView1.ClipboardCopyMode = DataGridViewClipboardCopyMode.Disable;
             kryptonDataGridView1.ColumnHeadersHeight = 30;
-            kryptonDataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3 });
+            kryptonDataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4 });
             kryptonDataGridView1.Location = new Point(193, 256);
             kryptonDataGridView1.MultiSelect = false;
             kryptonDataGridView1.Name = "kryptonDataGridView1";
@@ -163,26 +164,34 @@
             kryptonDataGridView1.ShowCellToolTips = false;
             kryptonDataGridView1.ShowEditingIcon = false;
             kryptonDataGridView1.ShowRowErrors = false;
-            kryptonDataGridView1.Size = new Size(279, 61);
+            kryptonDataGridView1.Size = new Size(393, 61);
             kryptonDataGridView1.StandardTab = true;
             kryptonDataGridView1.TabIndex = 30;
             kryptonDataGridView1.TabStop = false;
-            kryptonDataGridView1.CellContentClick += kryptonDataGridView1_CellContentClick;
             // 
             // Column1
             // 
-            Column1.HeaderText = "System";
+            Column1.FillWeight = 115F;
+            Column1.HeaderText = "Needed Sales";
             Column1.Name = "Column1";
             // 
             // Column2
             // 
-            Column2.HeaderText = "User";
+            Column2.FillWeight = 139F;
+            Column2.HeaderText = "Allowed Purchase";
             Column2.Name = "Column2";
             // 
             // Column3
             // 
-            Column3.HeaderText = "Total";
+            Column3.FillWeight = 80F;
+            Column3.HeaderText = "User";
             Column3.Name = "Column3";
+            // 
+            // Column4
+            // 
+            Column4.FillWeight = 81F;
+            Column4.HeaderText = "Total";
+            Column4.Name = "Column4";
             // 
             // limitSelectionDropdown
             // 
@@ -192,7 +201,6 @@
             limitSelectionDropdown.TabIndex = 27;
             limitSelectionDropdown.Values.DropDownArrowColor = Color.Empty;
             limitSelectionDropdown.Values.Text = "7 Days";
-            limitSelectionDropdown.Click += limitSelectionDropdown_Click;
             // 
             // limitSelectionLabel
             // 
@@ -210,7 +218,7 @@
             remarksTextBox.Location = new Point(193, 415);
             remarksTextBox.Multiline = true;
             remarksTextBox.Name = "remarksTextBox";
-            remarksTextBox.Size = new Size(279, 96);
+            remarksTextBox.Size = new Size(393, 96);
             remarksTextBox.TabIndex = 25;
             // 
             // remarksLabel
@@ -230,10 +238,9 @@
             budgetAmountTextBox.Multiline = true;
             budgetAmountTextBox.Name = "budgetAmountTextBox";
             budgetAmountTextBox.ReadOnly = true;
-            budgetAmountTextBox.Size = new Size(279, 30);
+            budgetAmountTextBox.Size = new Size(393, 30);
             budgetAmountTextBox.TabIndex = 23;
             budgetAmountTextBox.TextAlign = HorizontalAlignment.Right;
-            budgetAmountTextBox.TextChanged += budgetAmountTextBox_TextChanged;
             // 
             // budgetAmountLabel
             // 
@@ -252,7 +259,7 @@
             AVGPriceTextBox.Multiline = true;
             AVGPriceTextBox.Name = "AVGPriceTextBox";
             AVGPriceTextBox.ReadOnly = true;
-            AVGPriceTextBox.Size = new Size(279, 30);
+            AVGPriceTextBox.Size = new Size(393, 30);
             AVGPriceTextBox.TabIndex = 21;
             AVGPriceTextBox.TextAlign = HorizontalAlignment.Right;
             // 
@@ -273,7 +280,7 @@
             overShortSTextBox.Multiline = true;
             overShortSTextBox.Name = "overShortSTextBox";
             overShortSTextBox.ReadOnly = true;
-            overShortSTextBox.Size = new Size(279, 30);
+            overShortSTextBox.Size = new Size(393, 30);
             overShortSTextBox.TabIndex = 19;
             overShortSTextBox.TextAlign = HorizontalAlignment.Right;
             // 
@@ -294,7 +301,7 @@
             daysTGTextBox.Multiline = true;
             daysTGTextBox.Name = "daysTGTextBox";
             daysTGTextBox.ReadOnly = true;
-            daysTGTextBox.Size = new Size(279, 30);
+            daysTGTextBox.Size = new Size(393, 30);
             daysTGTextBox.TabIndex = 17;
             daysTGTextBox.TextAlign = HorizontalAlignment.Right;
             // 
@@ -323,7 +330,7 @@
             // doneButton
             // 
             doneButton.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            doneButton.Location = new Point(835, 515);
+            doneButton.Location = new Point(885, 515);
             doneButton.Name = "doneButton";
             doneButton.Size = new Size(100, 40);
             doneButton.TabIndex = 14;
@@ -332,7 +339,7 @@
             // 
             // selectProductButton
             // 
-            selectProductButton.Location = new Point(478, 16);
+            selectProductButton.Location = new Point(855, 16);
             selectProductButton.Name = "selectProductButton";
             selectProductButton.Size = new Size(131, 30);
             selectProductButton.TabIndex = 13;
@@ -345,10 +352,9 @@
             qtyTextBox.Multiline = true;
             qtyTextBox.Name = "qtyTextBox";
             qtyTextBox.ReadOnly = true;
-            qtyTextBox.Size = new Size(279, 30);
+            qtyTextBox.Size = new Size(393, 30);
             qtyTextBox.TabIndex = 12;
             qtyTextBox.TextAlign = HorizontalAlignment.Right;
-            qtyTextBox.TextChanged += qtyTextBox_TextChanged;
             // 
             // avgTextBox
             // 
@@ -356,9 +362,8 @@
             avgTextBox.Multiline = true;
             avgTextBox.Name = "avgTextBox";
             avgTextBox.ReadOnly = true;
-            avgTextBox.Size = new Size(279, 30);
+            avgTextBox.Size = new Size(393, 30);
             avgTextBox.TabIndex = 11;
-            avgTextBox.TextChanged += avgTextBox_TextChanged;
             // 
             // nameTextBox
             // 
@@ -366,9 +371,8 @@
             nameTextBox.Multiline = true;
             nameTextBox.Name = "nameTextBox";
             nameTextBox.ReadOnly = true;
-            nameTextBox.Size = new Size(279, 67);
+            nameTextBox.Size = new Size(393, 67);
             nameTextBox.TabIndex = 10;
-            nameTextBox.TextChanged += nameTextBox_TextChanged;
             // 
             // avgLabel
             // 
@@ -397,7 +401,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(950, 700);
+            ClientSize = new Size(1000, 700);
             Controls.Add(kryptonPanel1);
             Controls.Add(kryptonPanel2);
             MaximizeBox = false;
@@ -445,11 +449,12 @@
         private Krypton.Toolkit.KryptonTextBox remarksTextBox;
         private Label remarksLabel;
         private Krypton.Toolkit.KryptonDataGridView kryptonDataGridView1;
-        private DataGridViewTextBoxColumn Column1;
-        private DataGridViewTextBoxColumn Column2;
-        private DataGridViewTextBoxColumn Column3;
         private Krypton.Toolkit.KryptonDropButton limitSelectionDropdown;
         private Label limitSelectionLabel;
         private Krypton.Toolkit.KryptonDataGridView productListSelection;
+        private DataGridViewTextBoxColumn Column1;
+        private DataGridViewTextBoxColumn Column2;
+        private DataGridViewTextBoxColumn Column3;
+        private DataGridViewTextBoxColumn Column4;
     }
 }

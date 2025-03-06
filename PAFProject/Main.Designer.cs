@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             kryptonPanel1 = new Krypton.Toolkit.KryptonPanel();
+            dateTextBox = new Krypton.Toolkit.KryptonTextBox();
+            dateLabel = new Label();
             PDFButton = new Button();
             deleteButton = new Button();
             branchNameLabel = new Krypton.Toolkit.KryptonTextBox();
@@ -69,6 +71,9 @@
             // 
             // kryptonPanel1
             // 
+            kryptonPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            kryptonPanel1.Controls.Add(dateTextBox);
+            kryptonPanel1.Controls.Add(dateLabel);
             kryptonPanel1.Controls.Add(PDFButton);
             kryptonPanel1.Controls.Add(deleteButton);
             kryptonPanel1.Controls.Add(branchNameLabel);
@@ -90,6 +95,26 @@
             kryptonPanel1.Name = "kryptonPanel1";
             kryptonPanel1.Size = new Size(1369, 145);
             kryptonPanel1.TabIndex = 0;
+            // 
+            // dateTextBox
+            // 
+            dateTextBox.Location = new Point(102, 83);
+            dateTextBox.Multiline = true;
+            dateTextBox.Name = "dateTextBox";
+            dateTextBox.ReadOnly = true;
+            dateTextBox.Size = new Size(149, 30);
+            dateTextBox.TabIndex = 19;
+            // 
+            // dateLabel
+            // 
+            dateLabel.BackColor = Color.Transparent;
+            dateLabel.Font = new Font("Segoe UI", 12F);
+            dateLabel.Location = new Point(13, 86);
+            dateLabel.Name = "dateLabel";
+            dateLabel.Size = new Size(83, 28);
+            dateLabel.TabIndex = 18;
+            dateLabel.Text = "Date:";
+            dateLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // PDFButton
             // 
@@ -116,7 +141,7 @@
             branchNameLabel.Multiline = true;
             branchNameLabel.Name = "branchNameLabel";
             branchNameLabel.ReadOnly = true;
-            branchNameLabel.Size = new Size(78, 30);
+            branchNameLabel.Size = new Size(149, 30);
             branchNameLabel.TabIndex = 15;
             // 
             // branchName
@@ -132,7 +157,7 @@
             // 
             // branchSelect
             // 
-            branchSelect.Location = new Point(292, 9);
+            branchSelect.Location = new Point(257, 10);
             branchSelect.Name = "branchSelect";
             branchSelect.Size = new Size(116, 35);
             branchSelect.TabIndex = 13;
@@ -141,12 +166,14 @@
             // 
             // addBranch
             // 
-            addBranch.Location = new Point(186, 9);
+            addBranch.Enabled = false;
+            addBranch.Location = new Point(379, 9);
             addBranch.Name = "addBranch";
             addBranch.Size = new Size(100, 35);
             addBranch.TabIndex = 12;
             addBranch.Text = "ADD BRANCH";
             addBranch.UseVisualStyleBackColor = true;
+            addBranch.Visible = false;
             // 
             // shortOverTextBox
             // 
@@ -157,7 +184,6 @@
             shortOverTextBox.Size = new Size(143, 30);
             shortOverTextBox.TabIndex = 11;
             shortOverTextBox.TextAlign = HorizontalAlignment.Right;
-            shortOverTextBox.TextChanged += kryptonTextBox3_TextChanged;
             // 
             // proposedBudgetTextBox
             // 
@@ -216,9 +242,8 @@
             weekTextBox.Location = new Point(102, 46);
             weekTextBox.Multiline = true;
             weekTextBox.Name = "weekTextBox";
-            weekTextBox.Size = new Size(78, 30);
+            weekTextBox.Size = new Size(149, 30);
             weekTextBox.TabIndex = 5;
-            weekTextBox.TextChanged += kryptonTextBox1_TextChanged;
             // 
             // weekLabel
             // 
@@ -269,11 +294,12 @@
             kryptonDataGridView1.BorderStyle = BorderStyle.None;
             kryptonDataGridView1.ColumnHeadersHeight = 30;
             kryptonDataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column11, Column4, Column5, Column6, Column7, Column8, Column9, Column10 });
-            kryptonDataGridView1.Location = new Point(2, 0);
+            kryptonDataGridView1.Dock = DockStyle.Fill;
+            kryptonDataGridView1.Location = new Point(0, 0);
             kryptonDataGridView1.Name = "kryptonDataGridView1";
             kryptonDataGridView1.ReadOnly = true;
             kryptonDataGridView1.RowHeadersVisible = false;
-            kryptonDataGridView1.Size = new Size(1363, 600);
+            kryptonDataGridView1.Size = new Size(1369, 560);
             kryptonDataGridView1.TabIndex = 0;
             // 
             // Column1
@@ -360,6 +386,7 @@
             Controls.Add(kryptonPanel1);
             Controls.Add(kryptonPanel2);
             Name = "Main";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Purchase Approval Form";
             Load += Main_Load;
             ((System.ComponentModel.ISupportInitialize)kryptonPanel1).EndInit();
@@ -405,5 +432,7 @@
         private DataGridViewTextBoxColumn Column10;
         private Button deleteButton;
         private Button PDFButton;
+        private Krypton.Toolkit.KryptonTextBox dateTextBox;
+        private Label dateLabel;
     }
 }

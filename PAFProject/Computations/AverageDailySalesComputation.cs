@@ -43,7 +43,7 @@ public class AverageDailySalesComputation
     {
         try
         {
-            decimal averageDailySales = GetNumericAverageDailySales(productDescription); // Keep original logic
+            decimal averageDailySales = GetNumericAverageDailySales(productDescription);
             string periodText = _isThreeMonths ? "3 Months" : "6 Months";
 
             if (averageDailySales >= 1)
@@ -62,7 +62,7 @@ public class AverageDailySalesComputation
                 return $"1 Per {daysPerSale} Days ({periodText} Average: {averageDailySales:F2})";
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return "0";
         }
@@ -95,7 +95,7 @@ public class AverageDailySalesComputation
                 return $"1 Per {daysPerSale} Days ({periodText} Average: {averageDailySales:F2})";
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return "0";
         }

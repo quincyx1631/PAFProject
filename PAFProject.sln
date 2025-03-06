@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PAFProject", "PAFProject\PAFProject.csproj", "{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PAFProjectSetup", "PAFProjectSetup\PAFProjectSetup.vdproj", "{0ABA622E-63DB-27C6-DCF1-680EB29CA1CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,13 @@ Global
 		{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A42ADA9E-D211-4834-A4D4-36C9DB8BD5AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ABA622E-63DB-27C6-DCF1-680EB29CA1CB}.Debug|Any CPU.ActiveCfg = Debug
+		{0ABA622E-63DB-27C6-DCF1-680EB29CA1CB}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2CED2AFB-F435-403A-946D-5C46345B310B}
 	EndGlobalSection
 EndGlobal

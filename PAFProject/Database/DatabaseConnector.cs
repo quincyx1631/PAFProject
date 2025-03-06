@@ -8,11 +8,11 @@ namespace PAFProject.Database
 
         public DatabaseConnector()
         {
-            // Use your database details
-            string server = "127.0.0.1";
+            string server = "localhost";
             string database = "yulitodb";
             string username = "root";
-            string password = "1234";
+            //string password = "1234";
+            string password = "adminspcg0612#";
 
             connectionString = $"Server={server};Database={database};User ID={username};Password={password};SslMode=none;";
         }
