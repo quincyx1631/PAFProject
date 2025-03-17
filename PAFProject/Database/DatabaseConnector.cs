@@ -9,7 +9,8 @@ namespace PAFProject.Database
         public DatabaseConnector()
         {
             string server = "localhost";
-            string database = "yulitodb";
+            string database = "yansdb";
+            //string database = "yulitodb";
             string username = "root";
             //string password = "1234";
             string password = "adminspcg0612#";

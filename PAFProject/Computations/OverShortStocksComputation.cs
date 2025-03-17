@@ -10,23 +10,17 @@ namespace PAFProject.Computations
         {
             try
             {
-                // Round input values for consistency
-                decimal roundedDaysToGo = Math.Round(daysToGo, 1);
-                int roundedQtyOnHand = (int)Math.Round(quantityOnHand, 0);
-                int roundedAvgDailySales = (int)Math.Round(averageDailySales, 0);
-
-                // If Days to Go is greater than threshold or Average Daily Sales is 0, return 0
-                if (roundedDaysToGo > STOCK_THRESHOLD_DAYS || roundedAvgDailySales == 0)
+                if (daysToGo > STOCK_THRESHOLD_DAYS)
                 {
                     return "0";
                 }
 
                 // Calculate over/short stocks
                 // Formula: QtyOnHand - (AvgDailySales * (14 - DaysToGo))
-                decimal adjustment = roundedAvgDailySales * (STOCK_THRESHOLD_DAYS - roundedDaysToGo);
-                int overShortStocks = roundedQtyOnHand - (int)Math.Round(adjustment, 0);
+                decimal adjustment = averageDailySales * (STOCK_THRESHOLD_DAYS - daysToGo);
+                decimal overShortStocks = quantityOnHand - adjustment;
 
-                return overShortStocks.ToString();
+                return Math.Round(overShortStocks, 0).ToString();
             }
             catch (Exception)
             {

@@ -28,11 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             kryptonPanel1 = new Krypton.Toolkit.KryptonPanel();
             monthsSelectionLabel = new Label();
             monthlyDropdown = new Krypton.Toolkit.KryptonDropButton();
-            kryptonSeparator1 = new Krypton.Toolkit.KryptonSeparator();
+            nameTextBox = new Krypton.Toolkit.KryptonTextBox();
+            nameLabel = new Label();
+            selectProductButton = new Button();
             kryptonPanel2 = new Krypton.Toolkit.KryptonPanel();
+            label1 = new Label();
+            kryptonDataGridView2 = new Krypton.Toolkit.KryptonDataGridView();
+            Column5 = new DataGridViewTextBoxColumn();
+            Column6 = new DataGridViewTextBoxColumn();
+            Column7 = new DataGridViewTextBoxColumn();
             productListSelection = new Krypton.Toolkit.KryptonDataGridView();
             kryptonDataGridView1 = new Krypton.Toolkit.KryptonDataGridView();
             Column1 = new DataGridViewTextBoxColumn();
@@ -53,17 +61,14 @@
             DTGLabel = new Label();
             qtyOHLabel = new Label();
             doneButton = new Button();
-            selectProductButton = new Button();
             qtyTextBox = new Krypton.Toolkit.KryptonTextBox();
             avgTextBox = new Krypton.Toolkit.KryptonTextBox();
-            nameTextBox = new Krypton.Toolkit.KryptonTextBox();
             avgLabel = new Label();
-            nameLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)kryptonPanel1).BeginInit();
             kryptonPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)kryptonSeparator1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)kryptonPanel2).BeginInit();
             kryptonPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)kryptonDataGridView2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)productListSelection).BeginInit();
             ((System.ComponentModel.ISupportInitialize)kryptonDataGridView1).BeginInit();
             SuspendLayout();
@@ -72,10 +77,12 @@
             // 
             kryptonPanel1.Controls.Add(monthsSelectionLabel);
             kryptonPanel1.Controls.Add(monthlyDropdown);
-            kryptonPanel1.Controls.Add(kryptonSeparator1);
-            kryptonPanel1.Location = new Point(3, 63);
+            kryptonPanel1.Controls.Add(nameTextBox);
+            kryptonPanel1.Controls.Add(nameLabel);
+            kryptonPanel1.Controls.Add(selectProductButton);
+            kryptonPanel1.Location = new Point(3, 65);
             kryptonPanel1.Name = "kryptonPanel1";
-            kryptonPanel1.Size = new Size(993, 71);
+            kryptonPanel1.Size = new Size(993, 95);
             kryptonPanel1.TabIndex = 0;
             // 
             // monthsSelectionLabel
@@ -98,15 +105,39 @@
             monthlyDropdown.Values.DropDownArrowColor = Color.Empty;
             monthlyDropdown.Values.Text = "3 Months";
             // 
-            // kryptonSeparator1
+            // nameTextBox
             // 
-            kryptonSeparator1.Location = new Point(12, 48);
-            kryptonSeparator1.Name = "kryptonSeparator1";
-            kryptonSeparator1.Size = new Size(973, 16);
-            kryptonSeparator1.TabIndex = 0;
+            nameTextBox.Location = new Point(193, 12);
+            nameTextBox.Multiline = true;
+            nameTextBox.Name = "nameTextBox";
+            nameTextBox.ReadOnly = true;
+            nameTextBox.Size = new Size(393, 67);
+            nameTextBox.TabIndex = 10;
+            // 
+            // nameLabel
+            // 
+            nameLabel.BackColor = Color.Transparent;
+            nameLabel.Font = new Font("Segoe UI", 12F);
+            nameLabel.Location = new Point(15, 14);
+            nameLabel.Name = "nameLabel";
+            nameLabel.Size = new Size(127, 28);
+            nameLabel.TabIndex = 7;
+            nameLabel.Text = "DESCRIPTION: ";
+            nameLabel.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // selectProductButton
+            // 
+            selectProductButton.Location = new Point(617, 14);
+            selectProductButton.Name = "selectProductButton";
+            selectProductButton.Size = new Size(131, 30);
+            selectProductButton.TabIndex = 13;
+            selectProductButton.Text = "SELECT A PRODUCT";
+            selectProductButton.UseVisualStyleBackColor = true;
             // 
             // kryptonPanel2
             // 
+            kryptonPanel2.Controls.Add(label1);
+            kryptonPanel2.Controls.Add(kryptonDataGridView2);
             kryptonPanel2.Controls.Add(productListSelection);
             kryptonPanel2.Controls.Add(kryptonDataGridView1);
             kryptonPanel2.Controls.Add(limitSelectionDropdown);
@@ -123,24 +154,70 @@
             kryptonPanel2.Controls.Add(DTGLabel);
             kryptonPanel2.Controls.Add(qtyOHLabel);
             kryptonPanel2.Controls.Add(doneButton);
-            kryptonPanel2.Controls.Add(selectProductButton);
             kryptonPanel2.Controls.Add(qtyTextBox);
             kryptonPanel2.Controls.Add(avgTextBox);
-            kryptonPanel2.Controls.Add(nameTextBox);
             kryptonPanel2.Controls.Add(avgLabel);
-            kryptonPanel2.Controls.Add(nameLabel);
-            kryptonPanel2.Location = new Point(3, 133);
+            kryptonPanel2.Location = new Point(3, 150);
             kryptonPanel2.Name = "kryptonPanel2";
-            kryptonPanel2.Size = new Size(994, 565);
+            kryptonPanel2.Size = new Size(994, 548);
             kryptonPanel2.TabIndex = 1;
+            // 
+            // label1
+            // 
+            label1.BackColor = Color.Transparent;
+            label1.Font = new Font("Segoe UI", 12F);
+            label1.Location = new Point(15, 175);
+            label1.Name = "label1";
+            label1.Size = new Size(172, 28);
+            label1.TabIndex = 33;
+            label1.Text = "PURCHASE LIMIT:";
+            label1.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // kryptonDataGridView2
+            // 
+            kryptonDataGridView2.AllowUserToResizeColumns = false;
+            kryptonDataGridView2.AllowUserToResizeRows = false;
+            kryptonDataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            kryptonDataGridView2.BorderStyle = BorderStyle.None;
+            kryptonDataGridView2.ColumnHeadersHeight = 30;
+            kryptonDataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            kryptonDataGridView2.Columns.AddRange(new DataGridViewColumn[] { Column5, Column6, Column7 });
+            kryptonDataGridView2.Location = new Point(193, 175);
+            kryptonDataGridView2.Name = "kryptonDataGridView2";
+            kryptonDataGridView2.ReadOnly = true;
+            kryptonDataGridView2.RowHeadersVisible = false;
+            kryptonDataGridView2.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle1.Padding = new Padding(3);
+            kryptonDataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            kryptonDataGridView2.Size = new Size(393, 69);
+            kryptonDataGridView2.TabIndex = 32;
+            kryptonDataGridView2.TabStop = false;
+            // 
+            // Column5
+            // 
+            Column5.HeaderText = "7 Days";
+            Column5.Name = "Column5";
+            Column5.ReadOnly = true;
+            // 
+            // Column6
+            // 
+            Column6.HeaderText = "15 Days";
+            Column6.Name = "Column6";
+            Column6.ReadOnly = true;
+            // 
+            // Column7
+            // 
+            Column7.HeaderText = "30 Days";
+            Column7.Name = "Column7";
+            Column7.ReadOnly = true;
             // 
             // productListSelection
             // 
             productListSelection.BorderStyle = BorderStyle.None;
-            productListSelection.Location = new Point(617, 89);
+            productListSelection.Location = new Point(617, 49);
             productListSelection.Name = "productListSelection";
             productListSelection.RowHeadersVisible = false;
-            productListSelection.Size = new Size(368, 420);
+            productListSelection.Size = new Size(368, 436);
             productListSelection.TabIndex = 31;
             // 
             // kryptonDataGridView1
@@ -152,8 +229,10 @@
             kryptonDataGridView1.BorderStyle = BorderStyle.None;
             kryptonDataGridView1.ClipboardCopyMode = DataGridViewClipboardCopyMode.Disable;
             kryptonDataGridView1.ColumnHeadersHeight = 30;
+            kryptonDataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             kryptonDataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4 });
             kryptonDataGridView1.Location = new Point(193, 256);
+            kryptonDataGridView1.Margin = new Padding(5);
             kryptonDataGridView1.MultiSelect = false;
             kryptonDataGridView1.Name = "kryptonDataGridView1";
             kryptonDataGridView1.RowHeadersVisible = false;
@@ -195,7 +274,7 @@
             // 
             // limitSelectionDropdown
             // 
-            limitSelectionDropdown.Location = new Point(15, 287);
+            limitSelectionDropdown.Location = new Point(15, 283);
             limitSelectionDropdown.Name = "limitSelectionDropdown";
             limitSelectionDropdown.Size = new Size(130, 30);
             limitSelectionDropdown.TabIndex = 27;
@@ -206,7 +285,7 @@
             // 
             limitSelectionLabel.BackColor = Color.Transparent;
             limitSelectionLabel.Font = new Font("Segoe UI", 12F);
-            limitSelectionLabel.Location = new Point(15, 256);
+            limitSelectionLabel.Location = new Point(13, 252);
             limitSelectionLabel.Name = "limitSelectionLabel";
             limitSelectionLabel.Size = new Size(172, 28);
             limitSelectionLabel.TabIndex = 26;
@@ -276,7 +355,7 @@
             // 
             // overShortSTextBox
             // 
-            overShortSTextBox.Location = new Point(193, 209);
+            overShortSTextBox.Location = new Point(193, 129);
             overShortSTextBox.Multiline = true;
             overShortSTextBox.Name = "overShortSTextBox";
             overShortSTextBox.ReadOnly = true;
@@ -288,7 +367,7 @@
             // 
             stocksLabel.BackColor = Color.Transparent;
             stocksLabel.Font = new Font("Segoe UI", 12F);
-            stocksLabel.Location = new Point(15, 209);
+            stocksLabel.Location = new Point(15, 129);
             stocksLabel.Name = "stocksLabel";
             stocksLabel.Size = new Size(172, 28);
             stocksLabel.TabIndex = 18;
@@ -297,7 +376,7 @@
             // 
             // daysTGTextBox
             // 
-            daysTGTextBox.Location = new Point(193, 169);
+            daysTGTextBox.Location = new Point(193, 89);
             daysTGTextBox.Multiline = true;
             daysTGTextBox.Name = "daysTGTextBox";
             daysTGTextBox.ReadOnly = true;
@@ -309,7 +388,7 @@
             // 
             DTGLabel.BackColor = Color.Transparent;
             DTGLabel.Font = new Font("Segoe UI", 12F);
-            DTGLabel.Location = new Point(15, 169);
+            DTGLabel.Location = new Point(15, 89);
             DTGLabel.Name = "DTGLabel";
             DTGLabel.Size = new Size(127, 28);
             DTGLabel.TabIndex = 16;
@@ -320,7 +399,7 @@
             // 
             qtyOHLabel.BackColor = Color.Transparent;
             qtyOHLabel.Font = new Font("Segoe UI", 12F);
-            qtyOHLabel.Location = new Point(15, 129);
+            qtyOHLabel.Location = new Point(15, 49);
             qtyOHLabel.Name = "qtyOHLabel";
             qtyOHLabel.Size = new Size(127, 28);
             qtyOHLabel.TabIndex = 15;
@@ -330,25 +409,16 @@
             // doneButton
             // 
             doneButton.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            doneButton.Location = new Point(885, 515);
+            doneButton.Location = new Point(885, 498);
             doneButton.Name = "doneButton";
             doneButton.Size = new Size(100, 40);
             doneButton.TabIndex = 14;
             doneButton.Text = "DONE";
             doneButton.UseVisualStyleBackColor = true;
             // 
-            // selectProductButton
-            // 
-            selectProductButton.Location = new Point(855, 16);
-            selectProductButton.Name = "selectProductButton";
-            selectProductButton.Size = new Size(131, 30);
-            selectProductButton.TabIndex = 13;
-            selectProductButton.Text = "SELECT A PRODUCT";
-            selectProductButton.UseVisualStyleBackColor = true;
-            // 
             // qtyTextBox
             // 
-            qtyTextBox.Location = new Point(193, 129);
+            qtyTextBox.Location = new Point(193, 49);
             qtyTextBox.Multiline = true;
             qtyTextBox.Name = "qtyTextBox";
             qtyTextBox.ReadOnly = true;
@@ -358,43 +428,23 @@
             // 
             // avgTextBox
             // 
-            avgTextBox.Location = new Point(193, 89);
+            avgTextBox.Location = new Point(193, 9);
             avgTextBox.Multiline = true;
             avgTextBox.Name = "avgTextBox";
             avgTextBox.ReadOnly = true;
             avgTextBox.Size = new Size(393, 30);
             avgTextBox.TabIndex = 11;
             // 
-            // nameTextBox
-            // 
-            nameTextBox.Location = new Point(193, 16);
-            nameTextBox.Multiline = true;
-            nameTextBox.Name = "nameTextBox";
-            nameTextBox.ReadOnly = true;
-            nameTextBox.Size = new Size(393, 67);
-            nameTextBox.TabIndex = 10;
-            // 
             // avgLabel
             // 
             avgLabel.BackColor = Color.Transparent;
             avgLabel.Font = new Font("Segoe UI", 12F);
-            avgLabel.Location = new Point(15, 89);
+            avgLabel.Location = new Point(15, 9);
             avgLabel.Name = "avgLabel";
             avgLabel.Size = new Size(127, 28);
             avgLabel.TabIndex = 8;
             avgLabel.Text = "AVERAGE DAILY:";
             avgLabel.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // nameLabel
-            // 
-            nameLabel.BackColor = Color.Transparent;
-            nameLabel.Font = new Font("Segoe UI", 12F);
-            nameLabel.Location = new Point(15, 18);
-            nameLabel.Name = "nameLabel";
-            nameLabel.Size = new Size(127, 28);
-            nameLabel.TabIndex = 7;
-            nameLabel.Text = "DESCRIPTION: ";
-            nameLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // Select_Product_Form
             // 
@@ -414,10 +464,11 @@
             Load += Select_Product_Form_Load;
             ((System.ComponentModel.ISupportInitialize)kryptonPanel1).EndInit();
             kryptonPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)kryptonSeparator1).EndInit();
+            kryptonPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)kryptonPanel2).EndInit();
             kryptonPanel2.ResumeLayout(false);
             kryptonPanel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)kryptonDataGridView2).EndInit();
             ((System.ComponentModel.ISupportInitialize)productListSelection).EndInit();
             ((System.ComponentModel.ISupportInitialize)kryptonDataGridView1).EndInit();
             ResumeLayout(false);
@@ -426,7 +477,6 @@
         #endregion
 
         private Krypton.Toolkit.KryptonPanel kryptonPanel1;
-        private Krypton.Toolkit.KryptonSeparator kryptonSeparator1;
         private Krypton.Toolkit.KryptonPanel kryptonPanel2;
         private Label nameLabel;
         private Label avgLabel;
@@ -452,6 +502,11 @@
         private Krypton.Toolkit.KryptonDropButton limitSelectionDropdown;
         private Label limitSelectionLabel;
         private Krypton.Toolkit.KryptonDataGridView productListSelection;
+        private Krypton.Toolkit.KryptonDataGridView kryptonDataGridView2;
+        private DataGridViewTextBoxColumn Column5;
+        private DataGridViewTextBoxColumn Column6;
+        private DataGridViewTextBoxColumn Column7;
+        private Label label1;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
         private DataGridViewTextBoxColumn Column3;

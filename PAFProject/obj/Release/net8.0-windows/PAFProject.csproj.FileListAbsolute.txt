@@ -31,7 +31,6 @@ C:\Users\admin\source\repos\PAFProject\PAFProject\bin\Release\net8.0-windows\run
 C:\Users\admin\source\repos\PAFProject\PAFProject\bin\Release\net8.0-windows\runtimes\win-x64\native\krbcc64.dll
 C:\Users\admin\source\repos\PAFProject\PAFProject\bin\Release\net8.0-windows\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 C:\Users\admin\source\repos\PAFProject\PAFProject\obj\Release\net8.0-windows\PAFProject.csproj.AssemblyReference.cache
-C:\Users\admin\source\repos\PAFProject\PAFProject\obj\Release\net8.0-windows\PAFProject.Forms.Add_Branch_Form.resources
 C:\Users\admin\source\repos\PAFProject\PAFProject\obj\Release\net8.0-windows\PAFProject.Forms.Product_List_Form.resources
 C:\Users\admin\source\repos\PAFProject\PAFProject\obj\Release\net8.0-windows\PAFProject.Forms.Select_Product_Form.resources
 C:\Users\admin\source\repos\PAFProject\PAFProject\obj\Release\net8.0-windows\PAFProject.Main.resources

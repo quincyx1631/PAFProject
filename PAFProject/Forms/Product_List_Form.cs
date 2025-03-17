@@ -44,6 +44,7 @@ namespace PAFProject.Forms
             {
                 try
                 {
+                    _parentForm.PrepareForNewProduct();
                     string salesDesc = productListDataGrid.Rows[e.RowIndex].Cells["SalesDesc"].Value.ToString();
                     decimal quantityOnHand = decimal.Parse(productListDataGrid.Rows[e.RowIndex].Cells["QuantityOnHand"].Value.ToString());
                     decimal averageCost = decimal.Parse(productListDataGrid.Rows[e.RowIndex].Cells["AverageCost"].Value.ToString());

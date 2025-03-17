@@ -49,17 +49,20 @@ public class AverageDailySalesComputation
             if (averageDailySales >= 1)
             {
                 int roundedSales = (int)Math.Round(averageDailySales, 0);
-                return $"{roundedSales} Per Day ({periodText} Average: {averageDailySales:F2})";
+                return $"{roundedSales} Per Day";
+                //return $"{roundedSales} Per Day ({periodText} Average: {averageDailySales:F2})";
             }
             else if (averageDailySales >= 1m / DAYS_IN_A_WEEK)
             {
                 int weeklySales = (int)Math.Ceiling(averageDailySales * DAYS_IN_A_WEEK);
-                return $"{weeklySales} Per Week ({periodText} Average: {averageDailySales:F2})";
+                return $"{weeklySales} Per Week";
+                //return $"{weeklySales} Per Week ({periodText} Average: {averageDailySales:F2})";
             }
             else
             {
                 int daysPerSale = (int)Math.Ceiling(1 / averageDailySales);
-                return $"1 Per {daysPerSale} Days ({periodText} Average: {averageDailySales:F2})";
+                return $"1 Per {daysPerSale} Days";
+                //return $"1 Per {daysPerSale} Days ({periodText} Average: {averageDailySales:F2})";
             }
         }
         catch (Exception)
@@ -82,17 +85,20 @@ public class AverageDailySalesComputation
             if (averageDailySales >= 1)
             {
                 int roundedSales = (int)Math.Round(averageDailySales, 0);
-                return $"{roundedSales} Per Day ({periodText} Average: {averageDailySales:F2})";
+                return $"{roundedSales} Per Day";
+                //return $"{roundedSales} Per Day ({periodText} Average: {averageDailySales:F2})";
             }
             else if (averageDailySales >= 1m / DAYS_IN_A_WEEK)
             {
                 int weeklySales = (int)Math.Ceiling(averageDailySales * DAYS_IN_A_WEEK);
-                return $"{weeklySales} Per Week ({periodText} Average: {averageDailySales:F2})";
+                return $"{weeklySales} Per Week";
+                //return $"{weeklySales} Per Week ({periodText} Average: {averageDailySales:F2})";
             }
             else
             {
                 int daysPerSale = (int)Math.Ceiling(1 / averageDailySales);
-                return $"1 Per {daysPerSale} Days ({periodText} Average: {averageDailySales:F2})";
+                return $"1 Per {daysPerSale} Days";
+                //return $"1 Per {daysPerSale} Days ({periodText} Average: {averageDailySales:F2})";
             }
         }
         catch (Exception)

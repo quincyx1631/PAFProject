@@ -28,9 +28,9 @@ namespace PAFProject.Models
                     conn.Open();
                     string tableName = isThreeMonths ? "three_months_sales" : "six_months_sales";
                     string query = $@"
-                        SELECT SalesDesc, Quantity 
-                        FROM yulitodb.{tableName} 
-                        WHERE SalesDesc = @SalesDesc";
+                            SELECT SalesDesc, Quantity 
+                            FROM yulitodb.{tableName} 
+                            WHERE SalesDesc = @SalesDesc";
 
                     using (var cmd = new MySqlCommand(query, conn))
                     {

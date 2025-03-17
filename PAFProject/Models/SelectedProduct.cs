@@ -10,6 +10,9 @@
         public decimal AverageCost { get; set; }
         public string BarCode { get; set; }
         public string PrefVendor { get; set; }
+        public string PurchaseLimit7Days { get; set; }
+        public string PurchaseLimit15Days { get; set; }
+        public string PurchaseLimit30Days { get; set; }
         public string UserValue { get; set; }
         public string SystemValue { get; set; }
         public string AllowedPurchase { get; set; } // New property

@@ -1,4 +1,5 @@
 using MaterialSkin.Controls;
+using PAFProject.Computations;
 using PAFProject.Design;
 using PAFProject.Export;
 using PAFProject.Forms;
@@ -11,13 +12,13 @@ namespace PAFProject
     {
         private int selectedRowIndex = -1;
         private BranchDropdownManager _branchDropdownManager;
-
+        private readonly Select_Product_Form _editing;
+        private readonly Select_Product_Form editForm;
         public Main()
         {
             InitializeComponent();
             weeklyBudgetTextBox.Text = Settings.Default.WeeklyBudget.ToString("N2");
             selectButton.Click += new System.EventHandler(this.selectButton_Click);
-            //addBranch.Click += new System.EventHandler(this.AddBranch_Click);
 
             dateTextBox.Text = DateTime.Now.ToString("MM/dd/yyyy");
 
@@ -46,6 +47,7 @@ namespace PAFProject
         }
         private void InitializeDataGridView()
         {
+            kryptonDataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
             kryptonDataGridView1.AllowUserToAddRows = false;
             kryptonDataGridView1.AllowUserToDeleteRows = false;
             kryptonDataGridView1.ReadOnly = true;
@@ -53,6 +55,7 @@ namespace PAFProject
             kryptonDataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             kryptonDataGridView1.MultiSelect = false;
             kryptonDataGridView1.AutoGenerateColumns = false;
+            kryptonDataGridView1.ScrollBars = ScrollBars.Both;
 
             kryptonDataGridView1.Rows.Clear();
 
@@ -61,35 +64,72 @@ namespace PAFProject
             {
                 column.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
+            kryptonDataGridView1.CellFormatting += KryptonDataGridView1_CellFormatting;
+            kryptonDataGridView1.ClearSelection();
+        }
+        private void KryptonDataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // List of column indexes to check for negative values
+            int[] targetColumns = { 4, 5, 6 }; // <-- example: QuantityOnHand, DaysToGo, OverShortStocks, BudgetAmount, etc.
+
+            if (targetColumns.Contains(e.ColumnIndex) && e.Value != null)
+            {
+                if (decimal.TryParse(e.Value.ToString(), out decimal value))
+                {
+                    if (value < 0)
+                    {
+                        e.CellStyle.ForeColor = Color.Red;
+                    }
+                }
+            }
         }
         private void KryptonDataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
                 selectedRowIndex = e.RowIndex;
+                var currentRow = kryptonDataGridView1.Rows[e.RowIndex];
+
+                // Get the value based on the purchase limit selection
+                string limitSelection = currentRow.Cells[10].Value?.ToString() ?? "7 Days";
+                string avgDailyStr = currentRow.Cells[2].Value?.ToString() ?? "0";
+
+                // Extract the numeric part of average daily (in case it has text like "pcs")
+                string numericPart = new string(avgDailyStr.TakeWhile(c => char.IsDigit(c) || c == '.').ToArray());
+
+                // Calculate the SystemValue based on the limit selection and average daily sales
+                decimal avgDaily = decimal.TryParse(numericPart, out decimal val) ? val : 0;
+                var purchaseLimitComputation = new PurchaseLimitComputation();
+                int days = purchaseLimitComputation.GetDaysFromSelection(limitSelection);
+                string systemValue = purchaseLimitComputation.ComputePurchaseLimit(avgDaily, days).ToString();
 
                 var currentProduct = new ProductData
                 {
-                    Description = kryptonDataGridView1.Rows[e.RowIndex].Cells[0].Value?.ToString() ?? string.Empty,
-                    BarCode = kryptonDataGridView1.Rows[e.RowIndex].Cells[1].Value?.ToString() ?? string.Empty,
-                    AverageDaily = kryptonDataGridView1.Rows[e.RowIndex].Cells[2].Value?.ToString() ?? string.Empty,
-                    PrefVendor = kryptonDataGridView1.Rows[e.RowIndex].Cells[3].Value?.ToString() ?? string.Empty,
-                    QuantityOnHand = kryptonDataGridView1.Rows[e.RowIndex].Cells[4].Value?.ToString() ?? string.Empty,
-                    DaysToGo = kryptonDataGridView1.Rows[e.RowIndex].Cells[5].Value?.ToString() ?? string.Empty,
-                    OverShortStocks = kryptonDataGridView1.Rows[e.RowIndex].Cells[6].Value?.ToString() ?? string.Empty,
-                    PurchaseLimit = kryptonDataGridView1.Rows[e.RowIndex].Cells[7].Value?.ToString() ?? string.Empty,
-                    AveragePrice = kryptonDataGridView1.Rows[e.RowIndex].Cells[8].Value?.ToString() ?? string.Empty,
-                    BudgetAmount = kryptonDataGridView1.Rows[e.RowIndex].Cells[9].Value?.ToString() ?? string.Empty,
-                    Remarks = kryptonDataGridView1.Rows[e.RowIndex].Cells[10].Value?.ToString() ?? string.Empty
+                    Description = currentRow.Cells[0].Value?.ToString() ?? string.Empty,
+                    BarCode = currentRow.Cells[1].Value?.ToString() ?? string.Empty,
+                    AverageDaily = avgDailyStr,
+                    PrefVendor = currentRow.Cells[3].Value?.ToString() ?? string.Empty,
+                    QuantityOnHand = currentRow.Cells[4].Value?.ToString() ?? string.Empty,
+                    DaysToGo = currentRow.Cells[5].Value?.ToString() ?? string.Empty,
+                    OverShortStocks = currentRow.Cells[6].Value?.ToString() ?? string.Empty,
+                    PurchaseLimit7Days = currentRow.Cells[7].Value?.ToString() ?? string.Empty,
+                    PurchaseLimit15Days = currentRow.Cells[8].Value?.ToString() ?? string.Empty,
+                    PurchaseLimit30Days = currentRow.Cells[9].Value?.ToString() ?? string.Empty,
+                    LimitSelection = limitSelection,
+                    AllowedPurchase = currentRow.Cells[11].Value?.ToString() ?? string.Empty,
+                    UserValue = currentRow.Cells[12].Value?.ToString() ?? string.Empty,
+                    PurchaseLimit = currentRow.Cells[13].Value?.ToString() ?? string.Empty, //Total
+                    AveragePrice = currentRow.Cells[14].Value?.ToString() ?? string.Empty,
+                    BudgetAmount = currentRow.Cells[15].Value?.ToString() ?? string.Empty,
+                    Remarks = currentRow.Cells[16].Value?.ToString() ?? string.Empty,
+                    SystemValue = systemValue // Add the calculated or retrieved SystemValue here
                 };
 
                 Select_Product_Form selectProductForm = new Select_Product_Form(this, currentProduct, selectedRowIndex);
                 selectProductForm.Show();
-
                 selectProductForm.DisableEdit();
             }
         }
-
         private void HandleNewProduct(ProductData product, int? editIndex)
         {
             if (this.InvokeRequired)
@@ -109,10 +149,16 @@ namespace PAFProject
                 row.Cells[4].Value = product.QuantityOnHand;
                 row.Cells[5].Value = product.DaysToGo;
                 row.Cells[6].Value = product.OverShortStocks;
-                row.Cells[7].Value = product.PurchaseLimit;
-                row.Cells[8].Value = product.AveragePrice;
-                row.Cells[9].Value = product.BudgetAmount;
-                row.Cells[10].Value = product.Remarks;
+                row.Cells[7].Value = product.PurchaseLimit7Days;
+                row.Cells[8].Value = product.PurchaseLimit15Days;
+                row.Cells[9].Value = product.PurchaseLimit30Days;
+                row.Cells[10].Value = product.LimitSelection;
+                row.Cells[11].Value = product.AllowedPurchase;
+                row.Cells[12].Value = product.UserValue;
+                row.Cells[13].Value = product.PurchaseLimit;//Total
+                row.Cells[14].Value = product.AveragePrice;
+                row.Cells[15].Value = product.BudgetAmount;
+                row.Cells[16].Value = product.Remarks;
             }
             else
             {
@@ -125,28 +171,41 @@ namespace PAFProject
                     product.QuantityOnHand,
                     product.DaysToGo,
                     product.OverShortStocks,
-                    product.PurchaseLimit,
+                    product.PurchaseLimit7Days,
+                    product.PurchaseLimit15Days,
+                    product.PurchaseLimit30Days,
+                    product.LimitSelection,
+                    product.AllowedPurchase,
+                    product.UserValue,
+                    product.PurchaseLimit, //Total
                     product.AveragePrice,
                     product.BudgetAmount,
                     product.Remarks
                 );
             }
+            kryptonDataGridView1.ClearSelection();
             // Align specific columns to the right
             kryptonDataGridView1.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // AverageDaily
             kryptonDataGridView1.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // QuantityOnHand
             kryptonDataGridView1.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // DaysToGo
             kryptonDataGridView1.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // OverShortStocks
-            kryptonDataGridView1.Columns[7].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // PurchaseLimit
-            kryptonDataGridView1.Columns[8].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // AveragePrice
-            kryptonDataGridView1.Columns[9].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // BudgetAmount
+            kryptonDataGridView1.Columns[7].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // PurchaseLimit7Days
+            kryptonDataGridView1.Columns[8].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // PurchaseLimit15Days
+            kryptonDataGridView1.Columns[9].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // PurchaseLimit30Days
+            kryptonDataGridView1.Columns[11].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft; // System
+            kryptonDataGridView1.Columns[12].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft; // UserValue
+            kryptonDataGridView1.Columns[13].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft; // Total
+            kryptonDataGridView1.Columns[14].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft; // AveragePrice
+            kryptonDataGridView1.Columns[15].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft; // BudgetAmount
+
+            kryptonDataGridView1.Columns[10].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // LimitSelection
 
             // Align remaining columns to the left
             kryptonDataGridView1.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft; // Description
             kryptonDataGridView1.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft; // BarCode
             kryptonDataGridView1.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft; //Pref Vendor
-            kryptonDataGridView1.Columns[10].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft; // Remarks
+            kryptonDataGridView1.Columns[16].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft; // Remarks
         }
-
         private async void ProcessButton_Click(object sender, EventArgs e)
         {
             try
@@ -246,7 +305,6 @@ namespace PAFProject
                 }));
             }
         }
-
         private async void pdfButton_Click(object sender, EventArgs e)
         {
             try
@@ -346,7 +404,6 @@ namespace PAFProject
                 }));
             }
         }
-
         private void UpdateProposedBudget(decimal totalBudget)
         {
             if (this.InvokeRequired)
@@ -356,7 +413,6 @@ namespace PAFProject
             }
             proposedBudgetTextBox.Text = totalBudget.ToString("N2");
         }
-
         private void selectButton_Click(object sender, EventArgs e)
         {
             try
@@ -474,18 +530,6 @@ namespace PAFProject
             // Trigger weekly budget computation
             weeklyBudgetTextBox_TextChanged(this, EventArgs.Empty);
         }
-        //private void AddBranch_Click(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        Add_Branch_Form addBranchForm = new Add_Branch_Form(this);
-        //        addBranchForm.Show();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show("Error opening Add Branch Form: " + ex.Message);
-        //    }
-        //}
         private void Main_Load(object sender, EventArgs e)
         {
 

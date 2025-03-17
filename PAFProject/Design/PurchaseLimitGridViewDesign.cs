@@ -60,7 +60,7 @@ public class PurchaseLimitGridViewDesign
         // Configure columns
         if (_dataGridView.Columns.Count == 0)
         {
-            _dataGridView.Columns.Add(CreateColumn("Column1", "System"));
+            _dataGridView.Columns.Add(CreateColumn("Column1", "Needed Purchase"));
             _dataGridView.Columns.Add(CreateColumn("Column2", "Allowed Purchase"));
             _dataGridView.Columns.Add(CreateColumn("Column3", "User"));
             _dataGridView.Columns.Add(CreateColumn("Column4", "Total"));

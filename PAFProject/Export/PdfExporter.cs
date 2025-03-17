@@ -2,6 +2,10 @@
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+
 public class PdfExporter
 {
     public static void ExportToPdf(KryptonDataGridView dataGridView, string filePath, string branchName,
@@ -28,9 +32,9 @@ public class PdfExporter
             {
                 container.Page(page =>
                 {
-                    // Use landscape orientation
-                    page.Size(PageSizes.A4.Landscape());
-                    page.Margin(50);
+                    // Use landscape orientation with wider A3 paper to accommodate more columns
+                    page.Size(PageSizes.A3.Landscape());
+                    page.Margin(40);
 
                     // Content layout
                     page.Content()
@@ -55,56 +59,91 @@ public class PdfExporter
 
                             // Right side - Budget Information
                             row.RelativeItem().Column(col =>
-                                {
-                                    decimal weeklyBudgetValue = decimal.TryParse(weeklyBudget, out decimal wb) ? wb : 0;
-                                    decimal proposedBudgetValue = decimal.TryParse(proposedBudget, out decimal pb) ? pb : 0;
-                                    decimal shortOverValue = decimal.TryParse(shortOver, out decimal so) ? so : 0;
+                            {
+                                decimal weeklyBudgetValue = decimal.TryParse(weeklyBudget, out decimal wb) ? wb : 0;
+                                decimal proposedBudgetValue = decimal.TryParse(proposedBudget, out decimal pb) ? pb : 0;
+                                decimal shortOverValue = decimal.TryParse(shortOver, out decimal so) ? so : 0;
 
-                                    col.Item().Text($"Weekly Budget: {weeklyBudgetValue:N2}")
-                                        .FontSize(12)
-                                        .AlignRight();
+                                col.Item().Text($"Weekly Budget: {"₱" + weeklyBudgetValue:N2}")
+                                    .FontSize(12)
+                                    .AlignRight();
 
-                                    col.Item().Text($"Proposed Budget: {proposedBudgetValue:N2}")
-                                        .FontSize(12)
-                                        .AlignRight();
+                                col.Item().Text($"Proposed Budget: {"₱" + proposedBudgetValue:N2}")
+                                    .FontSize(12)
+                                    .AlignRight();
 
-                                    col.Item().Text($"Short/Over: {shortOverValue:N2}")
-                                        .FontSize(12)
-                                        .AlignRight();
-                                });
+                                col.Item().Text($"Short/Over: {"₱" + shortOverValue:N2}")
+                                    .FontSize(12)
+                                    .AlignRight();
+                            });
                         });
 
-                        // Add table with **BORDERS**
+                        // Add table with borders
                         column.Item().PaddingTop(20).Table(table =>
                         {
-                            // Extract column headers
-                            var columnHeaders = new List<string>();
+                            // Extract column headers - add new #No column
+                            var columnHeaders = new List<string> { "No." };
                             foreach (DataGridViewColumn column in dataGridView.Columns)
                             {
                                 columnHeaders.Add(column.HeaderText);
                             }
 
-                            // Define column widths dynamically
+                            // Define column widths based on content type
                             table.ColumnsDefinition(columns =>
                             {
-                                for (int i = 0; i < columnHeaders.Count; i++)
-                                {
-                                    if (i <= 3 || i == 10) // Text columns
-                                    {
-                                        columns.RelativeColumn(2);
-                                    }
-                                    else // Numeric columns
-                                    {
-                                        columns.RelativeColumn(1.5f);
-                                    }
-                                }
+                                // #No column (narrow)
+                                columns.RelativeColumn(0.7f);
+
+                                // Description
+                                columns.RelativeColumn(3.5f);
+
+                                // BarCode
+                                columns.RelativeColumn(2f);
+
+                                // AverageDaily
+                                columns.RelativeColumn(1.5f);
+
+                                // PrefVendor
+                                columns.RelativeColumn(2f);
+
+                                // QuantityOnHand, DaysToGo, OverShortStocks
+                                columns.RelativeColumn(1.2f);
+                                columns.RelativeColumn(1.2f);
+                                columns.RelativeColumn(1.2f);
+
+                                // Purchase limits (7, 15, 30 days)
+                                columns.RelativeColumn(1.2f);
+                                columns.RelativeColumn(1.2f);
+                                columns.RelativeColumn(1.2f);
+
+                                // LimitSelection
+                                columns.RelativeColumn(1.5f);
+
+                                // AllowedPurchase, UserValue, PurchaseLimit
+                                columns.RelativeColumn(1.2f);
+                                columns.RelativeColumn(1.2f);
+                                columns.RelativeColumn(1.2f);
+
+                                // AveragePrice, BudgetAmount
+                                columns.RelativeColumn(1.6f);
+                                columns.RelativeColumn(1.6f);
+
+                                // Remarks
+                                columns.RelativeColumn(2.8f);
                             });
 
-                            // ✅ ADD HEADER ROW WITH BORDERS
+                            // Add header row with borders
                             table.Header(header =>
                             {
                                 foreach (var headerText in columnHeaders)
                                 {
+                                    bool isPurchaseLimitHeader = headerText.Contains("7 days") ||
+                                                                 headerText.Contains("15 days") ||
+                                                                 headerText.Contains("30 days") ||
+                                                                 headerText == "Allowed Purchase" ||
+                                                                 headerText == "User Value" ||
+                                                                 headerText == "Purchase Limit";
+
                                     header.Cell()
                                         .Border(1)
                                         .BorderColor(Colors.Black)
@@ -112,11 +151,28 @@ public class PdfExporter
                                         .Padding(2)
                                         .Element(cell =>
                                         {
-                                            // Create a container for the header text
                                             cell.Row(row =>
                                             {
                                                 row.RelativeItem().Column(col =>
                                                 {
+                                                    // Add group header for Purchase Limits columns
+                                                    if (headerText.Contains("7 days"))
+                                                    {
+                                                        col.Item().Text("Purchase Limits")
+                                                            .Bold()
+                                                            .FontSize(10)
+                                                            .AlignCenter();
+                                                    }
+
+                                                    // Add group header for Purchase Limit columns
+                                                    if (headerText == "Allowed Purchase")
+                                                    {
+                                                        col.Item().Text("Purchase Limit")
+                                                            .Bold()
+                                                            .FontSize(10)
+                                                            .AlignCenter();
+                                                    }
+
                                                     // Add each word on a separate line if header contains spaces
                                                     if (headerText.Contains(" "))
                                                     {
@@ -142,35 +198,61 @@ public class PdfExporter
                                 }
                             });
 
-                            // ✅ ADD DATA ROWS WITH BORDERS
+                            // Add data rows with borders
+                            // Add data rows with borders
                             for (int rowIndex = 0; rowIndex < dataGridView.Rows.Count; rowIndex++)
                             {
                                 var row = dataGridView.Rows[rowIndex];
                                 var isEvenRow = rowIndex % 2 == 0;
+                                var rowNumber = rowIndex + 1; // Increment row counter
 
+                                // Add row number cell first
+                                table.Cell()
+                                    .Border(1)
+                                    .BorderColor(Colors.Black)
+                                    .Background(isEvenRow ? Colors.White : Colors.Grey.Lighten5)
+                                    .Padding(4)
+                                    .AlignMiddle()
+                                    .AlignCenter()
+                                    .Text(rowNumber.ToString())
+                                    .FontSize(10);
+
+                                // Add actual data cells
                                 for (int cellIndex = 0; cellIndex < row.Cells.Count; cellIndex++)
                                 {
                                     var cell = row.Cells[cellIndex];
                                     string cellValue = cell.Value?.ToString() ?? "";
+                                    bool isNumeric = decimal.TryParse(cellValue, out decimal numericValue);
 
-                                    if (decimal.TryParse(cellValue, out decimal numericValue))
+                                    if (isNumeric)
                                     {
                                         cellValue = numericValue.ToString("N2");
                                     }
 
-                                    // Determine alignment
-                                    bool isTextColumn = (cellIndex <= 3 || cellIndex == 10);
+                                    // Determine if this is a text column that should be left-aligned
+                                    // For the column indices, you need to verify these match your actual columns
+                                    bool isTextColumn = cellIndex == 0 || cellIndex == 1 || cellIndex == 3 || cellIndex == 16;
+
                                     var cellBackground = isEvenRow ? Colors.White : Colors.Grey.Lighten5;
 
-                                    // ✅ APPLY BORDER TO EVERY CELL
+                                    // Apply border to every cell
                                     table.Cell()
                                         .Border(1)
                                         .BorderColor(Colors.Black)
                                         .Background(cellBackground)
-                                        .Padding(5)
+                                        .Padding(4)
                                         .AlignMiddle()
-                                        .Text(cellValue)
-                                        .FontSize(9);
+                                        .Element(e =>
+                                        {
+                                            if (isTextColumn || !isNumeric)
+                                            {
+                                                e.Text(cellValue).FontSize(10).AlignLeft();
+                                            }
+                                            else
+                                            {
+                                                e.Text(cellValue).FontSize(10).AlignRight();
+                                            }
+                                        });
                                 }
                             }
                         });
