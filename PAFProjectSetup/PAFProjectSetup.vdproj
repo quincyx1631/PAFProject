@@ -15,13 +15,13 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_C04213BFC06744059256BF8262EF410D"
+        "MsmKey" = "8:_AECEA3432C9F44C6899B62709ECBAFEB"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_D23CC024890F4E3B86840B9995D697BA"
+        "MsmKey" = "8:_C04213BFC06744059256BF8262EF410D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -199,7 +199,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PAFProjectSetup"
         "ProductCode" = "8:{BE577E41-F9B0-4993-813D-2F53B8485E8B}"
-        "PackageCode" = "8:{CBCD59F7-644C-4F93-8F63-B75B1BE639E8}"
+        "PackageCode" = "8:{92ADA3E6-AB96-46E7-8851-1A767AB32058}"
         "UpgradeCode" = "8:{20F576E3-8C51-4ABB-88AA-A0EFBBCEC875}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
@@ -319,29 +319,29 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_1A68E72946EA4D40872D0DF6AE55D98D"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_15CABD015FDC442CA8DC176E56881B4C"
             {
-            "Name" = "8:Purchase Form Approval"
+            "Name" = "8:Purchase Approval Form"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_D23CC024890F4E3B86840B9995D697BA"
+            "Target" = "8:_AECEA3432C9F44C6899B62709ECBAFEB"
             "Folder" = "8:_1DB0D4EDF8A64AA4A0D02D9114C709DF"
             "WorkingFolder" = "8:_E864A8DF91FB447690A332B3031B3F34"
             "Icon" = "8:_C04213BFC06744059256BF8262EF410D"
             "Feature" = "8:"
             }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_57282CB48F2E4628887F12CD9712099D"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_8968E23BF20C4C86B651A72F4EBAD42E"
             {
-            "Name" = "8:Purchase Form Approval"
+            "Name" = "8:Purchase Approval Form"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_D23CC024890F4E3B86840B9995D697BA"
+            "Target" = "8:_AECEA3432C9F44C6899B62709ECBAFEB"
             "Folder" = "8:_0BF643E61D124D43AEBA9767DDD0CE22"
             "WorkingFolder" = "8:_E864A8DF91FB447690A332B3031B3F34"
             "Icon" = "8:_C04213BFC06744059256BF8262EF410D"
@@ -746,7 +746,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_D23CC024890F4E3B86840B9995D697BA"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_AECEA3432C9F44C6899B62709ECBAFEB"
             {
             "SourcePath" = "8:..\\PAFProject\\obj\\Release\\net8.0-windows\\apphost.exe"
             "TargetName" = "8:"

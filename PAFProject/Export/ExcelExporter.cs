@@ -31,7 +31,6 @@ namespace PAFProject.Export
                     titleRange.Style.Font.Bold = true;
                     titleRange.Style.Font.FontSize = 14;
                     titleRange.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                    titleRange.Style.Fill.BackgroundColor = XLColor.LightBlue;
 
                     // Week & Budget Details
                     worksheet.Cell(4, 1).Value = "Week:";
@@ -56,7 +55,8 @@ namespace PAFProject.Export
                     {
                         worksheet.Cell(2, 17).Value = weeklyBudgetValue;
                         worksheet.Cell(2, 17).Style.NumberFormat.Format = "\"₱\" #,##0.00";
-                        worksheet.Cell(2, 17).Style.Fill.BackgroundColor = XLColor.LightGoldenrodYellow;
+                        worksheet.Cell(2, 17).Style.Fill.BackgroundColor = XLColor.LightBlue;
+                        worksheet.Cell(2, 17).Style.Font.Bold = true;
                     }
 
                     // Proposed Budget
@@ -66,6 +66,7 @@ namespace PAFProject.Export
                         worksheet.Cell(3, 17).Value = proposedBudgetValue;
                         worksheet.Cell(3, 17).Style.NumberFormat.Format = "\"₱\" #,##0.00";
                         worksheet.Cell(3, 17).Style.Fill.BackgroundColor = XLColor.GreenYellow;
+                        worksheet.Cell(3, 17).Style.Font.Bold = true;
                     }
 
                     // Short/Over Budget
@@ -74,6 +75,7 @@ namespace PAFProject.Export
                     {
                         worksheet.Cell(4, 17).Value = shortOverValue;
                         worksheet.Cell(4, 17).Style.NumberFormat.Format = "\"₱\" #,##0.00";
+                        worksheet.Cell(4, 17).Style.Font.Bold = true;
                         if (shortOverValue < 0)
                         {
                             worksheet.Cell(4, 17).Style.Fill.BackgroundColor = XLColor.Red;
@@ -190,18 +192,18 @@ namespace PAFProject.Export
                         {
                             (0, XLAlignmentHorizontalValues.Left, false, false),    // Description
                             (1, XLAlignmentHorizontalValues.Left, false, false),    // BarCode
-                            (2, XLAlignmentHorizontalValues.Left, false, false),    // AverageDaily
+                            (2, XLAlignmentHorizontalValues.Center, false, false),    // AverageDaily
                             (3, XLAlignmentHorizontalValues.Left, false, false),    // PrefVendor
-                            (4, XLAlignmentHorizontalValues.Right, true, false),    // QuantityOnHand
-                            (5, XLAlignmentHorizontalValues.Right, true, false),    // DaysToGo
-                            (6, XLAlignmentHorizontalValues.Right, true, false),    // OverShortStocks
-                            (7, XLAlignmentHorizontalValues.Right, false, false),    // PurchaseLimit7Days
-                            (8, XLAlignmentHorizontalValues.Right, false, false),    // PurchaseLimit15Days
-                            (9, XLAlignmentHorizontalValues.Right, false, false),    // PurchaseLimit30Days
+                            (4, XLAlignmentHorizontalValues.Center, true, false),    // QuantityOnHand
+                            (5, XLAlignmentHorizontalValues.Center, true, false),    // DaysToGo
+                            (6, XLAlignmentHorizontalValues.Center, true, false),    // OverShortStocks
+                            (7, XLAlignmentHorizontalValues.Center, false, false),    // PurchaseLimit7Days
+                            (8, XLAlignmentHorizontalValues.Center, false, false),    // PurchaseLimit15Days
+                            (9, XLAlignmentHorizontalValues.Center, false, false),    // PurchaseLimit30Days
                             (10, XLAlignmentHorizontalValues.Center, false, false), // LimitSelection
-                            (11, XLAlignmentHorizontalValues.Right, false, false),   // AllowedPurchase
-                            (12, XLAlignmentHorizontalValues.Right, false, false),   // UserValue
-                            (13, XLAlignmentHorizontalValues.Right, false, false),   // PurchaseLimit (Total)
+                            (11, XLAlignmentHorizontalValues.Center, false, false),   // AllowedPurchase
+                            (12, XLAlignmentHorizontalValues.Center, false, false),   // UserValue
+                            (13, XLAlignmentHorizontalValues.Center, false, false),   // PurchaseLimit (Total)
                             (14, XLAlignmentHorizontalValues.Right, true, true),    // AveragePrice
                             (15, XLAlignmentHorizontalValues.Right, true, true),    // BudgetAmount
                             (16, XLAlignmentHorizontalValues.Fill, false, false)    // Remarks - Changed to Fill alignment
@@ -288,21 +290,35 @@ namespace PAFProject.Export
                     worksheet.Column(1).Width = 8;    // "No." Column
                     worksheet.Column(2).AdjustToContents();   // Description
                     worksheet.Column(3).Width = 20;   // Bar Code
-                    worksheet.Column(4).Width = 30;   // Average Daily
+                    worksheet.Column(4).Width = 20;   // Average Daily
                     worksheet.Column(5).Width = 20;   // Pref Vendor
                     worksheet.Column(6).Width = 15;   // Qty On Hand
                     worksheet.Column(7).Width = 15;   // Days to Go
                     worksheet.Column(8).Width = 20;   // Over/Short Stocks
                     worksheet.Column(9).Width = 12;   // 7 Days
-                    worksheet.Column(10).Width = 12;  // 15 Days
-                    worksheet.Column(11).Width = 12;  // 30 Days
+                    worksheet.Column(10).Width = 10;  // 15 Days
+                    worksheet.Column(11).Width = 10;  // 30 Days
                     worksheet.Column(12).Width = 15;  // Limit Selection
-                    worksheet.Column(13).Width = 15;  // Allowed Purchase
-                    worksheet.Column(14).Width = 15;  // User Value
-                    worksheet.Column(15).Width = 15;  // Purchase Limit
+                    worksheet.Column(13).Width = 10;  // Allowed Purchase
+                    worksheet.Column(14).Width = 10;  // User Value
+                    worksheet.Column(15).Width = 10;  // Purchase Limit
                     worksheet.Column(16).Width = 15;  // Average Price
                     worksheet.Column(17).Width = 15;  // Budget Amount
                     worksheet.Column(18).Width = 30;  // Remarks
+
+                    //worksheet.PageSetup.PaperSize = XLPaperSize.LegalExtraPaper;
+                    worksheet.PageSetup.PaperSize = XLPaperSize.LegalPaper;
+                    worksheet.PageSetup.FitToPages(1, 0); // Fit to 1 page wide, height automatic
+                    worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
+                    worksheet.PageSetup.CenterHorizontally = true;
+                    worksheet.PageSetup.Margins.SetLeft(0.25);
+                    worksheet.PageSetup.Margins.SetRight(0.25);
+                    worksheet.PageSetup.Margins.SetTop(0.5);
+                    worksheet.PageSetup.Margins.SetBottom(0.5);
+                    worksheet.PageSetup.Margins.SetHeader(0.3);
+                    worksheet.PageSetup.Margins.SetFooter(0.3);
+                    worksheet.PageSetup.ScaleHFWithDocument = true;
+                    worksheet.PageSetup.BlackAndWhite = false;
 
                     // Save File
                     workbook.SaveAs(filePath);

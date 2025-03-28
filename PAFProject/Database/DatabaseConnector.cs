@@ -9,11 +9,11 @@ namespace PAFProject.Database
         public DatabaseConnector()
         {
             string server = "localhost";
-            string database = "yansdb";
-            //string database = "yulitodb";
+            string database = "yulitodb";
+            //string database = "yansdb";
             string username = "root";
-            //string password = "1234";
-            string password = "adminspcg0612#";
+            string password = "1234";
+            //string password = "adminspcg0612#";
 
             connectionString = $"Server={server};Database={database};User ID={username};Password={password};SslMode=none;";
         }
@@ -30,7 +30,7 @@ namespace PAFProject.Database
                 try
                 {
                     conn.Open();
-                    Console.WriteLine("Connected to MySQL database 'yulitodb' successfully!");
+                    Console.WriteLine("Connected to MySQL database 'yansdb' successfully!");
                 }
                 catch (Exception ex)
                 {

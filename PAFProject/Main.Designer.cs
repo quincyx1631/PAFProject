@@ -76,6 +76,7 @@
             // 
             // kryptonPanel1
             // 
+            kryptonPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             kryptonPanel1.Controls.Add(dateTextBox);
             kryptonPanel1.Controls.Add(dateLabel);
             kryptonPanel1.Controls.Add(PDFButton);
@@ -94,9 +95,9 @@
             kryptonPanel1.Controls.Add(selectButton);
             kryptonPanel1.Controls.Add(processButton);
             kryptonPanel1.Controls.Add(kryptonSeparator1);
-            kryptonPanel1.Location = new Point(0, 63);
+            kryptonPanel1.Location = new Point(0, 66);
             kryptonPanel1.Name = "kryptonPanel1";
-            kryptonPanel1.Size = new Size(1366, 145);
+            kryptonPanel1.Size = new Size(1366, 142);
             kryptonPanel1.TabIndex = 0;
             // 
             // dateTextBox
@@ -121,15 +122,19 @@
             // 
             // PDFButton
             // 
+            PDFButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            PDFButton.Enabled = false;
             PDFButton.Location = new Point(1245, 74);
             PDFButton.Name = "PDFButton";
             PDFButton.Size = new Size(110, 35);
             PDFButton.TabIndex = 17;
             PDFButton.Text = "EXPORT PDF";
             PDFButton.UseVisualStyleBackColor = true;
+            PDFButton.Visible = false;
             // 
             // deleteButton
             // 
+            deleteButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             deleteButton.Location = new Point(1110, 74);
             deleteButton.Name = "deleteButton";
             deleteButton.Size = new Size(129, 35);
@@ -169,6 +174,7 @@
             // 
             // shortOverTextBox
             // 
+            shortOverTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             shortOverTextBox.Location = new Point(938, 81);
             shortOverTextBox.Multiline = true;
             shortOverTextBox.Name = "shortOverTextBox";
@@ -179,6 +185,7 @@
             // 
             // proposedBudgetTextBox
             // 
+            proposedBudgetTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             proposedBudgetTextBox.Location = new Point(938, 45);
             proposedBudgetTextBox.Multiline = true;
             proposedBudgetTextBox.Name = "proposedBudgetTextBox";
@@ -189,6 +196,7 @@
             // 
             // shortOverLabel
             // 
+            shortOverLabel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             shortOverLabel.BackColor = Color.Transparent;
             shortOverLabel.Font = new Font("Segoe UI", 12F);
             shortOverLabel.Location = new Point(800, 81);
@@ -200,6 +208,7 @@
             // 
             // proposedBudgetLabel
             // 
+            proposedBudgetLabel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             proposedBudgetLabel.BackColor = Color.Transparent;
             proposedBudgetLabel.Font = new Font("Segoe UI", 12F);
             proposedBudgetLabel.Location = new Point(800, 45);
@@ -211,6 +220,7 @@
             // 
             // weeklyBudgetTextBox
             // 
+            weeklyBudgetTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             weeklyBudgetTextBox.Location = new Point(938, 10);
             weeklyBudgetTextBox.Multiline = true;
             weeklyBudgetTextBox.Name = "weeklyBudgetTextBox";
@@ -220,6 +230,7 @@
             // 
             // weeklyBudgetLabel
             // 
+            weeklyBudgetLabel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             weeklyBudgetLabel.BackColor = Color.Transparent;
             weeklyBudgetLabel.Font = new Font("Segoe UI", 12F);
             weeklyBudgetLabel.Location = new Point(800, 10);
@@ -250,6 +261,7 @@
             // 
             // selectButton
             // 
+            selectButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             selectButton.Location = new Point(1110, 15);
             selectButton.Name = "selectButton";
             selectButton.Size = new Size(129, 35);
@@ -259,6 +271,7 @@
             // 
             // processButton
             // 
+            processButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             processButton.Location = new Point(1245, 15);
             processButton.Name = "processButton";
             processButton.Size = new Size(110, 35);
@@ -268,6 +281,7 @@
             // 
             // kryptonSeparator1
             // 
+            kryptonSeparator1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             kryptonSeparator1.Location = new Point(3, 119);
             kryptonSeparator1.Name = "kryptonSeparator1";
             kryptonSeparator1.Size = new Size(1360, 20);
@@ -275,6 +289,7 @@
             // 
             // kryptonPanel2
             // 
+            kryptonPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             kryptonPanel2.Controls.Add(kryptonDataGridView1);
             kryptonPanel2.Location = new Point(0, 208);
             kryptonPanel2.Name = "kryptonPanel2";
