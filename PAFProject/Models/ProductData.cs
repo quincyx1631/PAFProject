@@ -20,6 +20,7 @@
         public string PurchaseLimit15Days { get; set; }
         public string PurchaseLimit30Days { get; set; }
         public string LimitSelection { get; set; }
+        public bool IsThreeMonthPeriod { get; set; }
 
     }
 

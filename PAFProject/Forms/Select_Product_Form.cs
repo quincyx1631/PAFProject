@@ -1,8 +1,9 @@
-﻿//Select_Product_Form.cs
+﻿//Select_Product_Form.cs - Yulito
 using MaterialSkin.Controls;
 using PAFProject.Computations;
 using PAFProject.Design;
 using PAFProject.Models;
+using System.Diagnostics;
 using System.Text;
 namespace PAFProject.Forms
 {
@@ -221,9 +222,16 @@ namespace PAFProject.Forms
             if (index >= 0 && index < selectedProducts.Count)
             {
                 var product = selectedProducts[index];
-                _currentAverageDailySales = _avgDailySalesComputation.GetPreciseAverageDailySales(product.Description);
+
+                bool isThreeMonths = product.IsThreeMonthPeriod;
+
+                var specificComputation = new AverageDailySalesComputation();
+                specificComputation.SetPeriod(isThreeMonths);
+
+                _currentAverageDailySales = specificComputation.GetPreciseAverageDailySales(product.Description);
+
                 nameTextBox.Text = product.Description;
-                string formattedAverageDailySales = _avgDailySalesComputation.ComputeAverageDailySalesFromValue(product.AverageDaily);
+                string formattedAverageDailySales = specificComputation.ComputeAverageDailySalesFromValue(product.AverageDaily);
                 avgTextBox.Text = formattedAverageDailySales;
                 qtyTextBox.Text = product.QuantityOnHand.ToString("N0");
                 daysTGTextBox.Text = product.DaysToGo;
@@ -231,8 +239,18 @@ namespace PAFProject.Forms
                 AVGPriceTextBox.Text = product.AverageCost.ToString("N2");
                 remarksTextBox.Text = product.Remarks ?? "";
 
+                // Temporarily remove event handlers to prevent cascading updates
+                limitSelectionDropdown.TextChanged -= LimitSelectionDropdown_TextChanged;
+                monthlyDropdown.TextChanged -= MonthlyDropdown_TextChanged;
+
+                // Set values based on the product's stored settings
                 limitSelectionDropdown.Values.Text = product.LimitSelection;
-                monthlyDropdown.Values.Text = product.IsThreeMonthPeriod ? "3 Months" : "6 Months";
+                // ✅ Set monthly dropdown correctly
+                monthlyDropdown.Values.Text = isThreeMonths ? "3 Months" : "6 Months";
+
+                // Restore event handlers
+                limitSelectionDropdown.TextChanged += LimitSelectionDropdown_TextChanged;
+                monthlyDropdown.TextChanged += MonthlyDropdown_TextChanged;
 
                 _gridViewDesign.SetLimitSelection(product.LimitSelection);
                 _gridViewDesign.SetQuantityOnHand(product.QuantityOnHand);
@@ -242,41 +260,10 @@ namespace PAFProject.Forms
 
                 PopulateKryptonDataGridView2(_currentAverageDailySales);
 
-                // Get the current system value and check if warning is needed
-                string systemValueStr = _gridViewDesign._dataGridView.Rows[0].Cells[0].Value?.ToString() ?? "0";
-                string allowedPurchaseValue = _gridViewDesign._dataGridView.Rows[0].Cells[1].Value?.ToString() ?? "0";
-
-                if (int.TryParse(systemValueStr, out int systemValue))
-                {
-                    string warningMessage = GenerateWarningMessage(product.QuantityOnHand, systemValue, allowedPurchaseValue);
-
-                    // Clear any existing warning regardless of the outcome
-                    if (remarksTextBox.Text.Contains("WARNING: You have enough STOCKS ON HAND"))
-                    {
-                        remarksTextBox.Text = remarksTextBox.Text.Replace("WARNING: You have enough STOCKS ON HAND!\n\n", "")
-                                                               .Replace("WARNING: You have enough STOCKS ON HAND!", "")
-                                                               .Trim();
-                    }
-
-                    if (!string.IsNullOrEmpty(warningMessage))
-                    {
-                        // Add the warning to remarks if not already present
-                        remarksTextBox.Text = warningMessage +
-                            (string.IsNullOrEmpty(remarksTextBox.Text) ? "" : "\n\n" + remarksTextBox.Text);
-
-                        // Highlight the warning message visually
-                        remarksTextBox.ForeColor = Color.Red;
-                    }
-                    else
-                    {
-                        // Reset color if there's no warning
-                        remarksTextBox.ForeColor = SystemColors.WindowText;
-                    }
-                }
-
                 budgetAmountTextBox.Text = product.BudgetAmount ?? "0.00";
             }
         }
+
         private void ProductListSelection_SelectionChanged(object sender, EventArgs e)
         {
             if (productListSelection.SelectedRows.Count > 0)
@@ -293,6 +280,7 @@ namespace PAFProject.Forms
         {
             limitSelectionDropdown.TextChanged += LimitSelectionDropdown_TextChanged;
             _gridViewDesign.OnBudgetCalculated += UpdateBudgetAmount;
+            monthlyDropdown.TextChanged += MonthlyDropdown_TextChanged;
 
             if (string.IsNullOrEmpty(limitSelectionDropdown.Values.Text))
             {
@@ -380,16 +368,13 @@ namespace PAFProject.Forms
 
             limitSelectionDropdown.Values.Text = _editingProduct.LimitSelection;
 
-            // Initialize the grid with the Needed Purchase (SystemValue)
             _gridViewDesign.InitializeWithExistingData(_editingProduct.SystemValue);
 
-            // Set the quantity on hand to properly calculate the Allowed Purchase
             if (decimal.TryParse(_editingProduct.QuantityOnHand, out decimal qtyOnHand))
             {
                 _gridViewDesign.SetQuantityOnHand(qtyOnHand);
             }
 
-            // If we have an AllowedPurchase value, ensure it's correctly shown in the grid
             if (!string.IsNullOrEmpty(_editingProduct.AllowedPurchase))
             {
                 if (_gridViewDesign._dataGridView.Rows.Count > 0)
@@ -403,9 +388,16 @@ namespace PAFProject.Forms
                 _currentAverageDailySales = avgDaily;
                 if (decimal.TryParse(_editingProduct.PurchaseLimit, out decimal purchaseLimit))
                 {
-                    int calculatedDays = (int)Math.Round(purchaseLimit / avgDaily);
-                    string daysText = GetClosestDaysSelection(calculatedDays);
-                    limitSelectionDropdown.Values.Text = daysText;
+                    if (avgDaily != 0)
+                    {
+                        int calculatedDays = (int)Math.Round(purchaseLimit / avgDaily);
+                        string daysText = GetClosestDaysSelection(calculatedDays);
+                        limitSelectionDropdown.Values.Text = daysText;
+                    }
+                    else
+                    {
+                        limitSelectionDropdown.Values.Text = "7 Days";
+                    }
                 }
 
                 PopulateKryptonDataGridView2(avgDaily);
@@ -423,13 +415,13 @@ namespace PAFProject.Forms
                 _gridViewDesign.SetAverageCost(avgPrice);
             }
 
-            // Set user value - this will update the Total as well
             if (!string.IsNullOrEmpty(_editingProduct.UserValue))
             {
                 _gridViewDesign.SetUserInput(_editingProduct.UserValue);
             }
 
-            // Create and add a selected product
+            monthlyDropdown.Values.Text = _editingProduct.IsThreeMonthPeriod ? "3 Months" : "6 Months";
+
             var product = new SelectedProduct
             {
                 Description = _editingProduct.Description,
@@ -447,7 +439,7 @@ namespace PAFProject.Forms
                 BudgetAmount = _editingProduct.BudgetAmount,
                 Remarks = _editingProduct.Remarks,
                 LimitSelection = _editingProduct.LimitSelection,
-                IsThreeMonthPeriod = monthlyDropdown.Values.Text == "3 Months",
+                IsThreeMonthPeriod = _editingProduct.IsThreeMonthPeriod, // ✅
                 PurchaseLimit7Days = _editingProduct.PurchaseLimit7Days,
                 PurchaseLimit15Days = _editingProduct.PurchaseLimit15Days,
                 PurchaseLimit30Days = _editingProduct.PurchaseLimit30Days
@@ -456,6 +448,7 @@ namespace PAFProject.Forms
             selectedProducts.Add(product);
             currentProductIndex = 0;
         }
+
         private string GetClosestDaysSelection(int calculatedDays)
         {
             if (calculatedDays <= 7) return "7 Days";
@@ -476,7 +469,6 @@ namespace PAFProject.Forms
                     product.TotalValue = _gridViewDesign._dataGridView.Rows[0].Cells[3].Value?.ToString() ?? "0";
                 }
 
-                // Save the values from kryptonDataGridView2
                 if (kryptonDataGridView2.Rows.Count > 0)
                 {
                     product.PurchaseLimit7Days = kryptonDataGridView2.Rows[0].Cells[0].Value?.ToString() ?? "0";
@@ -487,7 +479,7 @@ namespace PAFProject.Forms
                 product.BudgetAmount = budgetAmountTextBox.Text;
                 product.Remarks = remarksTextBox.Text;
                 product.LimitSelection = limitSelectionDropdown.Values.Text;
-                product.IsThreeMonthPeriod = monthlyDropdown.Values.Text == "3 Months";
+                product.IsThreeMonthPeriod = monthlyDropdown.Values.Text == "3 Months"; // ✅
 
                 selectedProducts[currentProductIndex] = product;
             }
@@ -571,11 +563,14 @@ namespace PAFProject.Forms
                     // Original logic for adding multiple products
                     foreach (var product in selectedProducts)
                     {
+                        var specificComputation = new AverageDailySalesComputation();
+                        specificComputation.SetPeriod(product.IsThreeMonthPeriod);
+
                         var productData = new ProductData
                         {
                             Description = product.Description,
                             BarCode = product.BarCode,
-                            AverageDaily = _avgDailySalesComputation.ComputeAverageDailySalesFromValue(product.AverageDaily),
+                            AverageDaily = specificComputation.ComputeAverageDailySalesFromValue(product.AverageDaily),
                             PrefVendor = product.PrefVendor,
                             QuantityOnHand = product.QuantityOnHand.ToString("N0"),
                             DaysToGo = product.DaysToGo,
@@ -740,23 +735,25 @@ namespace PAFProject.Forms
         }
         private void UpdateAverageDailySalesCalculation(bool isThreeMonths)
         {
-            if (!string.IsNullOrEmpty(nameTextBox.Text))
+            if (!string.IsNullOrEmpty(nameTextBox.Text) && currentProductIndex >= 0 && currentProductIndex < selectedProducts.Count)
             {
-                _avgDailySalesComputation.SetPeriod(isThreeMonths);
+                var specificComputation = new AverageDailySalesComputation();
+                specificComputation.SetPeriod(isThreeMonths);
 
-                // Force recalculation of Average Daily Sales
-                decimal numericAverageDailySales = _avgDailySalesComputation.GetNumericAverageDailySales(nameTextBox.Text);
-                string formattedAverageDailySales = _avgDailySalesComputation.ComputeAverageDailySalesFromValue(numericAverageDailySales);
+                string currentProductDescription = selectedProducts[currentProductIndex].Description;
+
+                decimal numericAverageDailySales = specificComputation.GetNumericAverageDailySales(currentProductDescription);
+                string formattedAverageDailySales = specificComputation.ComputeAverageDailySalesFromValue(numericAverageDailySales);
 
                 avgTextBox.Text = formattedAverageDailySales;
                 _currentAverageDailySales = numericAverageDailySales;
 
-                // Force recalculation of Purchase Limit
-                _gridViewDesign.UpdateSystemValue(limitSelectionDropdown.Values.Text, numericAverageDailySales);
+                var product = selectedProducts[currentProductIndex];
+                product.AverageDaily = numericAverageDailySales;
 
-                PopulateKryptonDataGridView2(_currentAverageDailySales);
+                _gridViewDesign.UpdateSystemValue(product.LimitSelection, numericAverageDailySales);
+                PopulateKryptonDataGridView2(numericAverageDailySales);
 
-                // Refresh dependent calculations
                 if (decimal.TryParse(qtyTextBox.Text, out decimal quantityOnHand))
                 {
                     var daysToGoComputation = new DaysToGoComputation();
@@ -771,59 +768,69 @@ namespace PAFProject.Forms
                     );
                     UpdateOverShortStocks(overShortStocks);
 
-                    // Get updated system value from grid after recalculation
+                    product.QuantityOnHand = quantityOnHand;
+                    product.DaysToGo = daysToGo;
+                    product.OverShortStocks = overShortStocks;
+
                     if (_gridViewDesign._dataGridView.Rows.Count > 0)
                     {
                         string systemValueStr = _gridViewDesign._dataGridView.Rows[0].Cells[0].Value?.ToString() ?? "0";
                         string allowedPurchaseValue = _gridViewDesign._dataGridView.Rows[0].Cells[1].Value?.ToString() ?? "0";
+                        string totalValueStr = _gridViewDesign._dataGridView.Rows[0].Cells[3].Value?.ToString() ?? "0";
 
                         if (int.TryParse(systemValueStr, out int systemValue))
                         {
-                            // Update warning message based on new values
                             string warningMessage = GenerateWarningMessage(quantityOnHand, systemValue, allowedPurchaseValue);
 
-                            // Clear any existing warning
-                            if (remarksTextBox.Text.Contains("WARNING: You have enough STOCKS ON HAND"))
+                            if (remarksTextBox.Text.Contains("WARNING:"))
                             {
-                                remarksTextBox.Text = remarksTextBox.Text.Replace("WARNING: You have enough STOCKS ON HAND!\n\n", "")
-                                                                   .Replace("WARNING: You have enough STOCKS ON HAND!", "")
-                                                                   .Trim();
+                                remarksTextBox.Text = remarksTextBox.Text.Replace("WARNING: You have enough STOCKS ON HAND!", "").Trim();
                                 remarksTextBox.ForeColor = SystemColors.WindowText;
                             }
 
                             if (!string.IsNullOrEmpty(warningMessage))
                             {
-                                // Add the new warning
                                 remarksTextBox.Text = warningMessage +
                                     (string.IsNullOrEmpty(remarksTextBox.Text) ? "" : "\n\n" + remarksTextBox.Text);
                                 remarksTextBox.ForeColor = Color.Red;
                             }
 
-                            // Update the current product's remarks
-                            if (currentProductIndex >= 0 && currentProductIndex < selectedProducts.Count)
+                            product.SystemValue = systemValueStr;
+                            product.AllowedPurchase = allowedPurchaseValue;
+                            product.TotalValue = totalValueStr;
+
+                            if (decimal.TryParse(totalValueStr, out decimal totalValue) &&
+                                decimal.TryParse(AVGPriceTextBox.Text, out decimal avgCost))
                             {
-                                selectedProducts[currentProductIndex].Remarks = remarksTextBox.Text;
-                                selectedProducts[currentProductIndex].SystemValue = systemValueStr;
-
-                                // Update other calculated values that may have changed
-                                var totalValueCell = _gridViewDesign._dataGridView.Rows[0].Cells[3].Value;
-                                if (totalValueCell != null)
-                                {
-                                    selectedProducts[currentProductIndex].TotalValue = totalValueCell.ToString();
-
-                                    // Update budget if needed
-                                    if (decimal.TryParse(totalValueCell.ToString(), out decimal totalValue) &&
-                                        decimal.TryParse(AVGPriceTextBox.Text, out decimal avgCost))
-                                    {
-                                        decimal budgetAmount = totalValue * avgCost;
-                                        UpdateBudgetAmount(budgetAmount.ToString("N2"));
-                                        selectedProducts[currentProductIndex].BudgetAmount = budgetAmount.ToString("N2");
-                                    }
-                                }
+                                decimal budgetAmount = totalValue * avgCost;
+                                UpdateBudgetAmount(budgetAmount.ToString("N2"));
+                                product.BudgetAmount = budgetAmount.ToString("N2");
                             }
+
+                            product.Remarks = remarksTextBox.Text;
                         }
                     }
                 }
+
+                selectedProducts[currentProductIndex] = product;
+            }
+        }
+        private void MonthlyDropdown_TextChanged(object sender, EventArgs e)
+        {
+            if (currentProductIndex >= 0 && currentProductIndex < selectedProducts.Count)
+            {
+                bool isThreeMonths = monthlyDropdown.Values.Text == "3 Months";
+
+                var product = selectedProducts[currentProductIndex];
+
+                // ✅ Save the dropdown selection inside the product
+                product.IsThreeMonthPeriod = isThreeMonths;
+                selectedProducts[currentProductIndex] = product;
+
+                // ✅ Recalculate after updating product
+                UpdateAverageDailySalesCalculation(isThreeMonths);
+
+                Debug.WriteLine($"[DEBUG] MonthlyDropdown Changed => currentProductIndex: {currentProductIndex}, New IsThreeMonthPeriod: {isThreeMonths} ({monthlyDropdown.Values.Text})");
             }
         }
     }

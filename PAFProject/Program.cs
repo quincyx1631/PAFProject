@@ -1,17 +1,26 @@
+using System;
+using System.Threading;
+using System.Windows.Forms;
+
 namespace PAFProject
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
+        private static Mutex mutex = new Mutex(true, "PAFProject_SingleInstance");
+
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Application.Run(new Main());
+            if (mutex.WaitOne(TimeSpan.Zero, true))
+            {
+                ApplicationConfiguration.Initialize();
+                Application.Run(new Main());
+                mutex.ReleaseMutex();
+            }
+            else
+            {
+                MessageBox.Show("Application is already running.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

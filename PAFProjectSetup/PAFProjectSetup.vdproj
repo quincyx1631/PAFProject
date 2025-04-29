@@ -15,7 +15,7 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_AECEA3432C9F44C6899B62709ECBAFEB"
+        "MsmKey" = "8:_721C1CEB7FA44318A78E2A0041520B04"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -65,7 +65,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\Purchase Form Approval.msi"
+        "OutputFilename" = "8:Release\\Purchase Approval Form.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -172,7 +172,7 @@
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_E864A8DF91FB447690A332B3031B3F34"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
+            "DefaultLocation" = "8:[ProgramFiles64Folder][Manufacturer]\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -197,9 +197,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:PAFProjectSetup"
+        "ProductName" = "8:Purchase Approval Form"
         "ProductCode" = "8:{BE577E41-F9B0-4993-813D-2F53B8485E8B}"
-        "PackageCode" = "8:{92ADA3E6-AB96-46E7-8851-1A767AB32058}"
+        "PackageCode" = "8:{9CA50D0D-BF0E-4C03-8698-A337B2BE085F}"
         "UpgradeCode" = "8:{20F576E3-8C51-4ABB-88AA-A0EFBBCEC875}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
@@ -210,17 +210,17 @@
         "Manufacturer" = "8:Comptrolla"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:PAFProjectSetup"
+        "Title" = "8:Purchase Approval Form"
         "Subject" = "8:"
         "ARPCONTACT" = "8:Comptrolla"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:"
+        "ARPPRODUCTICON" = "8:_C04213BFC06744059256BF8262EF410D"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
-        "TargetPlatform" = "3:0"
+        "TargetPlatform" = "3:1"
         "PreBuildEvent" = "8:"
         "PostBuildEvent" = "8:"
         "RunPostBuildEvent" = "3:0"
@@ -319,7 +319,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_15CABD015FDC442CA8DC176E56881B4C"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_25B6EBB5404549F485F42EB80F15229F"
             {
             "Name" = "8:Purchase Approval Form"
             "Arguments" = "8:"
@@ -327,13 +327,13 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_AECEA3432C9F44C6899B62709ECBAFEB"
-            "Folder" = "8:_1DB0D4EDF8A64AA4A0D02D9114C709DF"
+            "Target" = "8:_721C1CEB7FA44318A78E2A0041520B04"
+            "Folder" = "8:_0BF643E61D124D43AEBA9767DDD0CE22"
             "WorkingFolder" = "8:_E864A8DF91FB447690A332B3031B3F34"
             "Icon" = "8:_C04213BFC06744059256BF8262EF410D"
             "Feature" = "8:"
             }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_8968E23BF20C4C86B651A72F4EBAD42E"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_349C5CFFA0AB4A899B46D01674AA0E1B"
             {
             "Name" = "8:Purchase Approval Form"
             "Arguments" = "8:"
@@ -341,8 +341,8 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_AECEA3432C9F44C6899B62709ECBAFEB"
-            "Folder" = "8:_0BF643E61D124D43AEBA9767DDD0CE22"
+            "Target" = "8:_721C1CEB7FA44318A78E2A0041520B04"
+            "Folder" = "8:_1DB0D4EDF8A64AA4A0D02D9114C709DF"
             "WorkingFolder" = "8:_E864A8DF91FB447690A332B3031B3F34"
             "Icon" = "8:_C04213BFC06744059256BF8262EF410D"
             "Feature" = "8:"
@@ -746,7 +746,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_AECEA3432C9F44C6899B62709ECBAFEB"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_721C1CEB7FA44318A78E2A0041520B04"
             {
             "SourcePath" = "8:..\\PAFProject\\obj\\Release\\net8.0-windows\\apphost.exe"
             "TargetName" = "8:"
